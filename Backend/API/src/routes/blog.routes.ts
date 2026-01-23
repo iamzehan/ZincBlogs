@@ -4,7 +4,7 @@ import * as controller from "../controllers/blog.controller.js";
 const routes = Router();
 
 // get all blog posts
-//routes.get("/posts", controller.allBlogsGET);
+routes.get("/posts", controller.allBlogsGET);
 
 // create a blog post
 routes.post("/create", requireAuth, controller.createBlogPOST);

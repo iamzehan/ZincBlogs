@@ -1,10 +1,32 @@
 import { prisma } from "../config/prisma.js";
 import { NextFunction, Request, Response } from "express";
+import { Blog } from "../generated/prisma/client.js";
+
+// =================================== GET ALL BLOGS ==============================================//
+
+export const allBlogsGET = async (req: Request, res: Response) => {
+  try {
+    const blogs:Blog[] | [] = await prisma.blog.findMany({
+      include: {
+        comments: true,
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    });
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Could not find blogs" });
+  }
+};
 
 // =================================== CREATE A BLOG ==============================================//
 export const createBlogPOST = async (req: Request, res: Response) => {
   try {
-    const {title, content, tags} = req.body
+    const { title, content, tags } = req.body;
     const parsedTags = JSON.parse(tags).map((t: string) => t.toLowerCase());
 
     const result = await prisma.$transaction(async (prismaTx) => {
