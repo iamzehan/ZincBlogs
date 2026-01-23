@@ -15,8 +15,8 @@ const createBlogTitleView = async () => {
     const SQL = `
     DROP VIEW IF EXISTS "BlogTitles";
     CREATE VIEW "BlogTitles" AS
-    SELECT id, title
-    FROM "Blog";
+    SELECT id, title, "createdAt"
+    FROM "Blog"
     `;
     await client.query(SQL);
     console.log("BlogTitles view created!")
