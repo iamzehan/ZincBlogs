@@ -39,10 +39,6 @@ model Blog {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   
-  
-  // Creating views for Blog titles (good for navigation)
-  view BlogTitles?
-
   // One to many relations
   tags TagsOnBlogs[]
   comments Comments[]
@@ -89,6 +85,4 @@ model TagsOnBlogs {
 view BlogTitles{
   id String @unique
   title String
-  createdAt DateTime
-  blog Blog @relation(fields: [id], references: [id])
 }

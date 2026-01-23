@@ -20,62 +20,38 @@ export type TagsOnBlogsModel = runtime.Types.Result.DefaultSelection<Prisma.$Tag
 
 export type AggregateTagsOnBlogs = {
   _count: TagsOnBlogsCountAggregateOutputType | null
-  _avg: TagsOnBlogsAvgAggregateOutputType | null
-  _sum: TagsOnBlogsSumAggregateOutputType | null
   _min: TagsOnBlogsMinAggregateOutputType | null
   _max: TagsOnBlogsMaxAggregateOutputType | null
 }
 
-export type TagsOnBlogsAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type TagsOnBlogsSumAggregateOutputType = {
-  id: number | null
-}
-
 export type TagsOnBlogsMinAggregateOutputType = {
-  id: number | null
   tagId: string | null
   blogId: string | null
 }
 
 export type TagsOnBlogsMaxAggregateOutputType = {
-  id: number | null
   tagId: string | null
   blogId: string | null
 }
 
 export type TagsOnBlogsCountAggregateOutputType = {
-  id: number
   tagId: number
   blogId: number
   _all: number
 }
 
 
-export type TagsOnBlogsAvgAggregateInputType = {
-  id?: true
-}
-
-export type TagsOnBlogsSumAggregateInputType = {
-  id?: true
-}
-
 export type TagsOnBlogsMinAggregateInputType = {
-  id?: true
   tagId?: true
   blogId?: true
 }
 
 export type TagsOnBlogsMaxAggregateInputType = {
-  id?: true
   tagId?: true
   blogId?: true
 }
 
 export type TagsOnBlogsCountAggregateInputType = {
-  id?: true
   tagId?: true
   blogId?: true
   _all?: true
@@ -119,18 +95,6 @@ export type TagsOnBlogsAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: TagsOnBlogsAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: TagsOnBlogsSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: TagsOnBlogsMinAggregateInputType
@@ -161,19 +125,14 @@ export type TagsOnBlogsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: TagsOnBlogsCountAggregateInputType | true
-  _avg?: TagsOnBlogsAvgAggregateInputType
-  _sum?: TagsOnBlogsSumAggregateInputType
   _min?: TagsOnBlogsMinAggregateInputType
   _max?: TagsOnBlogsMaxAggregateInputType
 }
 
 export type TagsOnBlogsGroupByOutputType = {
-  id: number
   tagId: string
   blogId: string
   _count: TagsOnBlogsCountAggregateOutputType | null
-  _avg: TagsOnBlogsAvgAggregateOutputType | null
-  _sum: TagsOnBlogsSumAggregateOutputType | null
   _min: TagsOnBlogsMinAggregateOutputType | null
   _max: TagsOnBlogsMaxAggregateOutputType | null
 }
@@ -197,7 +156,6 @@ export type TagsOnBlogsWhereInput = {
   AND?: Prisma.TagsOnBlogsWhereInput | Prisma.TagsOnBlogsWhereInput[]
   OR?: Prisma.TagsOnBlogsWhereInput[]
   NOT?: Prisma.TagsOnBlogsWhereInput | Prisma.TagsOnBlogsWhereInput[]
-  id?: Prisma.IntFilter<"TagsOnBlogs"> | number
   tagId?: Prisma.StringFilter<"TagsOnBlogs"> | string
   blogId?: Prisma.StringFilter<"TagsOnBlogs"> | string
   tag?: Prisma.XOR<Prisma.TagsScalarRelationFilter, Prisma.TagsWhereInput>
@@ -205,7 +163,6 @@ export type TagsOnBlogsWhereInput = {
 }
 
 export type TagsOnBlogsOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
   tag?: Prisma.TagsOrderByWithRelationInput
@@ -213,7 +170,7 @@ export type TagsOnBlogsOrderByWithRelationInput = {
 }
 
 export type TagsOnBlogsWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  tagId_blogId?: Prisma.TagsOnBlogsTagIdBlogIdCompoundUniqueInput
   AND?: Prisma.TagsOnBlogsWhereInput | Prisma.TagsOnBlogsWhereInput[]
   OR?: Prisma.TagsOnBlogsWhereInput[]
   NOT?: Prisma.TagsOnBlogsWhereInput | Prisma.TagsOnBlogsWhereInput[]
@@ -221,24 +178,20 @@ export type TagsOnBlogsWhereUniqueInput = Prisma.AtLeast<{
   blogId?: Prisma.StringFilter<"TagsOnBlogs"> | string
   tag?: Prisma.XOR<Prisma.TagsScalarRelationFilter, Prisma.TagsWhereInput>
   blog?: Prisma.XOR<Prisma.BlogScalarRelationFilter, Prisma.BlogWhereInput>
-}, "id">
+}, "tagId_blogId">
 
 export type TagsOnBlogsOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
   _count?: Prisma.TagsOnBlogsCountOrderByAggregateInput
-  _avg?: Prisma.TagsOnBlogsAvgOrderByAggregateInput
   _max?: Prisma.TagsOnBlogsMaxOrderByAggregateInput
   _min?: Prisma.TagsOnBlogsMinOrderByAggregateInput
-  _sum?: Prisma.TagsOnBlogsSumOrderByAggregateInput
 }
 
 export type TagsOnBlogsScalarWhereWithAggregatesInput = {
   AND?: Prisma.TagsOnBlogsScalarWhereWithAggregatesInput | Prisma.TagsOnBlogsScalarWhereWithAggregatesInput[]
   OR?: Prisma.TagsOnBlogsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TagsOnBlogsScalarWhereWithAggregatesInput | Prisma.TagsOnBlogsScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"TagsOnBlogs"> | number
   tagId?: Prisma.StringWithAggregatesFilter<"TagsOnBlogs"> | string
   blogId?: Prisma.StringWithAggregatesFilter<"TagsOnBlogs"> | string
 }
@@ -249,7 +202,6 @@ export type TagsOnBlogsCreateInput = {
 }
 
 export type TagsOnBlogsUncheckedCreateInput = {
-  id?: number
   tagId: string
   blogId: string
 }
@@ -260,13 +212,11 @@ export type TagsOnBlogsUpdateInput = {
 }
 
 export type TagsOnBlogsUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TagsOnBlogsCreateManyInput = {
-  id?: number
   tagId: string
   blogId: string
 }
@@ -276,7 +226,6 @@ export type TagsOnBlogsUpdateManyMutationInput = {
 }
 
 export type TagsOnBlogsUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -291,30 +240,24 @@ export type TagsOnBlogsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type TagsOnBlogsTagIdBlogIdCompoundUniqueInput = {
+  tagId: string
+  blogId: string
+}
+
 export type TagsOnBlogsCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
 }
 
-export type TagsOnBlogsAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type TagsOnBlogsMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
 }
 
 export type TagsOnBlogsMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
-}
-
-export type TagsOnBlogsSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type TagsOnBlogsCreateNestedManyWithoutBlogInput = {
@@ -401,20 +344,11 @@ export type TagsOnBlogsUncheckedUpdateManyWithoutTagNestedInput = {
   deleteMany?: Prisma.TagsOnBlogsScalarWhereInput | Prisma.TagsOnBlogsScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type TagsOnBlogsCreateWithoutBlogInput = {
   tag: Prisma.TagsCreateNestedOneWithoutBlogInput
 }
 
 export type TagsOnBlogsUncheckedCreateWithoutBlogInput = {
-  id?: number
   tagId: string
 }
 
@@ -448,7 +382,6 @@ export type TagsOnBlogsScalarWhereInput = {
   AND?: Prisma.TagsOnBlogsScalarWhereInput | Prisma.TagsOnBlogsScalarWhereInput[]
   OR?: Prisma.TagsOnBlogsScalarWhereInput[]
   NOT?: Prisma.TagsOnBlogsScalarWhereInput | Prisma.TagsOnBlogsScalarWhereInput[]
-  id?: Prisma.IntFilter<"TagsOnBlogs"> | number
   tagId?: Prisma.StringFilter<"TagsOnBlogs"> | string
   blogId?: Prisma.StringFilter<"TagsOnBlogs"> | string
 }
@@ -458,7 +391,6 @@ export type TagsOnBlogsCreateWithoutTagInput = {
 }
 
 export type TagsOnBlogsUncheckedCreateWithoutTagInput = {
-  id?: number
   blogId: string
 }
 
@@ -489,7 +421,6 @@ export type TagsOnBlogsUpdateManyWithWhereWithoutTagInput = {
 }
 
 export type TagsOnBlogsCreateManyBlogInput = {
-  id?: number
   tagId: string
 }
 
@@ -498,17 +429,14 @@ export type TagsOnBlogsUpdateWithoutBlogInput = {
 }
 
 export type TagsOnBlogsUncheckedUpdateWithoutBlogInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TagsOnBlogsUncheckedUpdateManyWithoutBlogInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TagsOnBlogsCreateManyTagInput = {
-  id?: number
   blogId: string
 }
 
@@ -517,19 +445,16 @@ export type TagsOnBlogsUpdateWithoutTagInput = {
 }
 
 export type TagsOnBlogsUncheckedUpdateWithoutTagInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TagsOnBlogsUncheckedUpdateManyWithoutTagInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type TagsOnBlogsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   tagId?: boolean
   blogId?: boolean
   tag?: boolean | Prisma.TagsDefaultArgs<ExtArgs>
@@ -537,7 +462,6 @@ export type TagsOnBlogsSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 }, ExtArgs["result"]["tagsOnBlogs"]>
 
 export type TagsOnBlogsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   tagId?: boolean
   blogId?: boolean
   tag?: boolean | Prisma.TagsDefaultArgs<ExtArgs>
@@ -545,7 +469,6 @@ export type TagsOnBlogsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 }, ExtArgs["result"]["tagsOnBlogs"]>
 
 export type TagsOnBlogsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   tagId?: boolean
   blogId?: boolean
   tag?: boolean | Prisma.TagsDefaultArgs<ExtArgs>
@@ -553,12 +476,11 @@ export type TagsOnBlogsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 }, ExtArgs["result"]["tagsOnBlogs"]>
 
 export type TagsOnBlogsSelectScalar = {
-  id?: boolean
   tagId?: boolean
   blogId?: boolean
 }
 
-export type TagsOnBlogsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tagId" | "blogId", ExtArgs["result"]["tagsOnBlogs"]>
+export type TagsOnBlogsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"tagId" | "blogId", ExtArgs["result"]["tagsOnBlogs"]>
 export type TagsOnBlogsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tag?: boolean | Prisma.TagsDefaultArgs<ExtArgs>
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
@@ -579,7 +501,6 @@ export type $TagsOnBlogsPayload<ExtArgs extends runtime.Types.Extensions.Interna
     blog: Prisma.$BlogPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
     tagId: string
     blogId: string
   }, ExtArgs["result"]["tagsOnBlogs"]>
@@ -665,8 +586,8 @@ export interface TagsOnBlogsDelegate<ExtArgs extends runtime.Types.Extensions.In
    * // Get first 10 TagsOnBlogs
    * const tagsOnBlogs = await prisma.tagsOnBlogs.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const tagsOnBlogsWithIdOnly = await prisma.tagsOnBlogs.findMany({ select: { id: true } })
+   * // Only select the `tagId`
+   * const tagsOnBlogsWithTagIdOnly = await prisma.tagsOnBlogs.findMany({ select: { tagId: true } })
    * 
    */
   findMany<T extends TagsOnBlogsFindManyArgs>(args?: Prisma.SelectSubset<T, TagsOnBlogsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagsOnBlogsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -710,9 +631,9 @@ export interface TagsOnBlogsDelegate<ExtArgs extends runtime.Types.Extensions.In
    *   ]
    * })
    * 
-   * // Create many TagsOnBlogs and only return the `id`
-   * const tagsOnBlogsWithIdOnly = await prisma.tagsOnBlogs.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many TagsOnBlogs and only return the `tagId`
+   * const tagsOnBlogsWithTagIdOnly = await prisma.tagsOnBlogs.createManyAndReturn({
+   *   select: { tagId: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -801,9 +722,9 @@ export interface TagsOnBlogsDelegate<ExtArgs extends runtime.Types.Extensions.In
    *   ]
    * })
    * 
-   * // Update zero or more TagsOnBlogs and only return the `id`
-   * const tagsOnBlogsWithIdOnly = await prisma.tagsOnBlogs.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more TagsOnBlogs and only return the `tagId`
+   * const tagsOnBlogsWithTagIdOnly = await prisma.tagsOnBlogs.updateManyAndReturn({
+   *   select: { tagId: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1007,7 +928,6 @@ export interface Prisma__TagsOnBlogsClient<T, Null = never, ExtArgs extends runt
  * Fields of the TagsOnBlogs model
  */
 export interface TagsOnBlogsFieldRefs {
-  readonly id: Prisma.FieldRef<"TagsOnBlogs", 'Int'>
   readonly tagId: Prisma.FieldRef<"TagsOnBlogs", 'String'>
   readonly blogId: Prisma.FieldRef<"TagsOnBlogs", 'String'>
 }

@@ -27,19 +27,16 @@ export type AggregateBlogTitles = {
 export type BlogTitlesMinAggregateOutputType = {
   id: string | null
   title: string | null
-  createdAt: Date | null
 }
 
 export type BlogTitlesMaxAggregateOutputType = {
   id: string | null
   title: string | null
-  createdAt: Date | null
 }
 
 export type BlogTitlesCountAggregateOutputType = {
   id: number
   title: number
-  createdAt: number
   _all: number
 }
 
@@ -47,19 +44,16 @@ export type BlogTitlesCountAggregateOutputType = {
 export type BlogTitlesMinAggregateInputType = {
   id?: true
   title?: true
-  createdAt?: true
 }
 
 export type BlogTitlesMaxAggregateInputType = {
   id?: true
   title?: true
-  createdAt?: true
 }
 
 export type BlogTitlesCountAggregateInputType = {
   id?: true
   title?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -138,7 +132,6 @@ export type BlogTitlesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type BlogTitlesGroupByOutputType = {
   id: string
   title: string
-  createdAt: Date
   _count: BlogTitlesCountAggregateOutputType | null
   _min: BlogTitlesMinAggregateOutputType | null
   _max: BlogTitlesMaxAggregateOutputType | null
@@ -165,15 +158,11 @@ export type BlogTitlesWhereInput = {
   NOT?: Prisma.BlogTitlesWhereInput | Prisma.BlogTitlesWhereInput[]
   id?: Prisma.StringFilter<"BlogTitles"> | string
   title?: Prisma.StringFilter<"BlogTitles"> | string
-  createdAt?: Prisma.DateTimeFilter<"BlogTitles"> | Date | string
-  blog?: Prisma.XOR<Prisma.BlogScalarRelationFilter, Prisma.BlogWhereInput>
 }
 
 export type BlogTitlesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  blog?: Prisma.BlogOrderByWithRelationInput
 }
 
 export type BlogTitlesWhereUniqueInput = Prisma.AtLeast<{
@@ -182,14 +171,11 @@ export type BlogTitlesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.BlogTitlesWhereInput[]
   NOT?: Prisma.BlogTitlesWhereInput | Prisma.BlogTitlesWhereInput[]
   title?: Prisma.StringFilter<"BlogTitles"> | string
-  createdAt?: Prisma.DateTimeFilter<"BlogTitles"> | Date | string
-  blog?: Prisma.XOR<Prisma.BlogScalarRelationFilter, Prisma.BlogWhereInput>
 }, "id">
 
 export type BlogTitlesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   _count?: Prisma.BlogTitlesCountOrderByAggregateInput
   _max?: Prisma.BlogTitlesMaxOrderByAggregateInput
   _min?: Prisma.BlogTitlesMinOrderByAggregateInput
@@ -201,67 +187,21 @@ export type BlogTitlesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.BlogTitlesScalarWhereWithAggregatesInput | Prisma.BlogTitlesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"BlogTitles"> | string
   title?: Prisma.StringWithAggregatesFilter<"BlogTitles"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"BlogTitles"> | Date | string
-}
-
-export type BlogTitlesNullableScalarRelationFilter = {
-  is?: Prisma.BlogTitlesWhereInput | null
-  isNot?: Prisma.BlogTitlesWhereInput | null
 }
 
 export type BlogTitlesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type BlogTitlesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type BlogTitlesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type BlogTitlesCreateNestedOneWithoutBlogInput = {
-  connect?: Prisma.BlogTitlesWhereUniqueInput
-}
-
-export type BlogTitlesUncheckedCreateNestedOneWithoutBlogInput = {
-  connect?: Prisma.BlogTitlesWhereUniqueInput
-}
-
-export type BlogTitlesUpdateOneWithoutBlogNestedInput = {
-  disconnect?: Prisma.BlogTitlesWhereInput | boolean
-  delete?: Prisma.BlogTitlesWhereInput | boolean
-  connect?: Prisma.BlogTitlesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.BlogTitlesUpdateToOneWithWhereWithoutBlogInput, Prisma.BlogTitlesUpdateWithoutBlogInput>, Prisma.BlogTitlesUncheckedUpdateWithoutBlogInput>
-}
-
-export type BlogTitlesUncheckedUpdateOneWithoutBlogNestedInput = {
-  disconnect?: Prisma.BlogTitlesWhereInput | boolean
-  delete?: Prisma.BlogTitlesWhereInput | boolean
-  connect?: Prisma.BlogTitlesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.BlogTitlesUpdateToOneWithWhereWithoutBlogInput, Prisma.BlogTitlesUpdateWithoutBlogInput>, Prisma.BlogTitlesUncheckedUpdateWithoutBlogInput>
-}
-
-export type BlogTitlesUpdateToOneWithWhereWithoutBlogInput = {
-  where?: Prisma.BlogTitlesWhereInput
-  data: Prisma.XOR<Prisma.BlogTitlesUpdateWithoutBlogInput, Prisma.BlogTitlesUncheckedUpdateWithoutBlogInput>
-}
-
-export type BlogTitlesUpdateWithoutBlogInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type BlogTitlesUncheckedUpdateWithoutBlogInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -269,8 +209,6 @@ export type BlogTitlesUncheckedUpdateWithoutBlogInput = {
 export type BlogTitlesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
-  createdAt?: boolean
-  blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["blogTitles"]>
 
 
@@ -278,23 +216,16 @@ export type BlogTitlesSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type BlogTitlesSelectScalar = {
   id?: boolean
   title?: boolean
-  createdAt?: boolean
 }
 
-export type BlogTitlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "createdAt", ExtArgs["result"]["blogTitles"]>
-export type BlogTitlesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-}
+export type BlogTitlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title", ExtArgs["result"]["blogTitles"]>
 
 export type $BlogTitlesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "BlogTitles"
-  objects: {
-    blog: Prisma.$BlogPayload<ExtArgs>
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
-    createdAt: Date
   }, ExtArgs["result"]["blogTitles"]>
   composites: {}
 }
@@ -524,7 +455,6 @@ readonly fields: BlogTitlesFieldRefs;
  */
 export interface Prisma__BlogTitlesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  blog<T extends Prisma.BlogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BlogDefaultArgs<ExtArgs>>): Prisma.Prisma__BlogClient<runtime.Types.Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -556,7 +486,6 @@ export interface Prisma__BlogTitlesClient<T, Null = never, ExtArgs extends runti
 export interface BlogTitlesFieldRefs {
   readonly id: Prisma.FieldRef<"BlogTitles", 'String'>
   readonly title: Prisma.FieldRef<"BlogTitles", 'String'>
-  readonly createdAt: Prisma.FieldRef<"BlogTitles", 'DateTime'>
 }
     
 
@@ -573,10 +502,6 @@ export type BlogTitlesFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the BlogTitles
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
   /**
    * Filter, which BlogTitles to fetch.
    */
@@ -596,10 +521,6 @@ export type BlogTitlesFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
-  /**
    * Filter, which BlogTitles to fetch.
    */
   where: Prisma.BlogTitlesWhereUniqueInput
@@ -617,10 +538,6 @@ export type BlogTitlesFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the BlogTitles
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
   /**
    * Filter, which BlogTitles to fetch.
    */
@@ -670,10 +587,6 @@ export type BlogTitlesFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
-  /**
    * Filter, which BlogTitles to fetch.
    */
   where?: Prisma.BlogTitlesWhereInput
@@ -722,10 +635,6 @@ export type BlogTitlesFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
-  /**
    * Filter, which BlogTitles to fetch.
    */
   where?: Prisma.BlogTitlesWhereInput
@@ -768,8 +677,4 @@ export type BlogTitlesDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the BlogTitles
    */
   omit?: Prisma.BlogTitlesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BlogTitlesInclude<ExtArgs> | null
 }

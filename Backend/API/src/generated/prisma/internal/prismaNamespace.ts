@@ -985,7 +985,6 @@ export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof Tags
 
 
 export const TagsOnBlogsScalarFieldEnum = {
-  id: 'id',
   tagId: 'tagId',
   blogId: 'blogId'
 } as const
@@ -995,8 +994,7 @@ export type TagsOnBlogsScalarFieldEnum = (typeof TagsOnBlogsScalarFieldEnum)[key
 
 export const BlogTitlesScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  createdAt: 'createdAt'
+  title: 'title'
 } as const
 
 export type BlogTitlesScalarFieldEnum = (typeof BlogTitlesScalarFieldEnum)[keyof typeof BlogTitlesScalarFieldEnum]
@@ -1063,20 +1061,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
