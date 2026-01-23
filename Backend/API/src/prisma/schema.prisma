@@ -73,7 +73,6 @@ model Tags {
 
 // Relation table for tags belonging to a blog
 model TagsOnBlogs {
-  id Int @id @default(autoincrement())
   tagId String
   blogId String
   
@@ -81,7 +80,9 @@ model TagsOnBlogs {
   tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
 
-  @@index([blogId, tagId])
+  @@id([tagId, blogId])       // composite primary key
+  @@index([blogId])
+  @@index([tagId])
 }
 
 // The following view is created so it's easier to use blog titles on the side navigation
