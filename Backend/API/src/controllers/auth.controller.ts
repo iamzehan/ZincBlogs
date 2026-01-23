@@ -5,15 +5,17 @@ import { signAccessToken, signRefreshToken } from "../utils/jwt.js";
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
+  try{
   const user = await prisma.user.create({
     data: {
       email,
       password: await hashPassword(password)
     }
   });
-
   res.status(201).json({ id: user.id });
+} catch(err){
+  res.status(500).json({message: err});
+}
 };
 
 export const login = async (req: Request, res: Response) => {
