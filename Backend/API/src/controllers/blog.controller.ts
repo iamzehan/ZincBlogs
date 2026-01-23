@@ -1,12 +1,24 @@
 import { prisma } from "../config/prisma.js";
-import { NextFunction, Request, Response } from "express";
-import { Blog } from "../generated/prisma/client.js";
+import { NextFunction, Request, RequestParamHandler, Response } from "express";
+import { Blog, BlogTitles } from "../generated/prisma/client.js";
+import { parameterIDProcessor, tagParser } from "../utils/processors.js";
+// =================================== GET ALL BLOGS TITLE ==============================================//
+
+export const allBlogsTitleGET = async (req: Request, res: Response) => {
+  try {
+    const titles: BlogTitles[] | null = await prisma.blogTitles.findMany();
+    res.status(200).json(titles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Could not find blogs" });
+  }
+};
 
 // =================================== GET ALL BLOGS ==============================================//
 
 export const allBlogsGET = async (req: Request, res: Response) => {
   try {
-    const blogs:Blog[] | [] = await prisma.blog.findMany({
+    const blogs: Blog[] | [] = await prisma.blog.findMany({
       include: {
         comments: true,
         tags: {
@@ -23,11 +35,80 @@ export const allBlogsGET = async (req: Request, res: Response) => {
   }
 };
 
+// =================================== GET A BLOG DETAIL ==============================================//
+
+export const findOneBlogGET = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+    const blog: Blog | null = await prisma.blog.findFirst({
+      include: {
+        comments: true,
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      },
+      where: {
+        id: id
+      }
+    });
+    res.status(200).json(blog);
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: "Could not find blog details" });
+  }
+};
+
+// =================================== UPDATE A BLOG ==============================================//
+
+export const updateOneBlogPUT = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+    const { title, content, tags } = req.body;
+    // Transaction handling updates
+    const parsedTags = tagParser(tags); // => parse the tags
+    await prisma.$transaction(async (prismaTx) => {
+      // update tag records create if not exists, skip if exists
+      const tagRecords = await Promise.all(
+        parsedTags.map(async (tag: string) => {
+          return prismaTx.tags.upsert({
+            where: { tag: tag },
+            update: {},
+            create: { tag: tag }
+          });
+        })
+      );
+
+      // update the blog and set tags relations
+      await prismaTx.blog.update({
+        where: { id: id },
+        data: {
+          title,
+          content,
+          tags: {
+            // delete old existing tags
+            deleteMany: {},
+            // insert new tags
+            create: tagRecords.map((tag) => ({
+              tag: { connect: { id: tag.id } } // add all tags
+            }))
+          }
+        }
+      });
+    });
+    res.status(200).json({ message: "Blog updated!" });
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: "Could not find blog details" });
+  }
+};
+
 // =================================== CREATE A BLOG ==============================================//
 export const createBlogPOST = async (req: Request, res: Response) => {
   try {
     const { title, content, tags } = req.body;
-    const parsedTags = JSON.parse(tags).map((t: string) => t.toLowerCase());
+    const parsedTags = tagParser(tags);
 
     const result = await prisma.$transaction(async (prismaTx) => {
       // Upsert tags and collect their IDs
