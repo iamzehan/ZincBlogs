@@ -77,8 +77,9 @@ model TagsOnBlogs {
   tagId String
   blogId String
   
-  tag Tags @relation(fields: [tagId], references: [id])
-  blog Blog @relation(fields: [blogId], references: [id])
+  // tags and blogs when deleted the entry will be deleted as well
+  tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
 
   @@index([blogId, tagId])
 }
