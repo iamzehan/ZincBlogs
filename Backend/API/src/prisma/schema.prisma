@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -27,4 +28,65 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Blog {
+  id String @id @default(uuid())
+  title String
+  content String
+
+  // Timestamps to look after post timings
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  
+  
+  // Creating views for Blog titles (good for navigation)
+  view BlogTitles?
+
+  // One to many relations
+  tags TagsOnBlogs[]
+  comments Comments[]
+  @@index([id])
+}
+
+// One blog can have many comments
+model Comments {
+  id String @id @default(uuid())
+  username String @unique
+  email String @unique
+  content String
+  blogId String
+  blog Blog @relation(fields: [blogId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([blogId])
+}
+
+// One blog can have many tags
+model Tags {
+  id String @id @default(uuid())
+  tag String @unique
+  // but one tag can also belong to many blogs
+  blog TagsOnBlogs[]
+}
+
+// Relation table for tags belonging to a blog
+model TagsOnBlogs {
+  id Int @id @default(autoincrement())
+  tagId String
+  blogId String
+  
+  tag Tags @relation(fields: [tagId], references: [id])
+  blog Blog @relation(fields: [blogId], references: [id])
+
+  @@index([blogId, tagId])
+}
+
+// The following view is created so it's easier to use blog titles on the side navigation
+view BlogTitles{
+  id String @unique
+  title String
+  createdAt DateTime
+  blog Blog @relation(fields: [id], references: [id])
 }
