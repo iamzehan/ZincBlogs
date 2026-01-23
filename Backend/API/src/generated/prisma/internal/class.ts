@@ -16,11 +16,13 @@ import type * as Prisma from "./prismaNamespace.js"
 
 
 const config: runtime.GetPrismaClientConfig = {
-  "previewFeatures": [],
+  "previewFeatures": [
+    "views"
+  ],
   "clientVersion": "7.2.0",
   "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// Session \nmodel Session {\n  id        String   @id @default(cuid())\n  sid       String   @unique\n  data      String\n  expiresAt DateTime\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client\"\n  output          = \"../generated/prisma\"\n  previewFeatures = [\"views\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// Session \nmodel Session {\n  id        String   @id @default(cuid())\n  sid       String   @unique\n  data      String\n  expiresAt DateTime\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Blog {\n  id      String @id @default(uuid())\n  title   String\n  content String\n\n  // Timestamps to look after post timings\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n\n  // Creating views for Blog titles (good for navigation)\n  view BlogTitles?\n\n  // One to many relations\n  tags     TagsOnBlogs[]\n  comments Comments[]\n\n  @@index([id])\n}\n\n// One blog can have many comments\nmodel Comments {\n  id        String   @id @default(uuid())\n  username  String   @unique\n  email     String   @unique\n  content   String\n  blogId    String\n  blog      Blog     @relation(fields: [blogId], references: [id])\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n\n  @@index([blogId])\n}\n\n// One blog can have many tags\nmodel Tags {\n  id   String        @id @default(uuid())\n  tag  String        @unique\n  // but one tag can also belong to many blogs\n  blog TagsOnBlogs[]\n}\n\n// Relation table for tags belonging to a blog\nmodel TagsOnBlogs {\n  id     Int    @id @default(autoincrement())\n  tagId  String\n  blogId String\n\n  // tags and blogs when deleted the entry will be deleted as well\n  tag  Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)\n  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)\n\n  @@index([blogId, tagId])\n}\n\n// The following view is created so it's easier to use blog titles on the side navigation\nview BlogTitles {\n  id        String   @unique\n  title     String\n  createdAt DateTime\n  blog      Blog     @relation(fields: [id], references: [id])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +30,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sid\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sid\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Blog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"view\",\"kind\":\"object\",\"type\":\"BlogTitles\",\"relationName\":\"BlogToBlogTitles\"},{\"name\":\"tags\",\"kind\":\"object\",\"type\":\"TagsOnBlogs\",\"relationName\":\"BlogToTagsOnBlogs\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comments\",\"relationName\":\"BlogToComments\"}],\"dbName\":null},\"Comments\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blogId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blog\",\"kind\":\"object\",\"type\":\"Blog\",\"relationName\":\"BlogToComments\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Tags\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tag\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blog\",\"kind\":\"object\",\"type\":\"TagsOnBlogs\",\"relationName\":\"TagsToTagsOnBlogs\"}],\"dbName\":null},\"TagsOnBlogs\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"tagId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blogId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tag\",\"kind\":\"object\",\"type\":\"Tags\",\"relationName\":\"TagsToTagsOnBlogs\"},{\"name\":\"blog\",\"kind\":\"object\",\"type\":\"Blog\",\"relationName\":\"BlogToTagsOnBlogs\"}],\"dbName\":null},\"BlogTitles\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"blog\",\"kind\":\"object\",\"type\":\"Blog\",\"relationName\":\"BlogToBlogTitles\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -193,6 +195,56 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.blog`: Exposes CRUD operations for the **Blog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Blogs
+    * const blogs = await prisma.blog.findMany()
+    * ```
+    */
+  get blog(): Prisma.BlogDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.comments`: Exposes CRUD operations for the **Comments** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comments
+    * const comments = await prisma.comments.findMany()
+    * ```
+    */
+  get comments(): Prisma.CommentsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.tags`: Exposes CRUD operations for the **Tags** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tags
+    * const tags = await prisma.tags.findMany()
+    * ```
+    */
+  get tags(): Prisma.TagsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.tagsOnBlogs`: Exposes CRUD operations for the **TagsOnBlogs** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TagsOnBlogs
+    * const tagsOnBlogs = await prisma.tagsOnBlogs.findMany()
+    * ```
+    */
+  get tagsOnBlogs(): Prisma.TagsOnBlogsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.blogTitles`: Exposes CRUD operations for the **BlogTitles** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BlogTitles
+    * const blogTitles = await prisma.blogTitles.findMany()
+    * ```
+    */
+  get blogTitles(): Prisma.BlogTitlesDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

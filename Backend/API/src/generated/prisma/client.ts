@@ -49,3 +49,28 @@ export type Session = Prisma.SessionModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Blog
+ * 
+ */
+export type Blog = Prisma.BlogModel
+/**
+ * Model Comments
+ * 
+ */
+export type Comments = Prisma.CommentsModel
+/**
+ * Model Tags
+ * 
+ */
+export type Tags = Prisma.TagsModel
+/**
+ * Model TagsOnBlogs
+ * 
+ */
+export type TagsOnBlogs = Prisma.TagsOnBlogsModel
+/**
+ * Model BlogTitles
+ * 
+ */
+export type BlogTitles = Prisma.BlogTitlesModel
