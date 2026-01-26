@@ -108,14 +108,14 @@ export const updateOneBlogPUT = async (req: Request, res: Response) => {
 
 export const deleteBlogDELETE = async (req:Request, res: Response) => {
   try {
-    const {blogId} = req.body.id;
+    const id = parameterIDProcessor(req);
     const blog = await prisma.blog.delete({
       where: {
-        id: blogId
+        id: id
       }
     });
 
-    if(blog) return res.status(200).json({message: `Blog ${blogId} was deleted`});
+    if(blog) return res.status(200).json({message: `Blog ${id} was deleted`});
     else throw new Error;
   }
   catch(err){
