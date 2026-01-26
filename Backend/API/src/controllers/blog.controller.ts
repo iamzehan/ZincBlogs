@@ -104,6 +104,26 @@ export const updateOneBlogPUT = async (req: Request, res: Response) => {
   }
 };
 
+// =================================== DELETE A BLOG ==============================================//
+
+export const deleteBlogDELETE = async (req:Request, res: Response) => {
+  try {
+    const {blogId} = req.body.id;
+    const blog = await prisma.blog.delete({
+      where: {
+        id: blogId
+      }
+    });
+
+    if(blog) return res.status(200).json({message: `Blog ${blogId} was deleted`});
+    else throw new Error;
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({message: "Could not delete blog!"});
+  }
+}
+
 // =================================== CREATE A BLOG ==============================================//
 export const createBlogPOST = async (req: Request, res: Response) => {
   try {

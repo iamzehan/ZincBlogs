@@ -8,13 +8,14 @@ routes.get("/titles", controller.allBlogsTitleGET)
 
 // get all blog posts
 routes.get("/posts", controller.allBlogsGET);
-// get on blog
+// get one blog
 routes.get("/posts/:id", controller.findOneBlogGET);
 // update a blog post
 routes.put("/posts/:id", requireAuth, controller.updateOneBlogPUT);
+// delete a blog post
+routes.delete("/posts/:id", requireAuth, controller.deleteBlogDELETE);
 
 // create a blog post
 routes.post("/create", requireAuth, controller.createBlogPOST);
-
 
 export default routes;
