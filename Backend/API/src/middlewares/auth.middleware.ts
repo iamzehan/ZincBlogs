@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
+import { prisma } from "../config/prisma.js";
 
 export const requireAuth = (
   req: Request,
@@ -36,3 +37,17 @@ export const ensureGuest = (req: Request, res: Response, next: NextFunction) => 
     next(); // Invalid token → treat as guest
   }
 };
+
+export const ensureAuthor = async (req: Request, res:Response, next: NextFunction) => {
+  const isAuthor = await prisma.author.findFirst({
+    where: {
+      id: req.userId
+    }
+  });
+  if(isAuthor){
+    return next();
+  }
+  else{
+    return res.status(403).json({message: "Forbidden!"})
+  }
+}
