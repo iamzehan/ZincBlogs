@@ -273,7 +273,7 @@ export type SubscriberCreateInput = {
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  comments?: Prisma.CommentsCreateNestedManyWithoutSubscriberInput
+  comments?: Prisma.CommentsCreateNestedManyWithoutOwnerInput
 }
 
 export type SubscriberUncheckedCreateInput = {
@@ -285,7 +285,7 @@ export type SubscriberUncheckedCreateInput = {
   username: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutSubscriberInput
+  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type SubscriberUpdateInput = {
@@ -297,7 +297,7 @@ export type SubscriberUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUpdateManyWithoutSubscriberNestedInput
+  comments?: Prisma.CommentsUpdateManyWithoutOwnerNestedInput
 }
 
 export type SubscriberUncheckedUpdateInput = {
@@ -309,7 +309,7 @@ export type SubscriberUncheckedUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUncheckedUpdateManyWithoutSubscriberNestedInput
+  comments?: Prisma.CommentsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type SubscriberCreateManyInput = {

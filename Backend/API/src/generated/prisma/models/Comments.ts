@@ -191,7 +191,7 @@ export type CommentsWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Comments"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Comments"> | Date | string
   blog?: Prisma.XOR<Prisma.BlogScalarRelationFilter, Prisma.BlogWhereInput>
-  subscriber?: Prisma.XOR<Prisma.SubscriberScalarRelationFilter, Prisma.SubscriberWhereInput>
+  owner?: Prisma.XOR<Prisma.SubscriberScalarRelationFilter, Prisma.SubscriberWhereInput>
 }
 
 export type CommentsOrderByWithRelationInput = {
@@ -202,7 +202,7 @@ export type CommentsOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   blog?: Prisma.BlogOrderByWithRelationInput
-  subscriber?: Prisma.SubscriberOrderByWithRelationInput
+  owner?: Prisma.SubscriberOrderByWithRelationInput
 }
 
 export type CommentsWhereUniqueInput = Prisma.AtLeast<{
@@ -216,7 +216,7 @@ export type CommentsWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Comments"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Comments"> | Date | string
   blog?: Prisma.XOR<Prisma.BlogScalarRelationFilter, Prisma.BlogWhereInput>
-  subscriber?: Prisma.XOR<Prisma.SubscriberScalarRelationFilter, Prisma.SubscriberWhereInput>
+  owner?: Prisma.XOR<Prisma.SubscriberScalarRelationFilter, Prisma.SubscriberWhereInput>
 }, "id">
 
 export type CommentsOrderByWithAggregationInput = {
@@ -249,7 +249,7 @@ export type CommentsCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   blog: Prisma.BlogCreateNestedOneWithoutCommentsInput
-  subscriber: Prisma.SubscriberCreateNestedOneWithoutCommentsInput
+  owner: Prisma.SubscriberCreateNestedOneWithoutCommentsInput
 }
 
 export type CommentsUncheckedCreateInput = {
@@ -267,7 +267,7 @@ export type CommentsUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   blog?: Prisma.BlogUpdateOneRequiredWithoutCommentsNestedInput
-  subscriber?: Prisma.SubscriberUpdateOneRequiredWithoutCommentsNestedInput
+  owner?: Prisma.SubscriberUpdateOneRequiredWithoutCommentsNestedInput
 }
 
 export type CommentsUncheckedUpdateInput = {
@@ -341,45 +341,45 @@ export type CommentsMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type CommentsCreateNestedManyWithoutSubscriberInput = {
-  create?: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput> | Prisma.CommentsCreateWithoutSubscriberInput[] | Prisma.CommentsUncheckedCreateWithoutSubscriberInput[]
-  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutSubscriberInput | Prisma.CommentsCreateOrConnectWithoutSubscriberInput[]
-  createMany?: Prisma.CommentsCreateManySubscriberInputEnvelope
+export type CommentsCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput> | Prisma.CommentsCreateWithoutOwnerInput[] | Prisma.CommentsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutOwnerInput | Prisma.CommentsCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.CommentsCreateManyOwnerInputEnvelope
   connect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
 }
 
-export type CommentsUncheckedCreateNestedManyWithoutSubscriberInput = {
-  create?: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput> | Prisma.CommentsCreateWithoutSubscriberInput[] | Prisma.CommentsUncheckedCreateWithoutSubscriberInput[]
-  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutSubscriberInput | Prisma.CommentsCreateOrConnectWithoutSubscriberInput[]
-  createMany?: Prisma.CommentsCreateManySubscriberInputEnvelope
+export type CommentsUncheckedCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput> | Prisma.CommentsCreateWithoutOwnerInput[] | Prisma.CommentsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutOwnerInput | Prisma.CommentsCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.CommentsCreateManyOwnerInputEnvelope
   connect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
 }
 
-export type CommentsUpdateManyWithoutSubscriberNestedInput = {
-  create?: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput> | Prisma.CommentsCreateWithoutSubscriberInput[] | Prisma.CommentsUncheckedCreateWithoutSubscriberInput[]
-  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutSubscriberInput | Prisma.CommentsCreateOrConnectWithoutSubscriberInput[]
-  upsert?: Prisma.CommentsUpsertWithWhereUniqueWithoutSubscriberInput | Prisma.CommentsUpsertWithWhereUniqueWithoutSubscriberInput[]
-  createMany?: Prisma.CommentsCreateManySubscriberInputEnvelope
+export type CommentsUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput> | Prisma.CommentsCreateWithoutOwnerInput[] | Prisma.CommentsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutOwnerInput | Prisma.CommentsCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.CommentsUpsertWithWhereUniqueWithoutOwnerInput | Prisma.CommentsUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.CommentsCreateManyOwnerInputEnvelope
   set?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   disconnect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   delete?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   connect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
-  update?: Prisma.CommentsUpdateWithWhereUniqueWithoutSubscriberInput | Prisma.CommentsUpdateWithWhereUniqueWithoutSubscriberInput[]
-  updateMany?: Prisma.CommentsUpdateManyWithWhereWithoutSubscriberInput | Prisma.CommentsUpdateManyWithWhereWithoutSubscriberInput[]
+  update?: Prisma.CommentsUpdateWithWhereUniqueWithoutOwnerInput | Prisma.CommentsUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.CommentsUpdateManyWithWhereWithoutOwnerInput | Prisma.CommentsUpdateManyWithWhereWithoutOwnerInput[]
   deleteMany?: Prisma.CommentsScalarWhereInput | Prisma.CommentsScalarWhereInput[]
 }
 
-export type CommentsUncheckedUpdateManyWithoutSubscriberNestedInput = {
-  create?: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput> | Prisma.CommentsCreateWithoutSubscriberInput[] | Prisma.CommentsUncheckedCreateWithoutSubscriberInput[]
-  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutSubscriberInput | Prisma.CommentsCreateOrConnectWithoutSubscriberInput[]
-  upsert?: Prisma.CommentsUpsertWithWhereUniqueWithoutSubscriberInput | Prisma.CommentsUpsertWithWhereUniqueWithoutSubscriberInput[]
-  createMany?: Prisma.CommentsCreateManySubscriberInputEnvelope
+export type CommentsUncheckedUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput> | Prisma.CommentsCreateWithoutOwnerInput[] | Prisma.CommentsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutOwnerInput | Prisma.CommentsCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.CommentsUpsertWithWhereUniqueWithoutOwnerInput | Prisma.CommentsUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.CommentsCreateManyOwnerInputEnvelope
   set?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   disconnect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   delete?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
   connect?: Prisma.CommentsWhereUniqueInput | Prisma.CommentsWhereUniqueInput[]
-  update?: Prisma.CommentsUpdateWithWhereUniqueWithoutSubscriberInput | Prisma.CommentsUpdateWithWhereUniqueWithoutSubscriberInput[]
-  updateMany?: Prisma.CommentsUpdateManyWithWhereWithoutSubscriberInput | Prisma.CommentsUpdateManyWithWhereWithoutSubscriberInput[]
+  update?: Prisma.CommentsUpdateWithWhereUniqueWithoutOwnerInput | Prisma.CommentsUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.CommentsUpdateManyWithWhereWithoutOwnerInput | Prisma.CommentsUpdateManyWithWhereWithoutOwnerInput[]
   deleteMany?: Prisma.CommentsScalarWhereInput | Prisma.CommentsScalarWhereInput[]
 }
 
@@ -425,7 +425,7 @@ export type CommentsUncheckedUpdateManyWithoutBlogNestedInput = {
   deleteMany?: Prisma.CommentsScalarWhereInput | Prisma.CommentsScalarWhereInput[]
 }
 
-export type CommentsCreateWithoutSubscriberInput = {
+export type CommentsCreateWithoutOwnerInput = {
   id?: string
   content: string
   createdAt?: Date | string
@@ -433,7 +433,7 @@ export type CommentsCreateWithoutSubscriberInput = {
   blog: Prisma.BlogCreateNestedOneWithoutCommentsInput
 }
 
-export type CommentsUncheckedCreateWithoutSubscriberInput = {
+export type CommentsUncheckedCreateWithoutOwnerInput = {
   id?: string
   content: string
   blogId: string
@@ -441,30 +441,30 @@ export type CommentsUncheckedCreateWithoutSubscriberInput = {
   updatedAt?: Date | string
 }
 
-export type CommentsCreateOrConnectWithoutSubscriberInput = {
+export type CommentsCreateOrConnectWithoutOwnerInput = {
   where: Prisma.CommentsWhereUniqueInput
-  create: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput>
+  create: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput>
 }
 
-export type CommentsCreateManySubscriberInputEnvelope = {
-  data: Prisma.CommentsCreateManySubscriberInput | Prisma.CommentsCreateManySubscriberInput[]
+export type CommentsCreateManyOwnerInputEnvelope = {
+  data: Prisma.CommentsCreateManyOwnerInput | Prisma.CommentsCreateManyOwnerInput[]
   skipDuplicates?: boolean
 }
 
-export type CommentsUpsertWithWhereUniqueWithoutSubscriberInput = {
+export type CommentsUpsertWithWhereUniqueWithoutOwnerInput = {
   where: Prisma.CommentsWhereUniqueInput
-  update: Prisma.XOR<Prisma.CommentsUpdateWithoutSubscriberInput, Prisma.CommentsUncheckedUpdateWithoutSubscriberInput>
-  create: Prisma.XOR<Prisma.CommentsCreateWithoutSubscriberInput, Prisma.CommentsUncheckedCreateWithoutSubscriberInput>
+  update: Prisma.XOR<Prisma.CommentsUpdateWithoutOwnerInput, Prisma.CommentsUncheckedUpdateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.CommentsCreateWithoutOwnerInput, Prisma.CommentsUncheckedCreateWithoutOwnerInput>
 }
 
-export type CommentsUpdateWithWhereUniqueWithoutSubscriberInput = {
+export type CommentsUpdateWithWhereUniqueWithoutOwnerInput = {
   where: Prisma.CommentsWhereUniqueInput
-  data: Prisma.XOR<Prisma.CommentsUpdateWithoutSubscriberInput, Prisma.CommentsUncheckedUpdateWithoutSubscriberInput>
+  data: Prisma.XOR<Prisma.CommentsUpdateWithoutOwnerInput, Prisma.CommentsUncheckedUpdateWithoutOwnerInput>
 }
 
-export type CommentsUpdateManyWithWhereWithoutSubscriberInput = {
+export type CommentsUpdateManyWithWhereWithoutOwnerInput = {
   where: Prisma.CommentsScalarWhereInput
-  data: Prisma.XOR<Prisma.CommentsUpdateManyMutationInput, Prisma.CommentsUncheckedUpdateManyWithoutSubscriberInput>
+  data: Prisma.XOR<Prisma.CommentsUpdateManyMutationInput, Prisma.CommentsUncheckedUpdateManyWithoutOwnerInput>
 }
 
 export type CommentsScalarWhereInput = {
@@ -484,7 +484,7 @@ export type CommentsCreateWithoutBlogInput = {
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  subscriber: Prisma.SubscriberCreateNestedOneWithoutCommentsInput
+  owner: Prisma.SubscriberCreateNestedOneWithoutCommentsInput
 }
 
 export type CommentsUncheckedCreateWithoutBlogInput = {
@@ -521,7 +521,7 @@ export type CommentsUpdateManyWithWhereWithoutBlogInput = {
   data: Prisma.XOR<Prisma.CommentsUpdateManyMutationInput, Prisma.CommentsUncheckedUpdateManyWithoutBlogInput>
 }
 
-export type CommentsCreateManySubscriberInput = {
+export type CommentsCreateManyOwnerInput = {
   id?: string
   content: string
   blogId: string
@@ -529,7 +529,7 @@ export type CommentsCreateManySubscriberInput = {
   updatedAt?: Date | string
 }
 
-export type CommentsUpdateWithoutSubscriberInput = {
+export type CommentsUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -537,7 +537,7 @@ export type CommentsUpdateWithoutSubscriberInput = {
   blog?: Prisma.BlogUpdateOneRequiredWithoutCommentsNestedInput
 }
 
-export type CommentsUncheckedUpdateWithoutSubscriberInput = {
+export type CommentsUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -545,7 +545,7 @@ export type CommentsUncheckedUpdateWithoutSubscriberInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CommentsUncheckedUpdateManyWithoutSubscriberInput = {
+export type CommentsUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   blogId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -566,7 +566,7 @@ export type CommentsUpdateWithoutBlogInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscriber?: Prisma.SubscriberUpdateOneRequiredWithoutCommentsNestedInput
+  owner?: Prisma.SubscriberUpdateOneRequiredWithoutCommentsNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutBlogInput = {
@@ -595,7 +595,7 @@ export type CommentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comments"]>
 
 export type CommentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -606,7 +606,7 @@ export type CommentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comments"]>
 
 export type CommentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -617,7 +617,7 @@ export type CommentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comments"]>
 
 export type CommentsSelectScalar = {
@@ -632,22 +632,22 @@ export type CommentsSelectScalar = {
 export type CommentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "blogId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["comments"]>
 export type CommentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }
 export type CommentsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }
 export type CommentsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   blog?: boolean | Prisma.BlogDefaultArgs<ExtArgs>
-  subscriber?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
+  owner?: boolean | Prisma.SubscriberDefaultArgs<ExtArgs>
 }
 
 export type $CommentsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Comments"
   objects: {
     blog: Prisma.$BlogPayload<ExtArgs>
-    subscriber: Prisma.$SubscriberPayload<ExtArgs>
+    owner: Prisma.$SubscriberPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1051,7 +1051,7 @@ readonly fields: CommentsFieldRefs;
 export interface Prisma__CommentsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   blog<T extends Prisma.BlogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BlogDefaultArgs<ExtArgs>>): Prisma.Prisma__BlogClient<runtime.Types.Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  subscriber<T extends Prisma.SubscriberDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriberDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriberClient<runtime.Types.Result.GetResult<Prisma.$SubscriberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  owner<T extends Prisma.SubscriberDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriberDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriberClient<runtime.Types.Result.GetResult<Prisma.$SubscriberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

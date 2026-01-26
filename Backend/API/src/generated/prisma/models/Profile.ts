@@ -237,7 +237,7 @@ export type ProfileCreateInput = {
   firstName: string
   lastName: string
   author: Prisma.AuthorCreateNestedOneWithoutProfileInput
-  blog?: Prisma.BlogCreateNestedManyWithoutProfileInput
+  blog?: Prisma.BlogCreateNestedManyWithoutAuthorInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -246,7 +246,7 @@ export type ProfileUncheckedCreateInput = {
   firstName: string
   lastName: string
   authorId: string
-  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutProfileInput
+  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type ProfileUpdateInput = {
@@ -255,7 +255,7 @@ export type ProfileUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   author?: Prisma.AuthorUpdateOneRequiredWithoutProfileNestedInput
-  blog?: Prisma.BlogUpdateManyWithoutProfileNestedInput
+  blog?: Prisma.BlogUpdateManyWithoutAuthorNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -264,7 +264,7 @@ export type ProfileUncheckedUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
-  blog?: Prisma.BlogUncheckedUpdateManyWithoutProfileNestedInput
+  blog?: Prisma.BlogUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -375,7 +375,7 @@ export type ProfileCreateWithoutAuthorInput = {
   username: string
   firstName: string
   lastName: string
-  blog?: Prisma.BlogCreateNestedManyWithoutProfileInput
+  blog?: Prisma.BlogCreateNestedManyWithoutAuthorInput
 }
 
 export type ProfileUncheckedCreateWithoutAuthorInput = {
@@ -383,7 +383,7 @@ export type ProfileUncheckedCreateWithoutAuthorInput = {
   username: string
   firstName: string
   lastName: string
-  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutProfileInput
+  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type ProfileCreateOrConnectWithoutAuthorInput = {
@@ -407,7 +407,7 @@ export type ProfileUpdateWithoutAuthorInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  blog?: Prisma.BlogUpdateManyWithoutProfileNestedInput
+  blog?: Prisma.BlogUpdateManyWithoutAuthorNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutAuthorInput = {
@@ -415,7 +415,7 @@ export type ProfileUncheckedUpdateWithoutAuthorInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  blog?: Prisma.BlogUncheckedUpdateManyWithoutProfileNestedInput
+  blog?: Prisma.BlogUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type ProfileCreateWithoutBlogInput = {
