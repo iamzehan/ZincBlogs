@@ -24,7 +24,15 @@ export const allBlogsGET = async (req: Request, res: Response) => {
         profile: {
           select: {username: true, firstName:true, lastName: true},
         },
-        comments: true,
+        comments: {
+          select: {
+            subscriber: {select: {username:true, firstName: true, lastName: true}},
+            content: true, createdAt:true, 
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
         tags: {
           select: {tag: true},
         },
@@ -32,6 +40,9 @@ export const allBlogsGET = async (req: Request, res: Response) => {
       omit: {
         authorId: true,
         updatedAt: true
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     });
 
@@ -52,7 +63,15 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
         profile: {
           select: {username: true, firstName:true, lastName: true},
         },
-        comments: true,
+        comments: {
+          select: {
+            subscriber: {select: { username:true, firstName: true, lastName: true}},
+            id:true, content: true, createdAt:true, 
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
         tags: {
           select: {tag: true}
         }
@@ -185,3 +204,42 @@ export const createBlogPOST = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Blog post failed!" });
   }
 };
+
+
+// ====================================== COMMENTS SECTION ==============================//
+
+// Create comment
+export const commentPOST = async (req: Request, res: Response) => {
+  try{
+    const id = parameterIDProcessor(req);
+  const {content} = req.body;
+  const comment = await prisma.comments.create({
+    data: {
+      blogId: id,
+      userId: req.userId || '',
+      content: content,
+    }
+  });
+  return res.status(201).json({message: "Your comment was sent!"});
+}catch(err){
+  return res.status(500).json({message: "Your comment was not sent!"})
+}
+}
+
+// Update comment
+export const commentPUT = async (req: Request, res: Response) => {
+  try{
+    const id = parameterIDProcessor(req);
+    const {commentId, content} = req.body;
+
+    await prisma.comments.update({
+      where: {id: commentId, blogId: id},
+      data: {
+        content: content
+      }
+    })
+    res.status(200).json({message: "Comment updated!"});
+  }catch(err){
+    res.status(500).json({message: "Comment update failed!"})
+  }
+}

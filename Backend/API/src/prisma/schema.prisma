@@ -65,7 +65,7 @@ model Blog {
 
   // Timestamps to look after post timings
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
   // Many to one relation with the author
   authorId String
@@ -88,7 +88,7 @@ model Comments {
   blog Blog @relation(fields: [blogId], references: [id])
   subscriber Subscriber @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([blogId])
   @@index([userId])

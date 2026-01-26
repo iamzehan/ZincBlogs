@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requireAuth, ensureAuthor } from "../middlewares/auth.middleware.js";
+import { requireAuth, ensureAuthor, ensureCommentOwner } from "../middlewares/auth.middleware.js";
 import * as controller from "../controllers/blog.controller.js";
 const routes = Router();
 
@@ -18,4 +18,9 @@ routes.delete("/posts/:id", requireAuth, ensureAuthor, controller.deleteBlogDELE
 // create a blog post
 routes.post("/create", requireAuth, ensureAuthor, controller.createBlogPOST);
 
+
+// ============================= COMMENTS SECTION ====================================//
+routes.post("/posts/:id/comment", requireAuth, controller.commentPOST);
+// update a comment
+routes.put("/posts/:id/comment", requireAuth, ensureCommentOwner, controller.commentPUT);
 export default routes;
