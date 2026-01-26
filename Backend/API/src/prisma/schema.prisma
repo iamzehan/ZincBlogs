@@ -42,6 +42,7 @@ model Profile {
   authorId String @unique
   author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
+  blog Blog[]
   @@index([id])
   @@index([authorId])
 }
@@ -56,7 +57,7 @@ model Blog {
   
   // Many to one relation with the author
   authorId String
-
+  profile Profile @relation(fields: [authorId], references: [authorId])
   // One to many relations
   tags TagsOnBlogs[]
   comments Comments[]

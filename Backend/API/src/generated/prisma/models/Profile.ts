@@ -183,6 +183,7 @@ export type ProfileWhereInput = {
   lastName?: Prisma.StringFilter<"Profile"> | string
   authorId?: Prisma.StringFilter<"Profile"> | string
   author?: Prisma.XOR<Prisma.AuthorScalarRelationFilter, Prisma.AuthorWhereInput>
+  blog?: Prisma.BlogListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -192,6 +193,7 @@ export type ProfileOrderByWithRelationInput = {
   lastName?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   author?: Prisma.AuthorOrderByWithRelationInput
+  blog?: Prisma.BlogOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -204,6 +206,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringFilter<"Profile"> | string
   lastName?: Prisma.StringFilter<"Profile"> | string
   author?: Prisma.XOR<Prisma.AuthorScalarRelationFilter, Prisma.AuthorWhereInput>
+  blog?: Prisma.BlogListRelationFilter
 }, "id" | "username" | "authorId">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -234,6 +237,7 @@ export type ProfileCreateInput = {
   firstName: string
   lastName: string
   author: Prisma.AuthorCreateNestedOneWithoutProfileInput
+  blog?: Prisma.BlogCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -242,6 +246,7 @@ export type ProfileUncheckedCreateInput = {
   firstName: string
   lastName: string
   authorId: string
+  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUpdateInput = {
@@ -250,6 +255,7 @@ export type ProfileUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   author?: Prisma.AuthorUpdateOneRequiredWithoutProfileNestedInput
+  blog?: Prisma.BlogUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -258,6 +264,7 @@ export type ProfileUncheckedUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  blog?: Prisma.BlogUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -312,6 +319,11 @@ export type ProfileMinOrderByAggregateInput = {
   authorId?: Prisma.SortOrder
 }
 
+export type ProfileScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput
+  isNot?: Prisma.ProfileWhereInput
+}
+
 export type ProfileCreateNestedOneWithoutAuthorInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutAuthorInput, Prisma.ProfileUncheckedCreateWithoutAuthorInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAuthorInput
@@ -344,11 +356,26 @@ export type ProfileUncheckedUpdateOneWithoutAuthorNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutAuthorInput, Prisma.ProfileUpdateWithoutAuthorInput>, Prisma.ProfileUncheckedUpdateWithoutAuthorInput>
 }
 
+export type ProfileCreateNestedOneWithoutBlogInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutBlogInput, Prisma.ProfileUncheckedCreateWithoutBlogInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutBlogInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutBlogNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutBlogInput, Prisma.ProfileUncheckedCreateWithoutBlogInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutBlogInput
+  upsert?: Prisma.ProfileUpsertWithoutBlogInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutBlogInput, Prisma.ProfileUpdateWithoutBlogInput>, Prisma.ProfileUncheckedUpdateWithoutBlogInput>
+}
+
 export type ProfileCreateWithoutAuthorInput = {
   id?: string
   username: string
   firstName: string
   lastName: string
+  blog?: Prisma.BlogCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutAuthorInput = {
@@ -356,6 +383,7 @@ export type ProfileUncheckedCreateWithoutAuthorInput = {
   username: string
   firstName: string
   lastName: string
+  blog?: Prisma.BlogUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutAuthorInput = {
@@ -379,6 +407,7 @@ export type ProfileUpdateWithoutAuthorInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  blog?: Prisma.BlogUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutAuthorInput = {
@@ -386,8 +415,86 @@ export type ProfileUncheckedUpdateWithoutAuthorInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  blog?: Prisma.BlogUncheckedUpdateManyWithoutProfileNestedInput
 }
 
+export type ProfileCreateWithoutBlogInput = {
+  id?: string
+  username: string
+  firstName: string
+  lastName: string
+  author: Prisma.AuthorCreateNestedOneWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutBlogInput = {
+  id?: string
+  username: string
+  firstName: string
+  lastName: string
+  authorId: string
+}
+
+export type ProfileCreateOrConnectWithoutBlogInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutBlogInput, Prisma.ProfileUncheckedCreateWithoutBlogInput>
+}
+
+export type ProfileUpsertWithoutBlogInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutBlogInput, Prisma.ProfileUncheckedUpdateWithoutBlogInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutBlogInput, Prisma.ProfileUncheckedCreateWithoutBlogInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutBlogInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutBlogInput, Prisma.ProfileUncheckedUpdateWithoutBlogInput>
+}
+
+export type ProfileUpdateWithoutBlogInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  author?: Prisma.AuthorUpdateOneRequiredWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutBlogInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type ProfileCountOutputType
+ */
+
+export type ProfileCountOutputType = {
+  blog: number
+}
+
+export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  blog?: boolean | ProfileCountOutputTypeCountBlogArgs
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCountOutputType
+   */
+  select?: Prisma.ProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountBlogArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BlogWhereInput
+}
 
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -397,6 +504,8 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   lastName?: boolean
   authorId?: boolean
   author?: boolean | Prisma.AuthorDefaultArgs<ExtArgs>
+  blog?: boolean | Prisma.Profile$blogArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -428,6 +537,8 @@ export type ProfileSelectScalar = {
 export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "firstName" | "lastName" | "authorId", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.AuthorDefaultArgs<ExtArgs>
+  blog?: boolean | Prisma.Profile$blogArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.AuthorDefaultArgs<ExtArgs>
@@ -440,6 +551,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Profile"
   objects: {
     author: Prisma.$AuthorPayload<ExtArgs>
+    blog: Prisma.$BlogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -842,6 +954,7 @@ readonly fields: ProfileFieldRefs;
 export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   author<T extends Prisma.AuthorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthorDefaultArgs<ExtArgs>>): Prisma.Prisma__AuthorClient<runtime.Types.Result.GetResult<Prisma.$AuthorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  blog<T extends Prisma.Profile$blogArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$blogArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1269,6 +1382,30 @@ export type ProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Profiles to delete.
    */
   limit?: number
+}
+
+/**
+ * Profile.blog
+ */
+export type Profile$blogArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Blog
+   */
+  select?: Prisma.BlogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Blog
+   */
+  omit?: Prisma.BlogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null
+  where?: Prisma.BlogWhereInput
+  orderBy?: Prisma.BlogOrderByWithRelationInput | Prisma.BlogOrderByWithRelationInput[]
+  cursor?: Prisma.BlogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BlogScalarFieldEnum | Prisma.BlogScalarFieldEnum[]
 }
 
 /**
