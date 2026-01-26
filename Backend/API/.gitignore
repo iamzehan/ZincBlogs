@@ -3,6 +3,5 @@ dist
 .env
 coverage
 
-/generated/prisma
-
-/generated/prisma
+./src/generated
+./src/prisma/migrations

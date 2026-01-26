@@ -45,7 +45,42 @@ export { Prisma }
  */
 export type Session = Prisma.SessionModel
 /**
- * Model User
+ * Model Author
  * 
  */
-export type User = Prisma.UserModel
+export type Author = Prisma.AuthorModel
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel
+/**
+ * Model Subscriber
+ * 
+ */
+export type Subscriber = Prisma.SubscriberModel
+/**
+ * Model Blog
+ * 
+ */
+export type Blog = Prisma.BlogModel
+/**
+ * Model Comments
+ * 
+ */
+export type Comments = Prisma.CommentsModel
+/**
+ * Model Tags
+ * 
+ */
+export type Tags = Prisma.TagsModel
+/**
+ * Model TagsOnBlogs
+ * 
+ */
+export type TagsOnBlogs = Prisma.TagsOnBlogsModel
+/**
+ * Model BlogTitles
+ * 
+ */
+export type BlogTitles = Prisma.BlogTitlesModel

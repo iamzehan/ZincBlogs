@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
+import { prisma } from "../config/prisma.js";
+import { parameterIDProcessor } from "../utils/processors.js";
 
 export const requireAuth = (
   req: Request,
@@ -36,3 +38,32 @@ export const ensureGuest = (req: Request, res: Response, next: NextFunction) => 
     next(); // Invalid token → treat as guest
   }
 };
+
+export const ensureAuthor = async (req: Request, res:Response, next: NextFunction) => {
+  const isAuthor = await prisma.author.findFirst({
+    where: {
+      id: req.userId
+    }
+  });
+  if(isAuthor){
+    return next();
+  }
+  else{
+    return res.status(403).json({message: "Forbidden!"})
+  }
+}
+
+// Check if the comment is owned by the user before making destructive changes
+export const ensureCommentOwner = async (req:Request, res:Response, next: NextFunction)=> {
+  const id = parameterIDProcessor(req);
+  const isOwner = await prisma.comments.findFirst({
+    where: {
+      blogId: id,
+      userId: req.userId
+    }
+  });
+  if (isOwner) {
+    return next();
+  }
+  else return res.status(403).json({message: "Forbidden!"});
+}

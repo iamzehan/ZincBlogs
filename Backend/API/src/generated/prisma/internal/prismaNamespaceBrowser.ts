@@ -52,7 +52,14 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Session: 'Session',
-  User: 'User'
+  Author: 'Author',
+  Profile: 'Profile',
+  Subscriber: 'Subscriber',
+  Blog: 'Blog',
+  Comments: 'Comments',
+  Tags: 'Tags',
+  TagsOnBlogs: 'TagsOnBlogs',
+  BlogTitles: 'BlogTitles'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,7 +88,7 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
-export const UserScalarFieldEnum = {
+export const AuthorScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
@@ -89,7 +96,80 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
+
+
+export const ProfileScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  authorId: 'authorId'
+} as const
+
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const SubscriberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  username: 'username',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriberScalarFieldEnum = (typeof SubscriberScalarFieldEnum)[keyof typeof SubscriberScalarFieldEnum]
+
+
+export const BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  authorId: 'authorId'
+} as const
+
+export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
+
+
+export const CommentsScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  blogId: 'blogId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommentsScalarFieldEnum = (typeof CommentsScalarFieldEnum)[keyof typeof CommentsScalarFieldEnum]
+
+
+export const TagsScalarFieldEnum = {
+  id: 'id',
+  tag: 'tag'
+} as const
+
+export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof TagsScalarFieldEnum]
+
+
+export const TagsOnBlogsScalarFieldEnum = {
+  tagId: 'tagId',
+  blogId: 'blogId'
+} as const
+
+export type TagsOnBlogsScalarFieldEnum = (typeof TagsOnBlogsScalarFieldEnum)[keyof typeof TagsOnBlogsScalarFieldEnum]
+
+
+export const BlogTitlesScalarFieldEnum = {
+  id: 'id',
+  title: 'title'
+} as const
+
+export type BlogTitlesScalarFieldEnum = (typeof BlogTitlesScalarFieldEnum)[keyof typeof BlogTitlesScalarFieldEnum]
 
 
 export const SortOrder = {

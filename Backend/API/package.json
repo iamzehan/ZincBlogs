@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "test": "jest",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "create-views" : "tsx ./src/utils/views.ts"
   },
   "keywords": [],
   "author": "",

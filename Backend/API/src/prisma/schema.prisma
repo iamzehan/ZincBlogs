@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -21,10 +22,102 @@ model Session {
   expiresAt DateTime
 }
 
-model User {
+model Author {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  profile Profile?
+}
+model Profile {
+  id String @id @default(uuid())
+  username String @unique
+  firstName String
+  lastName String
+
+  // One to one relationship with the author
+  authorId String @unique
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  blog Blog[]
+  @@index([id])
+  @@index([authorId])
+}
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  username  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments Comments[]
+}
+model Blog {
+  id String @id @default(uuid())
+  title String
+  content String
+
+  // Timestamps to look after post timings
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Many to one relation with the author
+  authorId String
+  author Profile @relation(fields: [authorId], references: [authorId])
+  // One to many relations
+  tags TagsOnBlogs[]
+  comments Comments[]
+
+  // indexing the author and the blog id
+  @@index([id])
+  @@index([authorId])
+}
+
+// One blog can have many comments
+model Comments {
+  id String @id @default(uuid())
+  content String
+  blogId String
+  userId String
+  blog Blog @relation(fields: [blogId], references: [id])
+  owner Subscriber @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([blogId])
+  @@index([userId])
+}
+
+// One blog can have many tags
+model Tags {
+  id String @id @default(uuid())
+  tag String @unique
+  // but one tag can also belong to many blogs
+  blog TagsOnBlogs[]
+}
+
+// Relation table for tags belonging to a blog
+model TagsOnBlogs {
+  tagId String
+  blogId String
+  
+  // tags and blogs when deleted the entry will be deleted as well
+  tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@id([tagId, blogId])       // composite primary key
+  @@index([blogId])
+  @@index([tagId])
+}
+
+// The following view is created so it's easier to use blog titles on the side navigation
+view BlogTitles{
+  id String @unique
+  title String
 }
