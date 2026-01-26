@@ -1,6 +1,6 @@
 import { prisma } from "../config/prisma.js";
 import { Request, Response } from "express";
-import { Blog, BlogTitles } from "../generated/prisma/client.js";
+import { Blog, BlogTitles, Subscriber } from "../generated/prisma/client.js";
 import { parameterIDProcessor, tagParser } from "../utils/processors.js";
 
 // =================================== GET ALL BLOGS TITLE ==============================================//
@@ -21,12 +21,12 @@ export const allBlogsGET = async (req: Request, res: Response) => {
   try {
     const blogs = await prisma.blog.findMany({
       include: {
-        profile: {
+        author: {
           select: {username: true, firstName:true, lastName: true},
         },
         comments: {
           select: {
-            subscriber: {select: {username:true, firstName: true, lastName: true}},
+            owner: {select: {username:true, firstName: true, lastName: true}},
             content: true, createdAt:true, 
           },
           orderBy: {
@@ -60,12 +60,12 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
     const id = parameterIDProcessor(req);
     const blog= await prisma.blog.findFirst({
       include: {
-        profile: {
+        author: {
           select: {username: true, firstName:true, lastName: true},
         },
         comments: {
           select: {
-            subscriber: {select: { username:true, firstName: true, lastName: true}},
+            owner: {select: { username:true, firstName: true, lastName: true}},
             id:true, content: true, createdAt:true, 
           },
           orderBy: {
@@ -84,7 +84,15 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
         updatedAt: true
       }
     });
-    res.status(200).json(blog);
+
+    const formattedBlog = {
+      ...blog,
+      tags: blog?.tags.map(t=> ({
+        id: t.tag.id,
+        tag: t.tag.tag
+      })) 
+    }
+    res.status(200).json(formattedBlog);
 
   } catch (err) {
     console.error(err);
