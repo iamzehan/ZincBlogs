@@ -1141,10 +1141,9 @@ export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof Blog
 
 export const CommentsScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  email: 'email',
   content: 'content',
   blogId: 'blogId',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
