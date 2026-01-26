@@ -388,6 +388,8 @@ export const ModelName = {
   Author: 'Author',
   Profile: 'Profile',
   Subscriber: 'Subscriber',
+  PendingUser: 'PendingUser',
+  EmailToken: 'EmailToken',
   Blog: 'Blog',
   Comments: 'Comments',
   Tags: 'Tags',
@@ -408,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "author" | "profile" | "subscriber" | "blog" | "comments" | "tags" | "tagsOnBlogs" | "blogTitles"
+    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "comments" | "tags" | "tagsOnBlogs" | "blogTitles"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,6 +707,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SubscriberCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SubscriberCountAggregateOutputType> | number
+        }
+      }
+    }
+    PendingUser: {
+      payload: Prisma.$PendingUserPayload<ExtArgs>
+      fields: Prisma.PendingUserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PendingUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PendingUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        findFirst: {
+          args: Prisma.PendingUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PendingUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        findMany: {
+          args: Prisma.PendingUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>[]
+        }
+        create: {
+          args: Prisma.PendingUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        createMany: {
+          args: Prisma.PendingUserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PendingUserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>[]
+        }
+        delete: {
+          args: Prisma.PendingUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        update: {
+          args: Prisma.PendingUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        deleteMany: {
+          args: Prisma.PendingUserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PendingUserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PendingUserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>[]
+        }
+        upsert: {
+          args: Prisma.PendingUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingUserPayload>
+        }
+        aggregate: {
+          args: Prisma.PendingUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePendingUser>
+        }
+        groupBy: {
+          args: Prisma.PendingUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PendingUserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PendingUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PendingUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    EmailToken: {
+      payload: Prisma.$EmailTokenPayload<ExtArgs>
+      fields: Prisma.EmailTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmailTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmailTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.EmailTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmailTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        findMany: {
+          args: Prisma.EmailTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>[]
+        }
+        create: {
+          args: Prisma.EmailTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        createMany: {
+          args: Prisma.EmailTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmailTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.EmailTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        update: {
+          args: Prisma.EmailTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmailTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmailTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmailTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.EmailTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.EmailTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmailToken>
+        }
+        groupBy: {
+          args: Prisma.EmailTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmailTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -1120,11 +1270,35 @@ export const SubscriberScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   username: 'username',
+  isVarified: 'isVarified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SubscriberScalarFieldEnum = (typeof SubscriberScalarFieldEnum)[keyof typeof SubscriberScalarFieldEnum]
+
+
+export const PendingUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  username: 'username',
+  createdAt: 'createdAt'
+} as const
+
+export type PendingUserScalarFieldEnum = (typeof PendingUserScalarFieldEnum)[keyof typeof PendingUserScalarFieldEnum]
+
+
+export const EmailTokenScalarFieldEnum = {
+  id: 'id',
+  pendingId: 'pendingId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt'
+} as const
+
+export type EmailTokenScalarFieldEnum = (typeof EmailTokenScalarFieldEnum)[keyof typeof EmailTokenScalarFieldEnum]
 
 
 export const BlogScalarFieldEnum = {
@@ -1222,6 +1396,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1337,6 +1518,8 @@ export type GlobalOmitConfig = {
   author?: Prisma.AuthorOmit
   profile?: Prisma.ProfileOmit
   subscriber?: Prisma.SubscriberOmit
+  pendingUser?: Prisma.PendingUserOmit
+  emailToken?: Prisma.EmailTokenOmit
   blog?: Prisma.BlogOmit
   comments?: Prisma.CommentsOmit
   tags?: Prisma.TagsOmit

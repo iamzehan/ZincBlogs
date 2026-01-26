@@ -60,6 +60,16 @@ export type Profile = Prisma.ProfileModel
  */
 export type Subscriber = Prisma.SubscriberModel
 /**
+ * Model PendingUser
+ * 
+ */
+export type PendingUser = Prisma.PendingUserModel
+/**
+ * Model EmailToken
+ * 
+ */
+export type EmailToken = Prisma.EmailTokenModel
+/**
  * Model Blog
  * 
  */
