@@ -13,7 +13,7 @@
     "test": "jest",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "create-views" : "tsx ./src/utils/views.ts"
+    "create-views": "tsx ./src/utils/views.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,8 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/morgan": "^1.9.10",
+    "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^7.0.5",
     "@types/pg": "^8.16.0",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
@@ -36,6 +38,7 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
+    "nodemailer": "^7.0.12",
     "pg": "^8.17.2",
     "winston": "^3.19.0",
     "zod": "^4.3.5"
