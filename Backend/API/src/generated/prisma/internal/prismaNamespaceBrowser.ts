@@ -54,6 +54,7 @@ export const ModelName = {
   Session: 'Session',
   Author: 'Author',
   Profile: 'Profile',
+  Subscriber: 'Subscriber',
   Blog: 'Blog',
   Comments: 'Comments',
   Tags: 'Tags',
@@ -107,6 +108,20 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const SubscriberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  username: 'username',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriberScalarFieldEnum = (typeof SubscriberScalarFieldEnum)[keyof typeof SubscriberScalarFieldEnum]
 
 
 export const BlogScalarFieldEnum = {

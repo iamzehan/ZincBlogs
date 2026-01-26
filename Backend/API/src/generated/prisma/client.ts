@@ -55,6 +55,11 @@ export type Author = Prisma.AuthorModel
  */
 export type Profile = Prisma.ProfileModel
 /**
+ * Model Subscriber
+ * 
+ */
+export type Subscriber = Prisma.SubscriberModel
+/**
  * Model Blog
  * 
  */

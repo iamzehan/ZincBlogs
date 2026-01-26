@@ -31,7 +31,6 @@ model Author {
 
   profile Profile?
 }
-
 model Profile {
   id String @id @default(uuid())
   username String @unique
@@ -45,6 +44,19 @@ model Profile {
   blog Blog[]
   @@index([id])
   @@index([authorId])
+}
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  username  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments Comments[]
 }
 model Blog {
   id String @id @default(uuid())
@@ -70,15 +82,16 @@ model Blog {
 // One blog can have many comments
 model Comments {
   id String @id @default(uuid())
-  username String @unique
-  email String @unique
   content String
   blogId String
+  userId String
   blog Blog @relation(fields: [blogId], references: [id])
+  subscriber Subscriber @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
   @@index([blogId])
+  @@index([userId])
 }
 
 // One blog can have many tags
