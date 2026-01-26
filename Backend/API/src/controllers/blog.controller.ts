@@ -19,16 +19,22 @@ export const allBlogsTitleGET = async (req: Request, res: Response) => {
 
 export const allBlogsGET = async (req: Request, res: Response) => {
   try {
-    const blogs: Blog[] | [] = await prisma.blog.findMany({
+    const blogs = await prisma.blog.findMany({
       include: {
+        profile: {
+          select: {username: true, firstName:true, lastName: true},
+        },
         comments: true,
         tags: {
-          include: {
-            tag: true
-          }
-        }
+          select: {tag: true},
+        },
+      },
+      omit: {
+        authorId: true,
+        updatedAt: true
       }
     });
+
     res.status(200).json(blogs);
   } catch (err) {
     console.error(err);
@@ -41,27 +47,25 @@ export const allBlogsGET = async (req: Request, res: Response) => {
 export const findOneBlogGET = async (req: Request, res: Response) => {
   try {
     const id = parameterIDProcessor(req);
-    const blog: Blog | null = await prisma.blog.findFirst({
+    const blog= await prisma.blog.findFirst({
       include: {
+        profile: {
+          select: {username: true, firstName:true, lastName: true},
+        },
         comments: true,
         tags: {
-          include: {
-            tag: true
-          }
+          select: {tag: true}
         }
       },
       where: {
         id: id
+      },
+      omit: {
+        authorId: true,
+        updatedAt: true
       }
     });
-    // get profile
-    const profile = await prisma.profile.findFirst({
-      where: {
-        authorId: blog?.authorId
-      }
-    });
-
-    res.status(200).json({...blog, authorInfo: profile});
+    res.status(200).json(blog);
 
   } catch (err) {
     console.error(err);
