@@ -1,7 +1,8 @@
 import { prisma } from "../config/prisma.js";
-import { NextFunction, Request, RequestParamHandler, Response } from "express";
+import { Request, Response } from "express";
 import { Blog, BlogTitles } from "../generated/prisma/client.js";
 import { parameterIDProcessor, tagParser } from "../utils/processors.js";
+
 // =================================== GET ALL BLOGS TITLE ==============================================//
 
 export const allBlogsTitleGET = async (req: Request, res: Response) => {
@@ -53,7 +54,15 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
         id: id
       }
     });
-    res.status(200).json(blog);
+    // get profile
+    const profile = await prisma.profile.findFirst({
+      where: {
+        authorId: blog?.authorId
+      }
+    });
+
+    res.status(200).json({...blog, authorInfo: profile});
+
   } catch (err) {
     console.error(err);
     res.status(404).json({ message: "Could not find blog details" });
@@ -128,6 +137,7 @@ export const deleteBlogDELETE = async (req:Request, res: Response) => {
 export const createBlogPOST = async (req: Request, res: Response) => {
   try {
     const { title, content, tags } = req.body;
+    const userId = req.userId; // get the currently logged in user
     const parsedTags = tagParser(tags);
 
     const result = await prisma.$transaction(async (prismaTx) => {
@@ -147,7 +157,8 @@ export const createBlogPOST = async (req: Request, res: Response) => {
       const blog = await prismaTx.blog.create({
         data: {
           title,
-          content
+          content,
+          authorId: userId || ''
         }
       });
 
