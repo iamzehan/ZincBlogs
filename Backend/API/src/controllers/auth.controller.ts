@@ -6,7 +6,7 @@ import { signAccessToken, signRefreshToken } from "../utils/jwt.js";
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try{
-  const user = await prisma.user.create({
+  const user = await prisma.author.create({
     data: {
       email,
       password: await hashPassword(password)
@@ -21,7 +21,7 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.author.findUnique({ where: { email } });
   if (!user || !(await comparePassword(password, user.password))) {
     return res.status(401).json({ message: "Invalid credentials" });
   }

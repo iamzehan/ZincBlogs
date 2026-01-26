@@ -22,14 +22,29 @@ model Session {
   expiresAt DateTime
 }
 
-model User {
+model Author {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  profile Profile?
 }
 
+model Profile {
+  id String @id @default(uuid())
+  username String @unique
+  firstName String
+  lastName String
+
+  // One to one relationship with the author
+  authorId String @unique
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([id])
+  @@index([authorId])
+}
 model Blog {
   id String @id @default(uuid())
   title String
@@ -39,10 +54,16 @@ model Blog {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   
+  // Many to one relation with the author
+  authorId String
+
   // One to many relations
   tags TagsOnBlogs[]
   comments Comments[]
+
+  // indexing the author and the blog id
   @@index([id])
+  @@index([authorId])
 }
 
 // One blog can have many comments
