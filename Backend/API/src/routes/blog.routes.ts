@@ -20,6 +20,7 @@ routes.post("/create", requireAuth, ensureAuthor, controller.createBlogPOST);
 
 
 // ============================= COMMENTS SECTION ====================================//
+// post a comment
 routes.post("/posts/:id/comment", requireAuth, controller.commentPOST);
 // update a comment
 routes.put("/posts/:id/comment", requireAuth, ensureCommentOwner, controller.commentPUT);
