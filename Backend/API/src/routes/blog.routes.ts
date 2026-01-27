@@ -6,15 +6,18 @@ const routes = Router();
 // get all blog titles (useful for sidebar navigation)
 routes.get("/titles", controller.allBlogsTitleGET)
 
+// get all published blog posts
+routes.get("/posts/published", controller.allPublishedBlogsGET);
 // get all blog posts
-routes.get("/posts", controller.allBlogsGET);
+routes.get("/posts", requireAuth, ensureAuthor, controller.allBlogsGET)
 // get one blog
 routes.get("/posts/:id", controller.findOneBlogGET);
 // update a blog post
 routes.put("/posts/:id", requireAuth, ensureAuthor, controller.updateOneBlogPUT);
 // delete a blog post
 routes.delete("/posts/:id", requireAuth, ensureAuthor, controller.deleteBlogDELETE);
-
+// publish a blog post
+routes.put("/posts/:id/publish", requireAuth, ensureAuthor, controller.publishBlogPUT);
 // create a blog post
 routes.post("/create", requireAuth, ensureAuthor, controller.createBlogPOST);
 

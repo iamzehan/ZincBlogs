@@ -96,12 +96,20 @@ model Blog {
   // One to many relations
   tags TagsOnBlogs[]
   comments Comments[]
+  publish PublishBlog?
 
   // indexing the author and the blog id
   @@index([id])
   @@index([authorId])
 }
 
+model PublishBlog {
+  id String @id @default(uuid())
+  blogId String @unique
+  status Boolean @default(false)
+  
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+}
 // One blog can have many comments
 model Comments {
   id String @id @default(uuid())

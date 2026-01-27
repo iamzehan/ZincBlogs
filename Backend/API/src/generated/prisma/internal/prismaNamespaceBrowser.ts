@@ -58,6 +58,7 @@ export const ModelName = {
   PendingUser: 'PendingUser',
   EmailToken: 'EmailToken',
   Blog: 'Blog',
+  PublishBlog: 'PublishBlog',
   Comments: 'Comments',
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
@@ -160,6 +161,15 @@ export const BlogScalarFieldEnum = {
 } as const
 
 export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
+
+
+export const PublishBlogScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  status: 'status'
+} as const
+
+export type PublishBlogScalarFieldEnum = (typeof PublishBlogScalarFieldEnum)[keyof typeof PublishBlogScalarFieldEnum]
 
 
 export const CommentsScalarFieldEnum = {

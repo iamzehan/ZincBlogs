@@ -391,6 +391,7 @@ export const ModelName = {
   PendingUser: 'PendingUser',
   EmailToken: 'EmailToken',
   Blog: 'Blog',
+  PublishBlog: 'PublishBlog',
   Comments: 'Comments',
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "comments" | "tags" | "tagsOnBlogs" | "blogTitles"
+    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "publishBlog" | "comments" | "tags" | "tagsOnBlogs" | "blogTitles"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -932,6 +933,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PublishBlog: {
+      payload: Prisma.$PublishBlogPayload<ExtArgs>
+      fields: Prisma.PublishBlogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PublishBlogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PublishBlogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        findFirst: {
+          args: Prisma.PublishBlogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PublishBlogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        findMany: {
+          args: Prisma.PublishBlogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>[]
+        }
+        create: {
+          args: Prisma.PublishBlogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        createMany: {
+          args: Prisma.PublishBlogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PublishBlogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>[]
+        }
+        delete: {
+          args: Prisma.PublishBlogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        update: {
+          args: Prisma.PublishBlogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        deleteMany: {
+          args: Prisma.PublishBlogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PublishBlogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PublishBlogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>[]
+        }
+        upsert: {
+          args: Prisma.PublishBlogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PublishBlogPayload>
+        }
+        aggregate: {
+          args: Prisma.PublishBlogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePublishBlog>
+        }
+        groupBy: {
+          args: Prisma.PublishBlogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PublishBlogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PublishBlogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PublishBlogCountAggregateOutputType> | number
+        }
+      }
+    }
     Comments: {
       payload: Prisma.$CommentsPayload<ExtArgs>
       fields: Prisma.CommentsFieldRefs
@@ -1313,6 +1388,15 @@ export const BlogScalarFieldEnum = {
 export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
 
 
+export const PublishBlogScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  status: 'status'
+} as const
+
+export type PublishBlogScalarFieldEnum = (typeof PublishBlogScalarFieldEnum)[keyof typeof PublishBlogScalarFieldEnum]
+
+
 export const CommentsScalarFieldEnum = {
   id: 'id',
   content: 'content',
@@ -1521,6 +1605,7 @@ export type GlobalOmitConfig = {
   pendingUser?: Prisma.PendingUserOmit
   emailToken?: Prisma.EmailTokenOmit
   blog?: Prisma.BlogOmit
+  publishBlog?: Prisma.PublishBlogOmit
   comments?: Prisma.CommentsOmit
   tags?: Prisma.TagsOmit
   tagsOnBlogs?: Prisma.TagsOnBlogsOmit
