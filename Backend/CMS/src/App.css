@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+#root {
+  max-width: 1280;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+body {
+  @apply bg-zinc-700 w-screen;
+}
