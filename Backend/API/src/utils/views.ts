@@ -1,6 +1,5 @@
 import { Client } from "pg";
 import { env } from "../config/env.js";
-import console from "node:console";
 
 const client = new Client({
   connectionString: env.DATABASE_URL
@@ -15,8 +14,11 @@ const createBlogTitleView = async () => {
     const SQL = `
     DROP VIEW IF EXISTS "BlogTitles";
     CREATE VIEW "BlogTitles" AS
-    SELECT id, title, "createdAt"
-    FROM "Blog"
+    SELECT b.id, b.title, b."createdAt", p.status
+    FROM "Blog" AS b
+    LEFT JOIN "PublishBlog" as p
+    ON p."blogId" = b.id
+    WHERE p.status = true
     `;
     await client.query(SQL);
     console.log("BlogTitles view created!")
