@@ -7,6 +7,9 @@ import routes from "./routes/index.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import { sessionMiddleware } from "./config/session.js";
 
+// cron jobs
+import './jobs/index.js';
+
 const app = express();
 
 app.use(express.json());
