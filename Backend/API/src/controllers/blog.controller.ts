@@ -36,10 +36,17 @@ export const allBlogsGET = async (req: Request, res: Response) => {
         tags: {
           select: {tag: true},
         },
+        publish: true
       },
       omit: {
         authorId: true,
         updatedAt: true
+      },
+      // Only get the published blogs
+      where: {
+        publish: {
+          status: true
+        }
       },
       orderBy: {
         createdAt: 'desc'
@@ -144,6 +151,27 @@ export const updateOneBlogPUT = async (req: Request, res: Response) => {
   }
 };
 
+// =================================== PUBLISH/UNPUBLISH A BLOG ==============================================//
+export const publishBlogPUT = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+    const {status} = req.query;
+
+    if(status) {
+      await prisma.publishBlog.update({
+        data: {
+          status: status==='true'? true: false 
+        },
+        where: {blogId: id}
+      })
+    }
+    res.status(200).json({message: "Blog published!"});
+  } catch(err){
+    console.log(err);
+    res.status(500).json({message: "Could not Publish blog, something went wrong"})
+  }
+}
+
 // =================================== DELETE A BLOG ==============================================//
 
 export const deleteBlogDELETE = async (req:Request, res: Response) => {
@@ -203,6 +231,13 @@ export const createBlogPOST = async (req: Request, res: Response) => {
         data: tagsOnBlogsData,
         skipDuplicates: true
       });
+
+      // publication status defaults to false
+      await prismaTx.publishBlog.create({
+        data: {
+          blogId: blog.id
+        }
+      })
 
       return blog;
     });

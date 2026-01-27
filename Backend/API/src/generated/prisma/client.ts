@@ -75,6 +75,11 @@ export type EmailToken = Prisma.EmailTokenModel
  */
 export type Blog = Prisma.BlogModel
 /**
+ * Model PublishBlog
+ * 
+ */
+export type PublishBlog = Prisma.PublishBlogModel
+/**
  * Model Comments
  * 
  */

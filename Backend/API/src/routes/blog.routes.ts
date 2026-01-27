@@ -14,7 +14,8 @@ routes.get("/posts/:id", controller.findOneBlogGET);
 routes.put("/posts/:id", requireAuth, ensureAuthor, controller.updateOneBlogPUT);
 // delete a blog post
 routes.delete("/posts/:id", requireAuth, ensureAuthor, controller.deleteBlogDELETE);
-
+// publish a blog post
+routes.put("/posts/:id/publish", requireAuth, ensureAuthor, controller.publishBlogPUT);
 // create a blog post
 routes.post("/create", requireAuth, ensureAuthor, controller.createBlogPOST);
 

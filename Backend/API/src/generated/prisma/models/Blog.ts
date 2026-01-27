@@ -193,6 +193,7 @@ export type BlogWhereInput = {
   author?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   tags?: Prisma.TagsOnBlogsListRelationFilter
   comments?: Prisma.CommentsListRelationFilter
+  publish?: Prisma.XOR<Prisma.PublishBlogNullableScalarRelationFilter, Prisma.PublishBlogWhereInput> | null
 }
 
 export type BlogOrderByWithRelationInput = {
@@ -205,6 +206,7 @@ export type BlogOrderByWithRelationInput = {
   author?: Prisma.ProfileOrderByWithRelationInput
   tags?: Prisma.TagsOnBlogsOrderByRelationAggregateInput
   comments?: Prisma.CommentsOrderByRelationAggregateInput
+  publish?: Prisma.PublishBlogOrderByWithRelationInput
 }
 
 export type BlogWhereUniqueInput = Prisma.AtLeast<{
@@ -220,6 +222,7 @@ export type BlogWhereUniqueInput = Prisma.AtLeast<{
   author?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   tags?: Prisma.TagsOnBlogsListRelationFilter
   comments?: Prisma.CommentsListRelationFilter
+  publish?: Prisma.XOR<Prisma.PublishBlogNullableScalarRelationFilter, Prisma.PublishBlogWhereInput> | null
 }, "id">
 
 export type BlogOrderByWithAggregationInput = {
@@ -255,6 +258,7 @@ export type BlogCreateInput = {
   author: Prisma.ProfileCreateNestedOneWithoutBlogInput
   tags?: Prisma.TagsOnBlogsCreateNestedManyWithoutBlogInput
   comments?: Prisma.CommentsCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogCreateNestedOneWithoutBlogInput
 }
 
 export type BlogUncheckedCreateInput = {
@@ -266,6 +270,7 @@ export type BlogUncheckedCreateInput = {
   authorId: string
   tags?: Prisma.TagsOnBlogsUncheckedCreateNestedManyWithoutBlogInput
   comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogUncheckedCreateNestedOneWithoutBlogInput
 }
 
 export type BlogUpdateInput = {
@@ -277,6 +282,7 @@ export type BlogUpdateInput = {
   author?: Prisma.ProfileUpdateOneRequiredWithoutBlogNestedInput
   tags?: Prisma.TagsOnBlogsUpdateManyWithoutBlogNestedInput
   comments?: Prisma.CommentsUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogUncheckedUpdateInput = {
@@ -288,6 +294,7 @@ export type BlogUncheckedUpdateInput = {
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagsOnBlogsUncheckedUpdateManyWithoutBlogNestedInput
   comments?: Prisma.CommentsUncheckedUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUncheckedUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogCreateManyInput = {
@@ -400,6 +407,20 @@ export type BlogUncheckedUpdateManyWithoutAuthorNestedInput = {
   deleteMany?: Prisma.BlogScalarWhereInput | Prisma.BlogScalarWhereInput[]
 }
 
+export type BlogCreateNestedOneWithoutPublishInput = {
+  create?: Prisma.XOR<Prisma.BlogCreateWithoutPublishInput, Prisma.BlogUncheckedCreateWithoutPublishInput>
+  connectOrCreate?: Prisma.BlogCreateOrConnectWithoutPublishInput
+  connect?: Prisma.BlogWhereUniqueInput
+}
+
+export type BlogUpdateOneRequiredWithoutPublishNestedInput = {
+  create?: Prisma.XOR<Prisma.BlogCreateWithoutPublishInput, Prisma.BlogUncheckedCreateWithoutPublishInput>
+  connectOrCreate?: Prisma.BlogCreateOrConnectWithoutPublishInput
+  upsert?: Prisma.BlogUpsertWithoutPublishInput
+  connect?: Prisma.BlogWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BlogUpdateToOneWithWhereWithoutPublishInput, Prisma.BlogUpdateWithoutPublishInput>, Prisma.BlogUncheckedUpdateWithoutPublishInput>
+}
+
 export type BlogCreateNestedOneWithoutCommentsInput = {
   create?: Prisma.XOR<Prisma.BlogCreateWithoutCommentsInput, Prisma.BlogUncheckedCreateWithoutCommentsInput>
   connectOrCreate?: Prisma.BlogCreateOrConnectWithoutCommentsInput
@@ -436,6 +457,7 @@ export type BlogCreateWithoutAuthorInput = {
   updatedAt?: Date | string
   tags?: Prisma.TagsOnBlogsCreateNestedManyWithoutBlogInput
   comments?: Prisma.CommentsCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogCreateNestedOneWithoutBlogInput
 }
 
 export type BlogUncheckedCreateWithoutAuthorInput = {
@@ -446,6 +468,7 @@ export type BlogUncheckedCreateWithoutAuthorInput = {
   updatedAt?: Date | string
   tags?: Prisma.TagsOnBlogsUncheckedCreateNestedManyWithoutBlogInput
   comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogUncheckedCreateNestedOneWithoutBlogInput
 }
 
 export type BlogCreateOrConnectWithoutAuthorInput = {
@@ -486,6 +509,66 @@ export type BlogScalarWhereInput = {
   authorId?: Prisma.StringFilter<"Blog"> | string
 }
 
+export type BlogCreateWithoutPublishInput = {
+  id?: string
+  title: string
+  content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  author: Prisma.ProfileCreateNestedOneWithoutBlogInput
+  tags?: Prisma.TagsOnBlogsCreateNestedManyWithoutBlogInput
+  comments?: Prisma.CommentsCreateNestedManyWithoutBlogInput
+}
+
+export type BlogUncheckedCreateWithoutPublishInput = {
+  id?: string
+  title: string
+  content: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authorId: string
+  tags?: Prisma.TagsOnBlogsUncheckedCreateNestedManyWithoutBlogInput
+  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutBlogInput
+}
+
+export type BlogCreateOrConnectWithoutPublishInput = {
+  where: Prisma.BlogWhereUniqueInput
+  create: Prisma.XOR<Prisma.BlogCreateWithoutPublishInput, Prisma.BlogUncheckedCreateWithoutPublishInput>
+}
+
+export type BlogUpsertWithoutPublishInput = {
+  update: Prisma.XOR<Prisma.BlogUpdateWithoutPublishInput, Prisma.BlogUncheckedUpdateWithoutPublishInput>
+  create: Prisma.XOR<Prisma.BlogCreateWithoutPublishInput, Prisma.BlogUncheckedCreateWithoutPublishInput>
+  where?: Prisma.BlogWhereInput
+}
+
+export type BlogUpdateToOneWithWhereWithoutPublishInput = {
+  where?: Prisma.BlogWhereInput
+  data: Prisma.XOR<Prisma.BlogUpdateWithoutPublishInput, Prisma.BlogUncheckedUpdateWithoutPublishInput>
+}
+
+export type BlogUpdateWithoutPublishInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.ProfileUpdateOneRequiredWithoutBlogNestedInput
+  tags?: Prisma.TagsOnBlogsUpdateManyWithoutBlogNestedInput
+  comments?: Prisma.CommentsUpdateManyWithoutBlogNestedInput
+}
+
+export type BlogUncheckedUpdateWithoutPublishInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  tags?: Prisma.TagsOnBlogsUncheckedUpdateManyWithoutBlogNestedInput
+  comments?: Prisma.CommentsUncheckedUpdateManyWithoutBlogNestedInput
+}
+
 export type BlogCreateWithoutCommentsInput = {
   id?: string
   title: string
@@ -494,6 +577,7 @@ export type BlogCreateWithoutCommentsInput = {
   updatedAt?: Date | string
   author: Prisma.ProfileCreateNestedOneWithoutBlogInput
   tags?: Prisma.TagsOnBlogsCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogCreateNestedOneWithoutBlogInput
 }
 
 export type BlogUncheckedCreateWithoutCommentsInput = {
@@ -504,6 +588,7 @@ export type BlogUncheckedCreateWithoutCommentsInput = {
   updatedAt?: Date | string
   authorId: string
   tags?: Prisma.TagsOnBlogsUncheckedCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogUncheckedCreateNestedOneWithoutBlogInput
 }
 
 export type BlogCreateOrConnectWithoutCommentsInput = {
@@ -530,6 +615,7 @@ export type BlogUpdateWithoutCommentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.ProfileUpdateOneRequiredWithoutBlogNestedInput
   tags?: Prisma.TagsOnBlogsUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogUncheckedUpdateWithoutCommentsInput = {
@@ -540,6 +626,7 @@ export type BlogUncheckedUpdateWithoutCommentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagsOnBlogsUncheckedUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUncheckedUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogCreateWithoutTagsInput = {
@@ -550,6 +637,7 @@ export type BlogCreateWithoutTagsInput = {
   updatedAt?: Date | string
   author: Prisma.ProfileCreateNestedOneWithoutBlogInput
   comments?: Prisma.CommentsCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogCreateNestedOneWithoutBlogInput
 }
 
 export type BlogUncheckedCreateWithoutTagsInput = {
@@ -560,6 +648,7 @@ export type BlogUncheckedCreateWithoutTagsInput = {
   updatedAt?: Date | string
   authorId: string
   comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutBlogInput
+  publish?: Prisma.PublishBlogUncheckedCreateNestedOneWithoutBlogInput
 }
 
 export type BlogCreateOrConnectWithoutTagsInput = {
@@ -586,6 +675,7 @@ export type BlogUpdateWithoutTagsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.ProfileUpdateOneRequiredWithoutBlogNestedInput
   comments?: Prisma.CommentsUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogUncheckedUpdateWithoutTagsInput = {
@@ -596,6 +686,7 @@ export type BlogUncheckedUpdateWithoutTagsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   comments?: Prisma.CommentsUncheckedUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUncheckedUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogCreateManyAuthorInput = {
@@ -614,6 +705,7 @@ export type BlogUpdateWithoutAuthorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagsOnBlogsUpdateManyWithoutBlogNestedInput
   comments?: Prisma.CommentsUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogUncheckedUpdateWithoutAuthorInput = {
@@ -624,6 +716,7 @@ export type BlogUncheckedUpdateWithoutAuthorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagsOnBlogsUncheckedUpdateManyWithoutBlogNestedInput
   comments?: Prisma.CommentsUncheckedUpdateManyWithoutBlogNestedInput
+  publish?: Prisma.PublishBlogUncheckedUpdateOneWithoutBlogNestedInput
 }
 
 export type BlogUncheckedUpdateManyWithoutAuthorInput = {
@@ -684,6 +777,7 @@ export type BlogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   author?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.Blog$tagsArgs<ExtArgs>
   comments?: boolean | Prisma.Blog$commentsArgs<ExtArgs>
+  publish?: boolean | Prisma.Blog$publishArgs<ExtArgs>
   _count?: boolean | Prisma.BlogCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["blog"]>
 
@@ -721,6 +815,7 @@ export type BlogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   author?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.Blog$tagsArgs<ExtArgs>
   comments?: boolean | Prisma.Blog$commentsArgs<ExtArgs>
+  publish?: boolean | Prisma.Blog$publishArgs<ExtArgs>
   _count?: boolean | Prisma.BlogCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BlogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -736,6 +831,7 @@ export type $BlogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     author: Prisma.$ProfilePayload<ExtArgs>
     tags: Prisma.$TagsOnBlogsPayload<ExtArgs>[]
     comments: Prisma.$CommentsPayload<ExtArgs>[]
+    publish: Prisma.$PublishBlogPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1141,6 +1237,7 @@ export interface Prisma__BlogClient<T, Null = never, ExtArgs extends runtime.Typ
   author<T extends Prisma.ProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tags<T extends Prisma.Blog$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Blog$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagsOnBlogsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comments<T extends Prisma.Blog$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Blog$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  publish<T extends Prisma.Blog$publishArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Blog$publishArgs<ExtArgs>>): Prisma.Prisma__PublishBlogClient<runtime.Types.Result.GetResult<Prisma.$PublishBlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1617,6 +1714,25 @@ export type Blog$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.CommentsScalarFieldEnum | Prisma.CommentsScalarFieldEnum[]
+}
+
+/**
+ * Blog.publish
+ */
+export type Blog$publishArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PublishBlog
+   */
+  select?: Prisma.PublishBlogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PublishBlog
+   */
+  omit?: Prisma.PublishBlogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PublishBlogInclude<ExtArgs> | null
+  where?: Prisma.PublishBlogWhereInput
 }
 
 /**
