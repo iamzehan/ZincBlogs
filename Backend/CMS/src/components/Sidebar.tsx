@@ -13,12 +13,12 @@ export default function SideBar() {
   return (
     <header className="relative">
       <aside className={
-        clsx("w-full md:w-[300px] bg-zinc-800 h-full z-100 origin-left transition-all duration-300 fixed left-0 flex flex-col",
+        clsx("w-full md:w-[300px] bg-zinc-800/50 backdrop-blur-xl  md:bg-zinc-800 h-full z-100 origin-left transition-all duration-300 fixed left-0 flex flex-col",
         { "-translate-x-full": collapse}
         
       )}>
         {/* Brand Logo */}
-        <div className="font-bold text-2xl border-b px-5 py-5 text-left">Blog Admin Panel</div>
+        <div className="font-bold text-2xl border-b p-5 text-left">Blog Admin Panel</div>
         <NavLinks props={{handleMenu}}/>
       </aside>
       <MenuButton props={{collapse, handleMenu}}/>
@@ -68,11 +68,11 @@ function MenuButton({props}: {
     const {collapse, handleMenu} = props;
     return (
     <>
-        <button className={clsx("bg-zinc-600 shadow-2xs fixed z-1000 top-4 transition-all duration-300 rounded-full p-2", 
+        <button className={clsx("bg-zinc-600 active:scale-95 hover:bg-zinc-600/50 shadow-2xs fixed z-1000 top-4 transition-all duration-300 rounded-full aspect-square flex p-2", 
             {"right-2 left-auto md:left-[250px] md:right-auto": !collapse},
             {"left-2 right-auto": collapse}
         )} onClick={handleMenu}>
-            {(collapse)? <Menu/>: <Close/>}
+            {(collapse)? <Menu fontSize="medium"/>: <Close fontSize="medium"/>}
         </button>
     </>
 )
