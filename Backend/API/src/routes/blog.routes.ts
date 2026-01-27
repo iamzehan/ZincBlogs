@@ -6,8 +6,10 @@ const routes = Router();
 // get all blog titles (useful for sidebar navigation)
 routes.get("/titles", controller.allBlogsTitleGET)
 
+// get all published blog posts
+routes.get("/posts/published", controller.allPublishedBlogsGET);
 // get all blog posts
-routes.get("/posts", controller.allBlogsGET);
+routes.get("/posts", requireAuth, ensureAuthor, controller.allBlogsGET)
 // get one blog
 routes.get("/posts/:id", controller.findOneBlogGET);
 // update a blog post
