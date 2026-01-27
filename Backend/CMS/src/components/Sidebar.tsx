@@ -3,11 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import {Menu, Close } from '@mui/icons-material'
 import { links } from "../utils/links";
 import clsx from 'clsx';
+import { useIsMobile } from "../utils/hooks";
 
 export default function SideBar() {
-  const [collapse, setCollapse] = useState<boolean>(true);
 
-  const handleMenu = () => {
+//   Mobile device behaviour
+  const isMobile = useIsMobile();
+  const [collapse, setCollapse] = useState<boolean>(isMobile? true: false);
+
+  const handleMenuHide = () => {
         setCollapse((prev)=> !prev);
     }
   return (
@@ -19,17 +23,28 @@ export default function SideBar() {
       )}>
         {/* Brand Logo */}
         <div className="font-bold text-2xl border-b p-5 text-left">Blog Admin Panel</div>
-        <NavLinks props={{handleMenu}}/>
+        <NavLinks props={{handleMenuHide}}/>
       </aside>
-      <MenuButton props={{collapse, handleMenu}}/>
+      <MenuButton props={{collapse, handleMenuHide}}/>
     </header>
   );
 }
 
 // Nav links are mapped here
-function NavLinks({props} : { props: {handleMenu: ()=> void}}) {
+function NavLinks({props} : { props: {handleMenuHide: ()=> void}}) {
     const location = useLocation();
-    const {handleMenu} = props
+    const isMobile = useIsMobile();
+    const {handleMenuHide} = props
+    
+    // In mobile devices clicking link would hide the menu
+    const hideMenu = () => {
+        if(isMobile){
+            handleMenuHide();
+        }
+        else{
+            return;
+        }
+    }
     return (
         <ul className="
         text-white flex flex-col 
@@ -42,7 +57,7 @@ function NavLinks({props} : { props: {handleMenu: ()=> void}}) {
                 const Icon = link.icon;
                 return <li 
                 key={idx}
-                onClick={handleMenu}
+                onClick={hideMenu}
                 className={
                     clsx(
                         "text-2xl md:text-xl flex items-center rounded mx-2 p-2 px-10 gap-2 text-left",
@@ -53,7 +68,6 @@ function NavLinks({props} : { props: {handleMenu: ()=> void}}) {
                     <Link className="mb-0.5 flex-1 h-full" to={link.path}>{link.name}</Link>
                     </li>
             })}
-            
         </ul>
     )
 }
@@ -62,16 +76,16 @@ function NavLinks({props} : { props: {handleMenu: ()=> void}}) {
 function MenuButton({props}: {
     props: {
         collapse:boolean;
-        handleMenu:()=> void; 
+        handleMenuHide:()=> void; 
     }}){
     
-    const {collapse, handleMenu} = props;
+    const {collapse, handleMenuHide} = props;
     return (
     <>
         <button className={clsx("bg-zinc-600 active:scale-95 hover:bg-zinc-600/50 shadow-2xs fixed z-1000 top-4 transition-all duration-300 rounded-full aspect-square flex p-2", 
             {"right-2 left-auto md:left-[250px] md:right-auto": !collapse},
             {"left-2 right-auto": collapse}
-        )} onClick={handleMenu}>
+        )} onClick={handleMenuHide}>
             {(collapse)? <Menu fontSize="medium"/>: <Close fontSize="medium"/>}
         </button>
     </>
