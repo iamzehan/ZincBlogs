@@ -31,6 +31,7 @@ export type SubscriberMinAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   username: string | null
+  isVarified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +43,7 @@ export type SubscriberMaxAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   username: string | null
+  isVarified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,6 +55,7 @@ export type SubscriberCountAggregateOutputType = {
   firstName: number
   lastName: number
   username: number
+  isVarified: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,6 +69,7 @@ export type SubscriberMinAggregateInputType = {
   firstName?: true
   lastName?: true
   username?: true
+  isVarified?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +81,7 @@ export type SubscriberMaxAggregateInputType = {
   firstName?: true
   lastName?: true
   username?: true
+  isVarified?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type SubscriberCountAggregateInputType = {
   firstName?: true
   lastName?: true
   username?: true
+  isVarified?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -172,6 +178,7 @@ export type SubscriberGroupByOutputType = {
   firstName: string
   lastName: string
   username: string
+  isVarified: boolean
   createdAt: Date
   updatedAt: Date
   _count: SubscriberCountAggregateOutputType | null
@@ -204,6 +211,7 @@ export type SubscriberWhereInput = {
   firstName?: Prisma.StringFilter<"Subscriber"> | string
   lastName?: Prisma.StringFilter<"Subscriber"> | string
   username?: Prisma.StringFilter<"Subscriber"> | string
+  isVarified?: Prisma.BoolFilter<"Subscriber"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   comments?: Prisma.CommentsListRelationFilter
@@ -216,6 +224,7 @@ export type SubscriberOrderByWithRelationInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  isVarified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   comments?: Prisma.CommentsOrderByRelationAggregateInput
@@ -231,6 +240,7 @@ export type SubscriberWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"Subscriber"> | string
   firstName?: Prisma.StringFilter<"Subscriber"> | string
   lastName?: Prisma.StringFilter<"Subscriber"> | string
+  isVarified?: Prisma.BoolFilter<"Subscriber"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   comments?: Prisma.CommentsListRelationFilter
@@ -243,6 +253,7 @@ export type SubscriberOrderByWithAggregationInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  isVarified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscriberCountOrderByAggregateInput
@@ -260,6 +271,7 @@ export type SubscriberScalarWhereWithAggregatesInput = {
   firstName?: Prisma.StringWithAggregatesFilter<"Subscriber"> | string
   lastName?: Prisma.StringWithAggregatesFilter<"Subscriber"> | string
   username?: Prisma.StringWithAggregatesFilter<"Subscriber"> | string
+  isVarified?: Prisma.BoolWithAggregatesFilter<"Subscriber"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscriber"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscriber"> | Date | string
 }
@@ -271,6 +283,7 @@ export type SubscriberCreateInput = {
   firstName: string
   lastName: string
   username: string
+  isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentsCreateNestedManyWithoutOwnerInput
@@ -283,6 +296,7 @@ export type SubscriberUncheckedCreateInput = {
   firstName: string
   lastName: string
   username: string
+  isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutOwnerInput
@@ -295,6 +309,7 @@ export type SubscriberUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentsUpdateManyWithoutOwnerNestedInput
@@ -307,6 +322,7 @@ export type SubscriberUncheckedUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentsUncheckedUpdateManyWithoutOwnerNestedInput
@@ -319,6 +335,7 @@ export type SubscriberCreateManyInput = {
   firstName: string
   lastName: string
   username: string
+  isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -330,6 +347,7 @@ export type SubscriberUpdateManyMutationInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -341,6 +359,7 @@ export type SubscriberUncheckedUpdateManyInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,6 +371,7 @@ export type SubscriberCountOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  isVarified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -363,6 +383,7 @@ export type SubscriberMaxOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  isVarified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -374,6 +395,7 @@ export type SubscriberMinOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  isVarified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -381,6 +403,10 @@ export type SubscriberMinOrderByAggregateInput = {
 export type SubscriberScalarRelationFilter = {
   is?: Prisma.SubscriberWhereInput
   isNot?: Prisma.SubscriberWhereInput
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type SubscriberCreateNestedOneWithoutCommentsInput = {
@@ -404,6 +430,7 @@ export type SubscriberCreateWithoutCommentsInput = {
   firstName: string
   lastName: string
   username: string
+  isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -415,6 +442,7 @@ export type SubscriberUncheckedCreateWithoutCommentsInput = {
   firstName: string
   lastName: string
   username: string
+  isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -442,6 +470,7 @@ export type SubscriberUpdateWithoutCommentsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +482,7 @@ export type SubscriberUncheckedUpdateWithoutCommentsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -495,6 +525,7 @@ export type SubscriberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   firstName?: boolean
   lastName?: boolean
   username?: boolean
+  isVarified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   comments?: boolean | Prisma.Subscriber$commentsArgs<ExtArgs>
@@ -508,6 +539,7 @@ export type SubscriberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   firstName?: boolean
   lastName?: boolean
   username?: boolean
+  isVarified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["subscriber"]>
@@ -519,6 +551,7 @@ export type SubscriberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   firstName?: boolean
   lastName?: boolean
   username?: boolean
+  isVarified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["subscriber"]>
@@ -530,11 +563,12 @@ export type SubscriberSelectScalar = {
   firstName?: boolean
   lastName?: boolean
   username?: boolean
+  isVarified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscriberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "username" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriber"]>
+export type SubscriberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "username" | "isVarified" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriber"]>
 export type SubscriberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Subscriber$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriberCountOutputTypeDefaultArgs<ExtArgs>
@@ -554,6 +588,7 @@ export type $SubscriberPayload<ExtArgs extends runtime.Types.Extensions.Internal
     firstName: string
     lastName: string
     username: string
+    isVarified: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["subscriber"]>
@@ -986,6 +1021,7 @@ export interface SubscriberFieldRefs {
   readonly firstName: Prisma.FieldRef<"Subscriber", 'String'>
   readonly lastName: Prisma.FieldRef<"Subscriber", 'String'>
   readonly username: Prisma.FieldRef<"Subscriber", 'String'>
+  readonly isVarified: Prisma.FieldRef<"Subscriber", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Subscriber", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscriber", 'DateTime'>
 }

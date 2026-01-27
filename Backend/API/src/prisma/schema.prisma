@@ -53,10 +53,33 @@ model Subscriber {
   firstName String
   lastName  String
   username  String   @unique
+  isVarified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   comments Comments[]
+}
+
+// Temporary user storage
+model PendingUser{
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  username  String   @unique
+  createdAt DateTime @default(now())
+  token EmailToken? 
+}
+
+// Email Verification Tokens
+model EmailToken {
+  id String @id @default(uuid())
+  pendingId String @unique
+  tokenHash String
+  expiresAt DateTime
+
+  pending PendingUser @relation(fields: [pendingId], references: [id], onDelete:Cascade)
 }
 model Blog {
   id String @id @default(uuid())

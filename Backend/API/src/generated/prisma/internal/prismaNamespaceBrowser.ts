@@ -55,6 +55,8 @@ export const ModelName = {
   Author: 'Author',
   Profile: 'Profile',
   Subscriber: 'Subscriber',
+  PendingUser: 'PendingUser',
+  EmailToken: 'EmailToken',
   Blog: 'Blog',
   Comments: 'Comments',
   Tags: 'Tags',
@@ -117,11 +119,35 @@ export const SubscriberScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   username: 'username',
+  isVarified: 'isVarified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SubscriberScalarFieldEnum = (typeof SubscriberScalarFieldEnum)[keyof typeof SubscriberScalarFieldEnum]
+
+
+export const PendingUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  username: 'username',
+  createdAt: 'createdAt'
+} as const
+
+export type PendingUserScalarFieldEnum = (typeof PendingUserScalarFieldEnum)[keyof typeof PendingUserScalarFieldEnum]
+
+
+export const EmailTokenScalarFieldEnum = {
+  id: 'id',
+  pendingId: 'pendingId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt'
+} as const
+
+export type EmailTokenScalarFieldEnum = (typeof EmailTokenScalarFieldEnum)[keyof typeof EmailTokenScalarFieldEnum]
 
 
 export const BlogScalarFieldEnum = {
