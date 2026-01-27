@@ -17,7 +17,7 @@ export default function SideBar() {
   return (
     <header className="relative">
       <aside className={
-        clsx("w-full md:w-[300px] bg-zinc-800/50 backdrop-blur-xl  md:bg-zinc-800 h-full z-100 origin-left transition-all duration-300 fixed left-0 flex flex-col",
+        clsx("w-full md:w-[300px] bg-zinc-800 h-full z-100 origin-left transition-all duration-300 fixed left-0 flex flex-col",
         { "-translate-x-full": collapse}
         
       )}>
@@ -47,7 +47,7 @@ function NavLinks({props} : { props: {handleMenuHide: ()=> void}}) {
     }
     return (
         <ul className="
-        text-white flex flex-col 
+        text-white flex flex-col
         h-full justify-start 
         py-5 gap-2 *:transition-all *:duration-300 
         [&>li]:last-of-type:text-red-500 [&>li]:last-of-type:hover:bg-red-200/20 
@@ -60,9 +60,9 @@ function NavLinks({props} : { props: {handleMenuHide: ()=> void}}) {
                 onClick={hideMenu}
                 className={
                     clsx(
-                        "text-2xl md:text-xl flex items-center rounded mx-2 p-2 px-10 gap-2 text-left",
-                        {"bg-zinc-200 text-zinc-800": location.pathname==link.path},
-                        {"hover:bg-zinc-400 hover:text-zinc-100": location.pathname!==link.path})}>
+                        "text-2xl md:text-xl flex items-center rounded-lg mx-2 py-2 px-5 gap-2 text-left",
+                        {"bg-zinc-200/50 text-zinc-100": location.pathname==link.path},
+                        {"hover:bg-zinc-400/20 hover:text-zinc-100": location.pathname!==link.path})}>
                     
                     <Icon fontSize="small"/>
                     <Link className="mb-0.5 flex-1 h-full" to={link.path}>{link.name}</Link>
