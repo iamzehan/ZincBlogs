@@ -83,7 +83,7 @@ function MenuButton({props}: {
     return (
     <>
         <button className={clsx("bg-zinc-600 active:scale-95 hover:bg-zinc-600/50 shadow-2xs fixed z-1000 top-3 transition-all duration-300 rounded-full aspect-square flex", 
-            {"right-2 left-auto md:left-[250px] md:right-auto p-1": !collapse},
+            {"right-2 left-auto md:left-[250px] md:right-auto p-1 top-5!": !collapse},
             {"left-2 right-auto p-3": collapse}
         )} onClick={handleMenuHide}>
             {(collapse)? <Menu fontSize="medium"/>: <Close fontSize="medium"/>}
