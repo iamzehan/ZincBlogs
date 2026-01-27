@@ -166,6 +166,9 @@ Token-based identity confirmation.
 * `GET /api/blog/posts`
   Retrieve all blog resources
 
+* `GET /api/blog/posts/published`
+  Retrieve all published blog resources
+
 * `POST /api/blog/create`
   Create blog resource
 
@@ -177,6 +180,12 @@ Token-based identity confirmation.
 
 * `DELETE /api/blog/posts/:id`
   Delete blog resource
+
+* `PUT /api/blog/posts/:id/publish?status={boolean}`
+  `status=true` publishes a blog, `status=false` unpublishes it.
+
+* `GET /api/blog/titles`
+  Gets titles and id of all published blogs for side navigation bar.
 
 ---
 
