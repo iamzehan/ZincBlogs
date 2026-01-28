@@ -9,3 +9,35 @@
 body {
   @apply bg-zinc-700 w-screen;
 }
+
+.login-form{
+  @apply w-full flex flex-col gap-1 justify-center max-w-80 md:max-w-full md:shadow-xl md:shadow-zinc-900/20;
+  @apply md:border-2 md:border-zinc-500/20 md:rounded-2xl md:w-100 md:h-100 md:bg-zinc-600/50;
+
+  .label{
+    @apply text-2xl font-medium;
+  }
+  label{
+    @apply flex flex-col p-2 text-left gap-1 text-lg font-medium md:self-center;
+  }
+  input{
+    @apply border border-zinc-500 bg-zinc-600 shadow-sm rounded-lg p-2 px-4 font-normal md:w-80;
+    @apply transition-all duration-300;
+    @apply outline-transparent outline-2;
+    @apply focus:border-transparent focus:outline-white;
+  }
+  input[type=submit]{
+    @apply mx-2 my-3 bg-white text-zinc-500 font-bold;
+    @apply hover:bg-zinc-700 hover:text-white;
+    @apply md:self-center;
+    @apply active:scale-95;
+    @apply focus:outline-4 focus:outline-zinc-800/60;
+  }
+
+  input:not([type="submit"]):focus{
+    @apply bg-zinc-700;
+  }
+  input::placeholder{
+    @apply text-zinc-500;
+  }
+}
