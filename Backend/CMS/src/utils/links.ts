@@ -1,4 +1,4 @@
-import {Book, Logout, Subscriptions} from '@mui/icons-material'
+import {Book, Subscriptions} from '@mui/icons-material'
 export const links = [
         {
             name: "Blogs",
@@ -10,9 +10,4 @@ export const links = [
             path: "/subscribers",
             icon: Subscriptions
         },
-        {
-            name: "Logout",
-            path: "/auth/logout",
-            icon: Logout
-        }
     ]
