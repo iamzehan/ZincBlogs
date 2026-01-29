@@ -82,7 +82,9 @@ export const allBlogsGET = async (req: Request, res: Response) => {
         tags: {
           select: {tag: true},
         },
-        publish: true
+        publish: {
+          select: {status: true}
+        }
       },
       omit: {
         authorId: true,
