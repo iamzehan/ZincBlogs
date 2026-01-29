@@ -10,10 +10,9 @@ import { env } from "../config/env";
 ======================= */
 
 export interface User {
-  id: string;
-  email: string;
-  role?: string;
-  // add more fields from /auth/me if needed
+  username: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface LoginCredentials {
@@ -69,18 +68,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const refreshData: { accessToken: string } = await refreshRes.json();
         setAccessToken(refreshData.accessToken);
 
-        // // Fetch user profile
-        // const meRes = await fetch("/auth/me", {
-        //   method: "GET",
-        //   headers: {
-        //     Authorization: `Bearer ${refreshData.accessToken}`,
-        //   },
-        // });
+        // Fetch user profile
+        const meRes = await fetch(`${env.VITE_BACKEND_URL}/api/author/profile/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${refreshData.accessToken}`,
+          },
+        });
 
-        // if (!meRes.ok) throw new Error("User fetch failed");
+        if (!meRes.ok) throw new Error("User fetch failed");
 
-        // const meData: User = await meRes.json();
-        // setUser(meData);
+        const meData: User = await meRes.json();
+        setUser(meData);
       } catch (err) {
         console.log(err)
         setAccessToken(null);
@@ -110,20 +109,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const loginData: { accessToken: string } = await loginRes.json();
     setAccessToken(loginData.accessToken);
-    // // Fetch user
-    // const meRes = await fetch("/auth/me", {
-    //   method: "GET",
-    //   headers: {
-    //     Authorization: `Bearer ${loginData.accessToken}`,
-    //   },
-    // });
+    // Fetch user
+    const meRes = await fetch(`${env.VITE_BACKEND_URL}/api/author/profile/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${loginData.accessToken}`,
+      },
+    });
 
-    // if (!meRes.ok) {
-    //   throw new Error("User fetch failed");
-    // }
+    if (!meRes.ok) {
+      throw new Error("User fetch failed");
+    }
 
-    // const meData: User = await meRes.json();
-    // setUser(meData);
+    const meData: User = await meRes.json();
+    setUser(meData);
   };
 
   /* Logout */
