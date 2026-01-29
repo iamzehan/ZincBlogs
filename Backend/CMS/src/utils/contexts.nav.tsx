@@ -15,7 +15,7 @@ interface NavContextType {
   isMobile: boolean;
   handleMenuShowHide: ()=> void;
   logoutUser: ()=> void;
-  hideMenu: ()=> void;
+  hideMenuMobile: ()=> void;
   location: {pathname: string};
 }
 
@@ -51,9 +51,9 @@ export const NavProvider = ({ children }: NavProviderProps) => {
       console.error("Logout failed", err);
     }
   };
-
+  
   // In mobile devices clicking link would hide the menu
-  const hideMenu = () => {
+  const hideMenuMobile = () => {
     if (isMobile) {
       handleMenuShowHide();
     } else {
@@ -68,7 +68,7 @@ export const NavProvider = ({ children }: NavProviderProps) => {
     isMobile,
     handleMenuShowHide,
     logoutUser,
-    hideMenu,
+    hideMenuMobile,
     location
   };
   return <NavContext.Provider value={value}>{children}</NavContext.Provider>;

@@ -27,7 +27,7 @@ export default function SideBar() {
 
 // Nav links are mapped here
 function NavLinks() {
-  const {hideMenu, location, logoutUser} = useNav();
+  const {hideMenuMobile, location, logoutUser} = useNav();
   return (
     <ul
       className="
@@ -43,7 +43,7 @@ function NavLinks() {
         return (
           <li
             key={idx}
-            onClick={() => hideMenu()}
+            onClick={() => hideMenuMobile()}
             className={clsx(
               "text-2xl md:text-xl flex items-center rounded-lg mx-2 py-2 px-5 gap-2 text-left",
               {
