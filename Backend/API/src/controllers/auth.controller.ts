@@ -46,16 +46,7 @@ export const login = async (req: Request, res: Response) => {
 export const refresh =  (req: Request, res: Response) => {
   const token = req.cookies.refreshToken;
   if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, env.JWT_REFRESH_SECRET, (err:any, user:any) => {
-  if (err) return res.sendStatus(403);
-
-  const newAccessToken = jwt.sign(
-      { id: user.id },
-      env.JWT_SECRET,
-      { expiresIn: '15m' }
-    );
-
-    res.json({ accessToken: newAccessToken });
-  });
+  const payload = jwt.verify(token, env.JWT_REFRESH_SECRET) as { sub: string };
+  const newAccessToken = signAccessToken(payload.sub);
+  res.json({ accessToken: newAccessToken });
 }
