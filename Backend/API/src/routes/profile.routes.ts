@@ -5,6 +5,6 @@ const router = Router();
 
 router.put("/profile", requireAuth, ensureAuthor, controller.profilePUT);
 
-router.get("/profile/:id", controller.profileGET);
+router.get("/profile/me", requireAuth, controller.profileMeGET);
 
 export default router;

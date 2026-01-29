@@ -24,15 +24,14 @@ export const profilePUT = async (req: Request, res: Response) => {
 };
 
 
-export const profileGET = async (req: Request, res: Response) => {
+export const profileMeGET = async (req: Request, res: Response) => {
 
     try{
-        const id = parameterIDProcessor(req);
         const profile = await prisma.profile.findUnique(
           {
             select:{username:true, firstName:true, lastName:true},
             where: {
-              authorId: id
+              authorId: req.userId
             }
           }
         )
