@@ -45,9 +45,9 @@ function NavLinks() {
             key={idx}
             onClick={() => hideMenuMobile()}
             className={clsx(
-              "text-2xl md:text-xl flex items-center rounded-lg mx-2 py-2 px-5 gap-2 text-left",
+              "text-2xl md:text-xl flex items-center rounded-lg mx-2 gap-2 text-left",
               {
-                "bg-zinc-200/30 text-zinc-100": location.pathname == link.path,
+                "bg-zinc-200/25 text-zinc-200": location.pathname == link.path,
               },
               {
                 "hover:bg-zinc-400/20 hover:text-zinc-100":
@@ -55,8 +55,8 @@ function NavLinks() {
               },
             )}
           >
-            <Icon fontSize="small" />
-            <Link className="mb-0.5 flex-1 h-full" to={link.path}>
+            <Icon fontSize="small"  className="ml-5"/>
+            <Link className="mb-0.5 flex-1 h-full py-2" to={link.path}>
               {link.name}
             </Link>
           </li>
