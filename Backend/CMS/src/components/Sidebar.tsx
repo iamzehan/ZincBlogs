@@ -1,18 +1,11 @@
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, Close, Logout } from "@mui/icons-material";
-import { links } from "../utils/links";
 import clsx from "clsx";
-import { useIsMobile, useAuth } from "../utils/hooks";
+import { links } from "../utils/links";
+import {  useNav } from "../utils/hooks";
+import { Link } from "react-router-dom";
+import { Menu, Close, Logout } from "@mui/icons-material";
 
 export default function SideBar() {
-  //   Mobile device behaviour
-  const isMobile = useIsMobile();
-  const [collapse, setCollapse] = useState<boolean>(isMobile ? true : false);
-
-  const handleMenuHide = () => {
-    setCollapse((prev) => !prev);
-  };
+  const {collapse} = useNav();
   return (
     <header className="relative">
       <aside
@@ -25,39 +18,16 @@ export default function SideBar() {
         <div className="font-bold text-2xl border-b border-zinc-100/10 p-5 text-left">
           Blog Admin Panel
         </div>
-        <NavLinks props={{ handleMenuHide }} />
+        <NavLinks/>
       </aside>
-      <MenuButton props={{ collapse, handleMenuHide }} />
+      <MenuButton />
     </header>
   );
 }
 
 // Nav links are mapped here
-function NavLinks({ props }: { props: { handleMenuHide: () => void } }) {
-  const location = useLocation();
-  const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  const { logout } = useAuth();
-  const { handleMenuHide } = props;
-
-  // Logout
-  const logoutUser = async () => {
-    try {
-      await logout(); 
-      navigate("/login"); // redirect after logout
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
-
-  // In mobile devices clicking link would hide the menu
-  const hideMenu = () => {
-    if (isMobile) {
-      handleMenuHide();
-    } else {
-      return;
-    }
-  };
+function NavLinks() {
+  const {hideMenu, location, logoutUser} = useNav();
   return (
     <ul
       className="
@@ -106,15 +76,8 @@ function NavLinks({ props }: { props: { handleMenuHide: () => void } }) {
   );
 }
 
-function MenuButton({
-  props,
-}: {
-  props: {
-    collapse: boolean;
-    handleMenuHide: () => void;
-  };
-}) {
-  const { collapse, handleMenuHide } = props;
+function MenuButton() {
+  const { collapse, handleMenuShowHide } = useNav();
   return (
     <>
       <button
@@ -126,7 +89,7 @@ function MenuButton({
           },
           { "left-2 right-auto p-3": collapse },
         )}
-        onClick={handleMenuHide}
+        onClick={handleMenuShowHide}
       >
         {collapse ? <Menu fontSize="medium" /> : <Close fontSize="medium" />}
       </button>
