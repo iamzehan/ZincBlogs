@@ -4,10 +4,9 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
-import { env } from "../config/env";
-/* =======================
-   Types
-======================= */
+
+import * as request from "./requests.auth";
+/* ======================= Types ======================= */
 
 export interface User {
   username: string;
@@ -31,15 +30,11 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-/* =======================
-   Context
-======================= */
+/* ======================= Context======================= */
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-/* =======================
-   Provider
-======================= */
+/* ======================= Provider ======================= */
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -50,18 +45,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  /* 🔁 Restore session on app load */
+  /* Restore session on app reload */
   useEffect(() => {
     const restoreSession = async () => {
       try {
         // Refresh token via cookie
-        const refreshRes = await fetch(`${env.VITE_BACKEND_URL}/api/auth/refresh`, {
-          method: "POST",
-          credentials:"include", // 🔑 important for HttpOnly cookies
-          headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-        });
+        const refreshRes = await request.fetchRefresh();
 
         if (!refreshRes.ok) throw new Error("Refresh failed");
 
@@ -69,15 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setAccessToken(refreshData.accessToken);
 
         // Fetch user profile
-        const meRes = await fetch(`${env.VITE_BACKEND_URL}/api/author/profile/me`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${refreshData.accessToken}`,
-          },
-        });
-
+        const meRes = await request.fetchProfile(refreshData);
         if (!meRes.ok) throw new Error("User fetch failed");
-
         const meData: User = await meRes.json();
         setUser(meData);
       } catch (err) {
@@ -94,14 +76,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 //  ------------------------------------ LOGIN USER ----------------------------------- //
   const login = async (credentials: LoginCredentials): Promise<void> => {
-    const loginRes = await fetch(`${env.VITE_BACKEND_URL}/api/auth/login`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify(credentials),
-    });
+    // Login form Credentials
+    const loginRes = await request.fetchLogin(credentials);
 
     if (!loginRes.ok) {
       throw new Error("Login failed");
@@ -109,14 +85,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const loginData: { accessToken: string } = await loginRes.json();
     setAccessToken(loginData.accessToken);
-    // Fetch user
-    const meRes = await fetch(`${env.VITE_BACKEND_URL}/api/author/profile/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${loginData.accessToken}`,
-      },
-    });
 
+    // Fetch user
+    const meRes = await request.fetchProfile(loginData);
     if (!meRes.ok) {
       throw new Error("User fetch failed");
     }
@@ -125,20 +96,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(meData);
   };
 
-  /* Logout */
+  //  ------------------------------------ LOGOUT USER ----------------------------------- //
   const logout = async () => {
     try {
-      await fetch(`${env.VITE_BACKEND_URL}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await request.fetchLogout();
         setAccessToken(null);
         setUser(null);
     } catch {
       // ignore network errors
     }
-    
-    
   };
 
   const value: AuthContextType = {
