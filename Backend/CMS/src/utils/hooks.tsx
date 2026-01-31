@@ -26,7 +26,15 @@ import NavContext from './contexts.nav';
 export const useNav = ()=> {
   const ctx = useContext(NavContext);
   if(!ctx) {
-    throw new Error ("useContext must be used inside NavProvider")
+    throw new Error ("useNav must be used inside NavProvider")
   }
+  return ctx;
+}
+
+// Blog Page Provider hook
+import BlogContext from './contexts.blog';
+export const useBlog = () => {
+  const ctx = useContext(BlogContext);
+  if(!ctx) throw new Error("useNav must be use inside BlogPage");
   return ctx;
 }
