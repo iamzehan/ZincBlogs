@@ -7,7 +7,7 @@ import clsx from 'clsx';
 export default function MainLayout() {
 
   return (
-    <div className="container flex p-0 h-screen w-screen">
+    <div className="container flex p-0 min-h-screen w-screen">
       <NavProvider>
         <TopBar />
         <SideBar />
