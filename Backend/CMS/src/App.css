@@ -41,3 +41,7 @@ body {
     @apply text-zinc-500;
   }
 }
+
+button{
+  @apply cursor-pointer
+}
