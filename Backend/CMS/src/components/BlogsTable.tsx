@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -7,23 +7,23 @@ import { fetchAllBlogs } from "../utils/requests.blog";
 import { formatPostDate } from "../utils/formatter.data";
 import { SkeletonBlogsTable } from "./skeletons";
 import { PublishPills } from "./PublishPills";
+import { Error } from "@mui/icons-material";
 
 export default function BlogsTable() {
   const { accessToken } = useAuth();
-  const {fetchWithAuth} = useBlog();
-  const { isPending, error, data, isFetching } = useQuery({
+  const { fetchWithAuth } = useBlog();
+  const { isPending, error, data } = useQuery({
     queryKey: ["blogData"],
-    queryFn: () => fetchWithAuth(fetchAllBlogs, {accessToken}),
-    enabled: !!accessToken, // wait for token
+    queryFn: () => fetchWithAuth(fetchAllBlogs, { accessToken }),
+    enabled: !!accessToken,
   });
-  if (isPending)
+
+  if (isPending) return <SkeletonBlogsTable />;
+  if (error)
     return (
-        <SkeletonBlogsTable />
-    );
-  if (error) return <p>Error loading blogs</p>;
-  if (isFetching)
-    return (
-        <SkeletonBlogsTable />
+      <div className="h-50 place-content-center text-xl text-red-500 overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950 transition-all duration-300 w-full">
+        Error loading blogs <Error/>
+      </div>
     );
   return (
     <>
@@ -46,39 +46,35 @@ export default function BlogsTable() {
           </thead>
 
           <tbody>
-            {Array.isArray(data) && data.map((blog: Blog) => (
-              <tr
-                key={blog.id}
-                className="border-t border-zinc-800 hover:bg-zinc-900/60 transition-colors"
-              >
-                <td className="text-left text-zinc-100 max-w-fit underline-offset-2 hover:text-blue-400 hover:underline">
-                  <Link
-                    to={`/blog/posts/${blog.id}`}
-                    className="px-4 py-3 inline-flex text-sm md:text-base"
-                  >
-                    {blog.title}
-                  </Link>
-                </td>
+            {Array.isArray(data) &&
+              data.map((blog: Blog) => (
+                <tr
+                  key={blog.id}
+                  className="border-t border-zinc-800 hover:bg-zinc-900/60 transition-colors"
+                >
+                  <td className="text-left text-zinc-100 max-w-fit underline-offset-2 hover:text-blue-400 hover:underline">
+                    <Link
+                      to={`/blog/posts/${blog.id}`}
+                      className="px-4 py-3 inline-flex text-sm md:text-base"
+                    >
+                      {blog.title}
+                    </Link>
+                  </td>
 
-                <td className="text-left text-xs text-zinc-100">
-                  <Link
-                    to={`/blog/posts/${blog.id}`}
-                    className="px-4 py-3 inline-flex w-full"
-                  >
-                    {formatPostDate(blog.createdAt)}
-                  </Link>
-                </td>
+                  <td className="text-left text-xs text-zinc-100">
+                    <Link
+                      to={`/blog/posts/${blog.id}`}
+                      className="px-4 py-3 inline-flex w-full"
+                    >
+                      {formatPostDate(blog.createdAt)}
+                    </Link>
+                  </td>
 
-                <td>
-                  <Link
-                    to={`/blog/posts/${blog.id}`}
-                    className="px-4 py-3 w-full"
-                  >
-                    <PublishPills props={blog} />
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                  <td>
+                    <PublishPills key={blog.id} props={blog} />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
