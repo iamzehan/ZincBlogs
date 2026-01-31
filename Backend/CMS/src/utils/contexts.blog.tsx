@@ -4,7 +4,7 @@ import { fetchRefresh } from "./requests.auth";
 
 interface FetchOptions{
     accessToken?:string | null; 
-    id?: number | null;
+    id?: string | null;
     publish?:boolean | null;
 }
 
@@ -18,7 +18,6 @@ interface BlogContextType {
 interface BlogProviderProps {
   children: React.ReactNode;
 }
-
 
 const BlogContext = createContext<BlogContextType | undefined>(undefined);
 
