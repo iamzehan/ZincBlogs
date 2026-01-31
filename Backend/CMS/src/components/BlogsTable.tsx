@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../utils/hooks";
+import { useAuth, useBlog } from "../utils/hooks";
 import { fetchAllBlogs } from "../utils/requests.blog";
 import { formatPostDate } from "../utils/formatter.data";
 import { SkeletonBlogsTable } from "./skeletons";
@@ -10,23 +10,20 @@ import { PublishPills } from "./PublishPills";
 
 export default function BlogsTable() {
   const { accessToken } = useAuth();
+  const {fetchWithAuth} = useBlog();
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ["blogData"],
-    queryFn: () => fetchAllBlogs(accessToken!),
+    queryFn: () => fetchWithAuth(fetchAllBlogs, {accessToken}),
     enabled: !!accessToken, // wait for token
   });
   if (isPending)
     return (
-      <p>
         <SkeletonBlogsTable />
-      </p>
     );
   if (error) return <p>Error loading blogs</p>;
   if (isFetching)
     return (
-      <p>
         <SkeletonBlogsTable />
-      </p>
     );
   return (
     <>
@@ -49,7 +46,7 @@ export default function BlogsTable() {
           </thead>
 
           <tbody>
-            {data.map((blog: Blog) => (
+            {Array.isArray(data) && data.map((blog: Blog) => (
               <tr
                 key={blog.id}
                 className="border-t border-zinc-800 hover:bg-zinc-900/60 transition-colors"
