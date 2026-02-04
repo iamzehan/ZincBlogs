@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/hooks";
-
+import Brand from "../components/Brand";
 export default function Page() {
 
   const {login} = useAuth();
@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <main className="h-screen w-screen place-content-center place-items-center">
       <form onSubmit={handleSubmit} className="login-form">
+        <Brand direction="flex-row text-4xl" imgStyles="h-10 w-10"/>
         <p className="label">Log in</p>
         <label htmlFor="email">
           Email
@@ -38,7 +39,7 @@ export default function Page() {
             required
           />
         </label>
-        <input type="submit" name="login" id="login" />
+        <input type="submit" name="login" id="login"/>
       </form>
     </main>
   );

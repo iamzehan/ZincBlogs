@@ -3,7 +3,7 @@ import { links } from "../utils/links";
 import {  useNav } from "../utils/hooks";
 import { Link } from "react-router-dom";
 import { Menu, Close, Logout } from "@mui/icons-material";
-
+import Brand from "./Brand";
 export default function SideBar() {
   const {collapse} = useNav();
   return (
@@ -15,8 +15,10 @@ export default function SideBar() {
         )}
       >
         {/* Brand Logo */}
-        <div className="font-bold text-2xl border-b border-zinc-100/10 p-5 text-left">
-          Blog Admin Panel
+        <div className="border-b text-2xl border-zinc-100/10 p-5 text-left">
+          <Brand direction="relative flex-row border-b-0!" imgStyles="h-10 w-10 aspect-square">
+          <span className="bottom-0 right-15 md:right-2 md:-bottom-3.5 absolute h-fit items-center py-0.5 text-[12px] md:text-[10px] text-green-400 border border-green-400 rounded-full px-2">Admin</span>
+          </Brand>
         </div>
         <NavLinks/>
       </aside>
