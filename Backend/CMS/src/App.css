@@ -11,7 +11,7 @@ body {
 }
 
 .login-form{
-  @apply w-full flex flex-col gap-1 justify-center max-w-80 md:max-w-full md:shadow-xl md:shadow-zinc-900/20;
+  @apply pb-5 w-full flex flex-col gap-1 justify-center max-w-80 md:max-w-full md:shadow-xl md:shadow-zinc-900/20;
   @apply md:border-2 md:border-zinc-500/20 md:rounded-2xl md:w-100 md:h-100 md:bg-zinc-600/50;
 
   .label{
