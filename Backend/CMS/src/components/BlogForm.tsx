@@ -68,7 +68,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       <form
-        className="blog-form xl:h-full xl:justify-evenly!"
+        className="blog-form w-screen md:w-[800px] xl:w-[65vw] xl:h-full xl:justify-evenly!"
         onSubmit={handleSubmit}
       >
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
