@@ -1,7 +1,7 @@
 import { Request } from "express";
 
-export const tagParser = (tags: string): string[] => {
-  return JSON.parse(tags).map((t: string) => t.toLowerCase());
+export const tagParser = (tags: string[]): string[] => {
+  return tags.map((t) => t.toLowerCase());
 };
 
 export const parameterIDProcessor = (req: Request):string => {

@@ -123,7 +123,8 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
         },
         tags: {
           select: {tag: true}
-        }
+        },
+        publish: true,
       },
       where: {
         id: id
