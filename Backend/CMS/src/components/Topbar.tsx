@@ -22,14 +22,14 @@ export default function TopBar() {
 // Page header 
 function PageHeader() {
   const isMobile = useIsMobile();
-  const { collapse, location } = useNav();
+  const { collapse, location, customHeader } = useNav();
   const currentLink = links.find((link) => link.path === location.pathname);
-  const [heading, setHeading] = useState(currentLink?.name);
+  const [heading, setHeading] = useState(currentLink?.name || customHeader);
 
   useEffect(() => {
     const currentLink = links.find((link) => link.path === location.pathname);
     const headingHandler = async () => {
-      setHeading(currentLink?.name);
+      setHeading(currentLink?.name || customHeader);
     };
     headingHandler();
   }, [location]);

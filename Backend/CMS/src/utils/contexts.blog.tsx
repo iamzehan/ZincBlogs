@@ -2,17 +2,22 @@ import { createContext } from "react";
 import { useAuth } from "./hooks";
 import { fetchRefresh } from "./requests.auth";
 
-interface FetchOptions{
-    accessToken?:string | null; 
-    id?: string | null;
-    publish?:boolean | null;
+interface FetchOptions {
+  accessToken?: string | null;
+  id?: string | null;
+  publish?: boolean | null;
+  body?: {
+    title: string;
+    content: string;
+    tags: string[];
+  };
 }
 
 interface BlogContextType {
   fetchWithAuth: (
-    fetchFn: (options:FetchOptions)=> Promise<Response>,
-     options:FetchOptions
-    ) => Promise<Blog[] | Blog>;
+    fetchFn: (options: FetchOptions) => Promise<Response>,
+    options: FetchOptions,
+  ) => Promise<unknown>;
 }
 
 interface BlogProviderProps {
@@ -24,7 +29,10 @@ const BlogContext = createContext<BlogContextType | undefined>(undefined);
 export const BlogProvider = ({ children }: BlogProviderProps) => {
   const { setAccessToken } = useAuth();
 
-  async function fetchWithAuth( fetchFn: (options:FetchOptions)=> Promise<Response>, options:FetchOptions) {
+  async function fetchWithAuth(
+    fetchFn: (options: FetchOptions) => Promise<Response>,
+    options: FetchOptions,
+  ) {
     try {
       // first fetch
       const res = await fetchFn(options);

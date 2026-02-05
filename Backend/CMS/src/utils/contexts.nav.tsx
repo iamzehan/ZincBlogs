@@ -8,6 +8,7 @@ import {
 import { useIsMobile, useAuth } from "./hooks";
 import { useLocation } from "react-router-dom";
 
+
 // Context type for NavContext Provider
 interface NavContextType {
   collapse: boolean;
@@ -17,6 +18,8 @@ interface NavContextType {
   logoutUser: ()=> void;
   hideMenuMobile: ()=> void;
   location: {pathname: string};
+  customHeader: string | null;
+  setCustomHeader: Dispatch<SetStateAction<string | null>>;
 }
 
 // Prop Type for NavProvider
@@ -42,6 +45,9 @@ export const NavProvider = ({ children }: NavProviderProps) => {
   const handleMenuShowHide = () => {
     setCollapse((prev) => !prev);
   };
+
+  // Custom Header
+  const [customHeader, setCustomHeader] = useState<string | null>(null)
 
   // Logout user handles logout request and redirects user to login page immediately
   const logoutUser = async () => {
@@ -69,7 +75,9 @@ export const NavProvider = ({ children }: NavProviderProps) => {
     handleMenuShowHide,
     logoutUser,
     hideMenuMobile,
-    location
+    location,
+    customHeader,
+    setCustomHeader
   };
   return <NavContext.Provider value={value}>{children}</NavContext.Provider>;
 };

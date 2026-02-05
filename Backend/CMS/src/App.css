@@ -45,3 +45,34 @@ body {
 button{
   @apply cursor-pointer
 }
+
+
+
+/* Wrapper */
+.blog-form-wrapper {
+  @apply mx-auto max-w-screen md:px-4 md:py-4;
+}
+
+/* Form */
+.blog-form {
+  @apply flex flex-col min-h-screen md:min-h-auto gap-4 md:rounded-lg border border-zinc-800 bg-zinc-900 p-6;
+}
+
+/* Header / Save button */
+.blog-form-header {
+  @apply flex flex-wrap gap-2;
+}
+
+.blog-form-submit {
+  @apply cursor-pointer rounded-md bg-zinc-700 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-500/40;
+}
+
+/* Inputs */
+.blog-form-input {
+  @apply w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-200 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/40;
+}
+
+/* Textarea */
+.blog-form-textarea {
+  @apply min-h-100 w-full resize-y rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm leading-relaxed text-zinc-200 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/40;
+}
