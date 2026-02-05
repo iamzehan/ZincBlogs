@@ -27,7 +27,7 @@ export default function Page() {
             type: "primary",
             fn: handleClick,
             additionalDesign: `
-            fixed bottom-2 z-1000
+            fixed bottom-2 z-10
             bottom-10
             self-end rounded-full md:rounded-lg`
           }}
