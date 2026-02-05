@@ -29,7 +29,7 @@ export default function BlogsTable() {
     <>
       <div
         className={clsx(
-          "overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950 transition-all duration-300 w-full",
+          "overflow-x-auto rounded-md border border-zinc-600 bg-zinc-950 transition-all duration-300 w-full",
         )}
       >
         <table className="w-full border-collapse">
