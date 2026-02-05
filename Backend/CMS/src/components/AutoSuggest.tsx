@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function AutoSuggest({
@@ -29,14 +29,17 @@ export default function AutoSuggest({
   const removeOption = (option: string) => {
     setSelected((prev:string[]) => prev.filter((o) => o !== option));
   };
-
+  
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-full relative *:text-sm *:md:text-normal text-zinc-200 text-left">
       {/* Label */}
       <label className="mb-1 block text-zinc-400 font-semibold">Enter tags</label>
 
       {/* Input container */}
-      <div className="md:p-2 text-xl md:text-base flex flex-wrap items-center gap-1 rounded-md border border-zinc-600 p-1 focus-within:border-zinc-500 focus-within:ring-2 focus-within:ring-zinc-500/40">
+      <div 
+      onClick={()=> inputRef.current?.focus()}
+      className="md:p-2 text-xl md:text-base flex flex-wrap items-center gap-1 rounded-md border border-zinc-600 p-1 focus-within:border-zinc-500 focus-within:ring-2 focus-within:ring-zinc-500/40">
         {selected.map((option) => (
           <span
             key={option}
@@ -56,6 +59,7 @@ export default function AutoSuggest({
         <input
           name="tags"
           value={input}
+          ref={inputRef}
           onChange={(e) => setInput(e.target.value)}
           onBlur={(e) =>
             e.target.value.trim() !== ""
