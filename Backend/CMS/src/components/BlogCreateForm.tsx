@@ -52,6 +52,7 @@ export default function BlogForm() {
             name="title"
             placeholder="Your blog Title"
             className="blog-form-input"
+            required
           />
         </label>
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
@@ -60,6 +61,7 @@ export default function BlogForm() {
             name="content"
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
+            required
           />
         </label>
         {Array.isArray(options) && (
@@ -83,7 +85,10 @@ export default function BlogForm() {
             />
           </div>
           <button
-            onClick={() => navigate("/blog/posts")}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/blog/posts");
+            }}
             className="w-20 md:w-30 border rounded hover:text-red-600 transition-all duration-300 py-2"
           >
             Cancel
