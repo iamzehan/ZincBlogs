@@ -29,29 +29,40 @@ const BlogContext = createContext<BlogContextType | undefined>(undefined);
 export const BlogProvider = ({ children }: BlogProviderProps) => {
   const { setAccessToken } = useAuth();
 
-  async function fetchWithAuth(
+  async function fetchWithAuth<T>(
     fetchFn: (options: FetchOptions) => Promise<Response>,
     options: FetchOptions,
-  ) {
-    try {
-      // first fetch
-      const res = await fetchFn(options);
-      if (res.ok) return res.json(); // No issues then return the data
-      // if data fetching failed then refresh token and do it again
-      if (res.status === 401) {
-        const refreshRes = await fetchRefresh();
-        if (!refreshRes.ok) throw new Error("Refresh Failed!");
-        const refreshData: { accessToken: string } = await refreshRes.json();
-        setAccessToken(refreshData.accessToken);
-        // fetch again
-        options.accessToken = refreshData.accessToken;
-        const res = await fetchFn(options);
-        if (res.ok) return res.json();
-        else throw new Error("Sorry, couldn't load data");
-      }
-    } catch (err) {
-      console.error(err);
+  ): Promise<T> {
+    let res = await fetchFn(options);
+
+    if (res.ok) {
+      return res.json();
     }
+
+    if (res.status !== 401) {
+      throw new Error(`Request failed with status ${res.status}`);
+    }
+
+    // refresh token
+    const refreshRes = await fetchRefresh();
+    if (!refreshRes.ok) {
+      throw new Error("Token refresh failed");
+    }
+
+    const { accessToken }: { accessToken: string } = await refreshRes.json();
+    setAccessToken(accessToken);
+
+    // retry with new token (NO mutation)
+    res = await fetchFn({
+      ...options,
+      accessToken,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Retry failed with status ${res.status}`);
+    }
+
+    return res.json();
   }
 
   const value: BlogContextType = {
