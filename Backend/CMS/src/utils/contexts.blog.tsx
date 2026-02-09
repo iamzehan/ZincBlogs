@@ -5,7 +5,7 @@ import { fetchRefresh } from "./requests.auth";
 interface FetchOptions {
   accessToken?: string | null;
   id?: string | null;
-  publish?: boolean | null;
+  publish ?: boolean | false;
   body?: {
     title: string;
     content: string;

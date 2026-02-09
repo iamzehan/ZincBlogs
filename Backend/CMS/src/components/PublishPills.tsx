@@ -12,9 +12,10 @@ export function PublishPills({ props }: { props: Blog }) {
   const handlePublish = () => {
     mutate({
       id,
-      publish: !publish.status,
+      publish: !publish?.status,
     });
-  };
+  }
+
   if(isPending){
     <span
         className="inline-flex gap-2 justify-center items-center w-25 min-w-25 rounded-full bg-zinc-800 px-3 py-1 text-xs font-medium text-zinc-100 border border-zinc-700"
@@ -22,7 +23,7 @@ export function PublishPills({ props }: { props: Blog }) {
         Wait...
       </span>
   }
-  if (publish.status) {
+  if (publish?.status) {
     return (
       <button
         onClick={handlePublish}
