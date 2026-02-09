@@ -35,6 +35,14 @@ export const useNav = ()=> {
 import BlogContext from './contexts.blog';
 export const useBlog = () => {
   const ctx = useContext(BlogContext);
-  if(!ctx) throw new Error("useNav must be use inside BlogPage");
+  if(!ctx) throw new Error("useBlog must be used inside BlogPage");
+  return ctx;
+}
+
+// Subscribers Page Provider hook
+import SubsContext from './contexts.subs';
+export const useSubs = () => {
+  const ctx = useContext(SubsContext);
+  if(!ctx) throw new Error("useSubs must be used inside Subscribers Page");
   return ctx;
 }

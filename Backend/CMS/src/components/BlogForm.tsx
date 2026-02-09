@@ -101,7 +101,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
         )}
         <div
           className={clsx("blog-form-header flex justify-between w-full", {
-            "sticky left-0 bottom-2 bg-zinc-900/80 backdrop-blur-3xl px-2 py-3 border rounded-md border-zinc-600/50":
+            "sticky left-0 bottom-0 bg-zinc-900 backdrop-blur-3xl px-2 py-3 border-zinc-600/50":
               isMobile,
           })}
         >
@@ -109,7 +109,9 @@ export default function BlogForm({ props }: { props: PropsType }) {
             <input
               type="submit"
               value="Save"
-              className="w-20 bg-lime-600 active:bg-lime-800 active:scale-95 border-2 border-lime-600 hover:bg-white hover:text-lime-600 py-2 rounded md:w-30 transition-all duration-300"
+              className="w-20 bg-lime-600 active:bg-lime-800 active:scale-95 border-2
+               border-lime-600 hover:bg-white hover:text-lime-600 
+               py-2 rounded md:w-30 transition-all duration-300"
             />
             <button
               className={clsx(

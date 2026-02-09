@@ -107,6 +107,7 @@ export const createBlog = async (options: FetchOptions) : Promise<Response> => {
     ${env.VITE_BACKEND_URL}/api/blog/create`,
     {
       method: "POST",
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${options.accessToken}`,
         "Content-Type": "application/json; charset=UTF-8"

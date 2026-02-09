@@ -4,29 +4,22 @@ import { fetchRefresh } from "./requests.auth";
 
 interface FetchOptions {
   accessToken?: string | null;
-  id?: string | null;
-  publish?: boolean | null;
-  body?: {
-    title: string;
-    content: string;
-    tags: string[];
-  };
 }
 
-interface BlogContextType {
+interface SubsContextType {
   fetchWithAuth: (
     fetchFn: (options: FetchOptions) => Promise<Response>,
     options: FetchOptions,
   ) => Promise<unknown>;
 }
 
-interface BlogProviderProps {
+interface SubsProviderProps {
   children: React.ReactNode;
 }
 
-const BlogContext = createContext<BlogContextType | undefined>(undefined);
+const SubsContext = createContext<SubsContextType | undefined>(undefined);
 
-export const BlogProvider = ({ children }: BlogProviderProps) => {
+export const SubsProvider = ({ children }: SubsProviderProps) => {
   const { setAccessToken } = useAuth();
 
   async function fetchWithAuth<T>(
@@ -65,10 +58,10 @@ export const BlogProvider = ({ children }: BlogProviderProps) => {
     return res.json();
   }
 
-  const value: BlogContextType = {
+  const value: SubsContextType = {
     fetchWithAuth,
   };
-  return <BlogContext.Provider value={value}>{children}</BlogContext.Provider>;
+  return <SubsContext.Provider value={value}>{children}</SubsContext.Provider>;
 };
 
-export default BlogContext;
+export default SubsContext;
