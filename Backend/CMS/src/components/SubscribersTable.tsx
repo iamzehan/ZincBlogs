@@ -21,7 +21,7 @@ export default function UsersTable() {
   if (error)
     return (
       <div className="h-50 place-content-center text-xl text-red-500 overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950 transition-all duration-300 w-full">
-        Error loading blogs <Error />
+        Error loading Subsribers <Error />
       </div>
     );
   return (
@@ -62,10 +62,10 @@ export default function UsersTable() {
                 {/* Name */}
                 <td
                   className={`px-4 py-3 text-zinc-100 text-sm md:text-base ${
-                    isMobile ? "flex justify-between" : "text-left"
+                    isMobile ? "flex justify-between items-center" : "text-left"
                   }`}
                 >
-                  {isMobile && <span className="font-medium">Name:</span>}
+                  {isMobile && <span className="font-medium text-lg">Name:</span>}
                   <span>
                     {subscriber.firstName} {subscriber.lastName}
                   </span>
@@ -74,32 +74,32 @@ export default function UsersTable() {
                 {/* Username */}
                 <td
                   className={`px-4 py-3 text-zinc-100 text-sm ${
-                    isMobile ? "flex justify-between" : "text-left"
+                    isMobile ? "flex justify-between items-center" : "text-left"
                   }`}
                 >
-                  {isMobile && <span className="font-medium">Username:</span>}
+                  {isMobile && <span className="font-medium text-lg">Username:</span>}
                   <span>@{subscriber.username}</span>
                 </td>
 
                 {/* Email */}
                 <td
                   className={`px-4 py-3 text-zinc-100 text-xs md:text-sm ${
-                    isMobile ? "flex justify-between" : "text-left"
+                    isMobile ? "flex justify-between items-center gap-2" : "text-left"
                   }`}
                 >
-                  {isMobile && <span className="font-medium">Email:</span>}
+                  {isMobile && <span className="font-medium text-lg">Email:</span>}
                   <EmailCopy key={subscriber.email} subscriber={subscriber} />
                 </td>
 
                 {/* Verified */}
                 <td
-                  className={`px-4 py-3 text-center ${
-                    isMobile ? "flex justify-between" : "table-cell"
+                  className={`py-3 px-4 text-center ${
+                    isMobile ? "flex justify-between items-center px-4" : "table-cell"
                   }`}
                 >
-                  {isMobile && <span className="font-medium">Verified:</span>}
+                  {isMobile && <span className="font-medium text-lg">Verified:</span>}
                   <span
-                    className={`px-2 py-1 flex w-20 justify-center rounded-full text-xs font-medium ${
+                    className={`px-2 py-1 flex w-20 justify-center justify-self-center rounded-full text-xs font-medium ${
                       subscriber.isVarified
                         ? "bg-green-500/10 text-green-400"
                         : "bg-red-500/10 text-red-400"
@@ -112,10 +112,10 @@ export default function UsersTable() {
                 {/* Join Date */}
                 <td
                   className={`px-4 py-3 text-zinc-100 text-xs ${
-                    isMobile ? "flex justify-between" : "text-left"
+                    isMobile ? "flex justify-between items-center" : "text-left"
                   }`}
                 >
-                  {isMobile && <span className="font-medium">Join Date:</span>}
+                  {isMobile && <span className="font-medium text-lg">Join Date:</span>}
                   <span>
                     {new Date(subscriber.createdAt).toLocaleDateString()}
                   </span>
@@ -140,7 +140,9 @@ const EmailCopy = ({ subscriber }: { subscriber: Subscriber }) => {
     <button
       type="button"
       onClick={() => handleCopy(subscriber.email)}
-      className="group inline-flex items-center gap-2 hover:text-blue-400 transition-colors"
+      className={clsx("group inline-flex justify-center items-center gap-2 hover:text-blue-400 transition-colors",
+        {"border border-blue-400 bg-blue-400/20 px-4 py-1 w-fit text-[0.9rem] rounded-full text-blue-400": isMobile}
+      )}
       title="Click to copy"
     >
       <span className="truncate">{subscriber.email}</span>
@@ -151,12 +153,13 @@ const EmailCopy = ({ subscriber }: { subscriber: Subscriber }) => {
           "text-zinc-500 group-hover:opacity-100 transition-opacity text-xs",
           { "opacity-0": !isCopied },
           { "opacity-100": isCopied || isMobile },
+          
         )}
       >
         {isCopied ? (
-          <Done className="text-xs!" />
+          <Done className={clsx("text-xs!", {"text-blue-400" : isMobile})} />
         ) : (
-          <ContentCopy className="text-xs!" />
+          <ContentCopy className={clsx("text-xs!", {"text-blue-400" : isMobile})} />
         )}
       </span>
     </button>

@@ -7,7 +7,7 @@ import { fetchAllBlogs } from "../utils/requests.blog";
 import { formatPostDate } from "../utils/formatter.data";
 import { SkeletonBlogsTable } from "./skeletons";
 import { PublishPills } from "./PublishPills";
-import { Error } from "@mui/icons-material";
+import { Error, EditSquare  } from "@mui/icons-material";
 
 export default function BlogsTable() {
   const { accessToken } = useAuth();
@@ -105,6 +105,19 @@ export default function BlogsTable() {
                         : "table-cell",
                     )}
                   >
+                    {isMobile && 
+                    
+                    // Edit button
+                    <Link
+                      to={`/blog/posts/${blog.id}`}
+                      className="h-full bg-white text-zinc-600 font-semibold inline-flex 
+                      w-full border rounded-md items-center justify-center gap-2 
+                      active:scale-95 transition-all duration-300"
+                    >
+                      Edit <EditSquare className="text-zinc-600 text-lg!"/>
+                    </Link>
+                    }
+                    {/* Publish Button */}
                     <PublishPills key={blog.id} props={blog} />
                   </td>
                 </tr>
