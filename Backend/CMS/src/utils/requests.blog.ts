@@ -98,3 +98,22 @@ export const getTags = async (options:FetchOptions): Promise<Response> => {
   if (!res.ok) throw new Error("Failed to get tags");
   return res;
 };
+
+
+// create a blog 
+export const createBlog = async (options: FetchOptions) : Promise<Response> => {
+  const res = await fetch(
+    `
+    ${env.VITE_BACKEND_URL}/api/blog/create`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${options.accessToken}`,
+        "Content-Type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify(options.body)
+    },
+    
+  );
+  return res;
+}

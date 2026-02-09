@@ -9,7 +9,7 @@ export default function Page() {
   const { collapse, isMobile } = useNav();
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/blog/posts/:id");
+    navigate("/blog/posts/create");
   };
   return (
     <BlogProvider>
@@ -22,6 +22,7 @@ export default function Page() {
         )}
       >
         <BlogsTable />
+        {/* Create Blog floating Pen button */}
         <Button
           props={{
             type: "primary",
