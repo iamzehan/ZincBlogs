@@ -1,4 +1,4 @@
-import { useAuth, useSubs } from "../utils/hooks";
+import { useAuth, useIsMobile, useSubs } from "../utils/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { SkeletonBlogsTable } from "./skeletons";
 import { Error } from "@mui/icons-material";
@@ -59,13 +59,13 @@ export default function UsersTable() {
                   @{subscriber.username}
                 </td>
 
-                <td className="px-4 py-3 text-left text-zinc-100 text-xs md:text-sm relative">
+                <td className="px-4 py-3 text-left text-zinc-100 text-xs md:text-sm">
                     <EmailCopy key={subscriber.email} subscriber={subscriber} />
                 </td>
 
-                <td className="px-4 py-3 text-center">
+                <td className="px-4 py-3 text-center grid place-items-center">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    className={`px-2 py-1 flex w-20 justify-center rounded-full text-xs font-medium ${
                       subscriber.isVarified
                         ? "bg-green-500/10 text-green-400"
                         : "bg-red-500/10 text-red-400"
@@ -88,7 +88,7 @@ export default function UsersTable() {
 
 const EmailCopy = ({subscriber}: {subscriber: Subscriber}) => {
   const [isCopied, setCopy] = useState<boolean>(false);
-
+  const isMobile = useIsMobile();
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text);
     setTimeout(() => setCopy(false), 800);
@@ -106,9 +106,9 @@ const EmailCopy = ({subscriber}: {subscriber: Subscriber}) => {
       <span
         key={subscriber.email}
         className={clsx(
-          "text-zinc-500 group-hover:opacity-100 transition-opacity text-xs absolute right-0",
+          "text-zinc-500 group-hover:opacity-100 transition-opacity text-xs",
           { "opacity-0": !isCopied },
-          { "opacity-100": isCopied },
+          { "opacity-100": isCopied || isMobile },
         )}
       >
         {isCopied ? (
