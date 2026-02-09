@@ -21,9 +21,10 @@ export default function Page() {
           { "mx-2!": isMobile },
         )}
       >
-        <BlogsTable />
+        <BlogsTable key="data-table"/>
         {/* Create Blog floating Pen button */}
         <Button
+          key="write-btn"
           props={{
             type: "primary",
             fn: handleClick,
