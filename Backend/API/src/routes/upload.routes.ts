@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import multer from "multer";
-import { ensureAuthor } from "../middlewares/auth.middleware.js";
+import { ensureAuthor, requireAuth } from "../middlewares/auth.middleware.js";
 import * as cloud from "../middlewares/cloudinary.middleware.js";
 import * as controller from "../controllers/image.controller.js";
 const uploadImageRouter = Router();
@@ -9,6 +9,7 @@ const upload = multer(); // memory storage
 // image upload route
 uploadImageRouter.post(
   "/upload",
+  requireAuth,
   ensureAuthor,
   upload.single("image_file"),
   cloud.uploadImage, // uploads image to cloud
@@ -16,8 +17,9 @@ uploadImageRouter.post(
 );
 
 // Image delete route
-uploadImageRouter.post(
+uploadImageRouter.delete(
   "/delete",
+  requireAuth,
   ensureAuthor,
   cloud.deleteImage, // deletes image from cloud
   controller.deleteImageFromDB
