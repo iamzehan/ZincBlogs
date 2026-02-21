@@ -73,6 +73,11 @@ export type Tags = Prisma.TagsModel
  */
 export type TagsOnBlogs = Prisma.TagsOnBlogsModel
 /**
+ * Model Images
+ * 
+ */
+export type Images = Prisma.ImagesModel
+/**
  * Model BlogTitles
  * 
  */

@@ -62,6 +62,7 @@ export const ModelName = {
   Comments: 'Comments',
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
+  Images: 'Images',
   BlogTitles: 'BlogTitles'
 } as const
 
@@ -198,6 +199,17 @@ export const TagsOnBlogsScalarFieldEnum = {
 } as const
 
 export type TagsOnBlogsScalarFieldEnum = (typeof TagsOnBlogsScalarFieldEnum)[keyof typeof TagsOnBlogsScalarFieldEnum]
+
+
+export const ImagesScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  public_id: 'public_id',
+  filename: 'filename',
+  created_at: 'created_at'
+} as const
+
+export type ImagesScalarFieldEnum = (typeof ImagesScalarFieldEnum)[keyof typeof ImagesScalarFieldEnum]
 
 
 export const BlogTitlesScalarFieldEnum = {
