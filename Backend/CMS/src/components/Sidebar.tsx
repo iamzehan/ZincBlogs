@@ -10,7 +10,7 @@ export default function SideBar() {
     <header className="relative">
       <aside
         className={clsx(
-          "w-full md:w-[300px] bg-zinc-800 h-full z-100 origin-left transition-all duration-300 fixed left-0 flex flex-col",
+          "w-full md:w-[300px] bg-zinc-800 h-full z-1000 origin-left transition-all duration-300 fixed left-0 flex flex-col",
           { "-translate-x-full": collapse },
         )}
       >
