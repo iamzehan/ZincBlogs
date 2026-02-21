@@ -5,6 +5,8 @@ import Blogs from "./pages/Blogs";
 import Blog from "./pages/Blog";
 import BlogCreate from "./pages/CreateBlog";
 import Subscribers from "./pages/Subscribers";
+import MediaLibrary from "./pages/MediaLibrary";
+
 import { AuthProvider } from "./utils/contexts.auth";
 import ProtectedRoute from "./utils/protected";
 import MainLayout from "./layouts/MainLayout";
@@ -70,10 +72,19 @@ function App() {
             }
           />
         </Route>
+        <Route path="/media" element={<MainLayout />}>
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <MediaLibrary />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
       {/* Routes End */}
     </AuthProvider>
   );
 }
-
 export default App;
