@@ -395,6 +395,7 @@ export const ModelName = {
   Comments: 'Comments',
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
+  Images: 'Images',
   BlogTitles: 'BlogTitles'
 } as const
 
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "publishBlog" | "comments" | "tags" | "tagsOnBlogs" | "blogTitles"
+    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "publishBlog" | "comments" | "tags" | "tagsOnBlogs" | "images" | "blogTitles"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1229,6 +1230,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Images: {
+      payload: Prisma.$ImagesPayload<ExtArgs>
+      fields: Prisma.ImagesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ImagesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ImagesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        findFirst: {
+          args: Prisma.ImagesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ImagesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        findMany: {
+          args: Prisma.ImagesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>[]
+        }
+        create: {
+          args: Prisma.ImagesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        createMany: {
+          args: Prisma.ImagesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ImagesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>[]
+        }
+        delete: {
+          args: Prisma.ImagesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        update: {
+          args: Prisma.ImagesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        deleteMany: {
+          args: Prisma.ImagesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ImagesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ImagesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>[]
+        }
+        upsert: {
+          args: Prisma.ImagesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagesPayload>
+        }
+        aggregate: {
+          args: Prisma.ImagesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateImages>
+        }
+        groupBy: {
+          args: Prisma.ImagesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImagesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ImagesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImagesCountAggregateOutputType> | number
+        }
+      }
+    }
     BlogTitles: {
       payload: Prisma.$BlogTitlesPayload<ExtArgs>
       fields: Prisma.BlogTitlesFieldRefs
@@ -1425,6 +1500,17 @@ export const TagsOnBlogsScalarFieldEnum = {
 export type TagsOnBlogsScalarFieldEnum = (typeof TagsOnBlogsScalarFieldEnum)[keyof typeof TagsOnBlogsScalarFieldEnum]
 
 
+export const ImagesScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  public_id: 'public_id',
+  filename: 'filename',
+  created_at: 'created_at'
+} as const
+
+export type ImagesScalarFieldEnum = (typeof ImagesScalarFieldEnum)[keyof typeof ImagesScalarFieldEnum]
+
+
 export const BlogTitlesScalarFieldEnum = {
   id: 'id',
   title: 'title'
@@ -1501,6 +1587,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1609,6 +1709,7 @@ export type GlobalOmitConfig = {
   comments?: Prisma.CommentsOmit
   tags?: Prisma.TagsOmit
   tagsOnBlogs?: Prisma.TagsOnBlogsOmit
+  images?: Prisma.ImagesOmit
   blogTitles?: Prisma.BlogTitlesOmit
 }
 

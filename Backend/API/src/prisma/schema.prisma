@@ -147,6 +147,15 @@ model TagsOnBlogs {
   @@index([tagId])
 }
 
+// Images 
+model Images {
+  id          Int      @id @default(autoincrement())
+  url         String
+  public_id   String   @unique
+  filename    String
+  created_at  DateTime @default(now())
+  @@index([public_id])
+}
 // The following view is created so it's easier to use blog titles on the side navigation
 view BlogTitles{
   id String @unique
