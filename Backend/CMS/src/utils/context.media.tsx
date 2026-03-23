@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { useAuth } from "./hooks";
 import { fetchRefresh } from "./requests.auth";
 
@@ -12,6 +12,8 @@ interface MediaContextType {
     fetchFn: (options: FetchOptions) => Promise<Response>,
     options: FetchOptions,
   ) => Promise<unknown>;
+  imgURL: string | null;
+  setImgURL: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface MediaProviderProps {
@@ -22,6 +24,7 @@ const MediaContext = createContext<MediaContextType | undefined>(undefined);
 
 export const MediaProvider = ({ children }: MediaProviderProps) => {
   const { setAccessToken } = useAuth();
+  const [ imgURL, setImgURL ] = useState<string | null>(null)
 
   async function fetchWithAuth<T>(
     fetchFn: (options: FetchOptions) => Promise<Response>,
@@ -61,6 +64,8 @@ export const MediaProvider = ({ children }: MediaProviderProps) => {
 
   const value: MediaContextType = {
     fetchWithAuth,
+    imgURL,
+    setImgURL
   };
   return <MediaContext.Provider value={value}>{children}</MediaContext.Provider>;
 };
