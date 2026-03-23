@@ -6,6 +6,11 @@ import * as controller from "../controllers/image.controller.js";
 const uploadImageRouter = Router();
 const upload = multer(); // memory storage
 
+// get all images
+uploadImageRouter.get("/all", requireAuth, ensureAuthor,
+  controller.getAllImages
+);
+
 // image upload route
 uploadImageRouter.post(
   "/upload",
