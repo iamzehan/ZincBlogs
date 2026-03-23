@@ -5,6 +5,7 @@ import { fetchRefresh } from "./requests.auth";
 interface FetchOptions {
   accessToken?: string | null;
   public_id?: string | null;
+  file ? : File;
 }
 
 interface MediaContextType {
