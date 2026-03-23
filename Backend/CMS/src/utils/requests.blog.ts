@@ -114,7 +114,6 @@ export const createBlog = async (options: FetchOptions) : Promise<Response> => {
       },
       body: JSON.stringify(options.body)
     },
-    
   );
   return res;
 }

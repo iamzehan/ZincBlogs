@@ -1,30 +1,31 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { publishBlog } from "./requests.blog";
-import { useAuth, useBlog } from "./hooks";
+import { deleteImage } from "./requests.media";
+
+import { useAuth, useBlog, useMedia } from "./hooks";
 
 // This mutation hook stops the parent query that gets blog data and lets through the publish blog query
 export function useTogglePublish() {
-// get access token
+  // get access token
   const { accessToken } = useAuth();
-//   useBlog hook to fetch
+  //   useBlog hook to fetch
   const { fetchWithAuth } = useBlog();
-// use Query client to mutate
+  // use Query client to mutate
   const queryClient = useQueryClient();
-// return useMutation hook to access it's property as a callback
+  // return useMutation hook to access it's property as a callback
   return useMutation({
     // defines the mutation function (API call runs when mutate() is called)
-    mutationFn: 
-    ({ id, publish }: { id: string; publish: boolean }) =>
-    fetchWithAuth(publishBlog, { id, publish, accessToken }),
+    mutationFn: ({ id, publish }: { id: string; publish: boolean }) =>
+      fetchWithAuth(publishBlog, { id, publish, accessToken }),
 
     // cancel any in-flight refetches for this query to avoid overwriting optimistic data
     onMutate: async ({ id, publish }) => {
       await queryClient.cancelQueries({ queryKey: ["blogData"] });
-      
-    //   record the previous query data
+
+      //   record the previous query data
       const previous = queryClient.getQueryData<Blog[]>(["blogData"]);
 
-    // optimistically update the cached query data (client-side only)
+      // optimistically update the cached query data (client-side only)
       queryClient.setQueryData<Blog[]>(["blogData"], (old) =>
         old?.map((blog) =>
           blog.id === id
@@ -32,7 +33,7 @@ export function useTogglePublish() {
             : blog,
         ),
       );
-    // return previous data so it can be used for rollback if the mutation fails
+      // return previous data so it can be used for rollback if the mutation fails
       return { previous };
     },
     // if mutation function fails then set data as previous
@@ -42,8 +43,39 @@ export function useTogglePublish() {
     // when it succeeds mark as stale
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blogData"] });
-    }
+    },
   });
 }
 
-// ======================== This was a hell of a study I had done in 2 hours ============================= //
+// This mutation allows us to stop image fetching query and delete an image
+export function useDeleteMutation() {
+  // get access token
+  const { accessToken } = useAuth();
+  //   useBlog hook to fetch
+  const { fetchWithAuth } = useMedia();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (public_id: string) =>
+      fetchWithAuth(deleteImage, { accessToken, public_id }),
+
+    onMutate: async (public_id) => {
+      await queryClient.cancelQueries({ queryKey: ["imageData"] });
+
+      const previous = queryClient.getQueryData(["imageData"]);
+
+      queryClient.setQueryData(["imageData"], (old: ImageDataType[]) =>
+        old?.filter((img) => img.public_id !== public_id),
+      );
+
+      return { previous };
+    },
+
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(["imageData"], context?.previous);
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["imageData"] });
+    },
+  });
+}

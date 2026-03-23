@@ -46,3 +46,11 @@ export const useSubs = () => {
   if(!ctx) throw new Error("useSubs must be used inside Subscribers Page");
   return ctx;
 }
+
+// Media Library Page Provider hook
+import MediaContext from './context.media';
+export const useMedia = ()=> {
+  const ctx = useContext(MediaContext);
+  if(!ctx) throw new Error ("useMedia must be used inside Media Library Page");
+  return ctx;
+}
