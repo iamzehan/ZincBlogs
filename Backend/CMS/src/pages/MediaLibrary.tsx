@@ -43,7 +43,7 @@ export default function Page() {
           type: "primary",
           fn: ()=> 0,
           additionalDesign: `
-                  fixed bottom-2 z-10
+                  fixed bottom-2 right-10 z-10
                   bottom-10
                   self-end rounded-full md:rounded-lg`,
         }}
