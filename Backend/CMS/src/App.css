@@ -10,6 +10,38 @@ body {
   @apply bg-zinc-700 w-screen;
 }
 
+/* Modal Dialog styles */
+dialog::backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.3);
+}
+dialog[open] {
+  animation: 0.2s dialog-pop-in ease-in forwards;
+}
+/* Entry animation */
+@keyframes dialog-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Exit animation */
+@keyframes dialog-pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+}
+
 .login-form{
   @apply pb-5 w-full flex flex-col gap-1 justify-center max-w-80 md:max-w-full md:shadow-xl md:shadow-zinc-900/20;
   @apply md:border-2 md:border-zinc-500/20 md:rounded-2xl md:w-100 md:h-100 md:bg-zinc-600/50;
