@@ -3,7 +3,7 @@
 // Components
 import Image from "../components/Image";
 import Grid from "../components/ImageGrid";
-import Button from "../components/Buttons";
+import UploadModal from "../components/UploadModal";
 
 // Icons
 import {
@@ -15,7 +15,6 @@ import {
   Error,
   Done,
   Image as ImageIcon,
-  AddAPhoto
 } from "@mui/icons-material";
 
 // Style library
@@ -37,20 +36,7 @@ export default function Page() {
     <MediaProvider>
       <FullScreen />
       <ImageGrid />
-      <Button
-        key="write-btn"
-        props={{
-          type: "primary",
-          fn: ()=> 0,
-          additionalDesign: `
-                  fixed bottom-2 right-10 z-10
-                  bottom-10
-                  self-end rounded-full md:rounded-lg`,
-        }}
-      >
-        <p className="hidden md:block text-xl px-2">Upload</p>
-        <AddAPhoto className="md:text-xl! text-4xl!" />
-      </Button>
+      <UploadModal/>
     </MediaProvider>
   );
 }

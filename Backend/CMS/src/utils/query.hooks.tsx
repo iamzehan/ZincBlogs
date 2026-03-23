@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { publishBlog } from "./requests.blog";
 import { deleteImage } from "./requests.media";
+import { uploadImage } from "./requests.media";
 
 import { useAuth, useBlog, useMedia } from "./hooks";
 
@@ -75,6 +76,62 @@ export function useDeleteMutation() {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["imageData"] });
+    },
+  });
+}
+
+export function useUploadMutation() {
+  const { accessToken } = useAuth();
+  const { fetchWithAuth } = useMedia();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (file: File) => {
+      return fetchWithAuth(uploadImage, {
+        accessToken,
+        file
+      });
+    },
+
+    // Optimistic update
+    onMutate: async (file) => {
+      await queryClient.cancelQueries({ queryKey: ["imageData"] });
+
+      const previous = queryClient.getQueryData<ImageDataType[]>(["imageData"]);
+
+      // temporary preview (VERY important for UX)
+      const tempId = `temp-${Date.now()}`;
+      const previewURL = URL.createObjectURL(file);
+
+      queryClient.setQueryData(["imageData"], (old: ImageDataType[]) => [
+        {
+          public_id: tempId,
+          url: previewURL,
+          isUploading: true, // optional flag
+        },
+        ...old,
+      ]);
+
+      return { previous, tempId };
+    },
+
+    // Rollback on failure
+    onError: (_err, _file, context) => {
+      queryClient.setQueryData(["imageData"], context?.previous);
+    },
+
+    // Replace temp with real data
+    onSuccess: (data, _file, context) => {
+      queryClient.setQueryData(["imageData"], (old : ImageDataType[]) =>
+        old.map((img) =>
+          img.public_id === context?.tempId ? data : img
+        )
+      );
+    },
+
+    // Final sync
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["imageData"] });
     },
   });
