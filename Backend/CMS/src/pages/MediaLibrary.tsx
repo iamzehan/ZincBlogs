@@ -1,6 +1,11 @@
-import { useState } from "react";
+// =============== IMPORTS =============== //
+
+// Components
 import Image from "../components/Image";
 import Grid from "../components/ImageGrid";
+import Button from "../components/Buttons";
+
+// Icons
 import {
   MoreVert,
   DeleteOutline,
@@ -9,29 +14,82 @@ import {
   Link,
   Error,
   Done,
-  Image as ImageIcon
+  Image as ImageIcon,
+  AddAPhoto
 } from "@mui/icons-material";
+
+// Style library
 import clsx from "clsx";
-import { useAuth, useIsMobile, useMedia } from "../utils/hooks";
+
+// Contexts & Requests
 import { MediaProvider } from "../utils/context.media";
+import { getAllImages } from "../utils/requests.media";
+
+// hooks & queries
 import { useQuery } from "@tanstack/react-query";
-import { getAllImages} from "../utils/requests.media";
+import { useState, useRef, useEffect, type SetStateAction } from "react";
+import { useAuth, useIsMobile, useMedia } from "../utils/hooks";
 import { useDeleteMutation } from "../utils/query.hooks";
 
-
+// =============== PAGE COMPONENT =============== //
 export default function Page() {
   return (
     <MediaProvider>
+      <FullScreen />
       <ImageGrid />
+      <Button
+        key="write-btn"
+        props={{
+          type: "primary",
+          fn: ()=> 0,
+          additionalDesign: `
+                  fixed bottom-2 z-10
+                  bottom-10
+                  self-end rounded-full md:rounded-lg`,
+        }}
+      >
+        <p className="hidden md:block text-xl px-2">Upload</p>
+        <AddAPhoto className="md:text-xl! text-4xl!" />
+      </Button>
     </MediaProvider>
   );
 }
-interface ImageDataType {
-  id: string;
-  url: string;
-  public_id: string;
-}
 
+// =============== FULL SCREEN VIEW =============== //
+// HTML Dialog Element to show full screen image
+function FullScreen() {
+  const { imgURL, setImgURL } = useMedia();
+  const ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (imgURL) {
+      ref.current?.showModal();
+    } else {
+      ref.current?.close();
+    }
+  }, [imgURL]);
+  if (!imgURL) return null;
+  return (
+    // Popup modal
+    <dialog
+      ref={ref}
+      className="flex border rounded backdrop-blur-xl max-w-200 z-100 self-center justify-self-center"
+    >
+      {/* Close modal button */}
+      <Close
+        onClick={() => setImgURL(null)}
+        className="border rounded-full absolute
+       top-1 right-2 bg-red-400 z-10 cursor-pointer hover:bg-white hover:text-red-400"
+        fontSize="medium"
+      />
+      {/* Full-screen image */}
+      <Image props={{ src: imgURL, alt: "img", className: "w-auto" }} />
+    </dialog>
+  );
+}
+// =============== FULL SCREEN VIEW END =============== //
+
+// =============== IMAGE GRID =============== //
 function ImageGrid() {
   const { accessToken } = useAuth();
   const { fetchWithAuth } = useMedia();
@@ -59,30 +117,37 @@ function ImageGrid() {
   else {
     return (
       <div className="border-dashed border mx-2 rounded h-50 place-content-center">
-        No Images <ImageIcon fontSize="medium" className="text-red-400"/>
+        No Images <ImageIcon fontSize="medium" className="text-red-400" />
       </div>
     );
   }
 }
+// =============== IMAGE GRID END =============== //
 
-// Image cards
+// =============== IMAGE CARDS =============== //
 function ImageCard({ props }: { props: ImageDataType }) {
   // showMenu state is used for hover effect on the menu options
-  // hovering on an image shows the menu button
+  // hovering on an image shows the menu button | in mobile tapping the image shows menu button
   const [showMenu, setMenu] = useState(false);
+
+  // Dropdown menu show hide true=show, false=hide
+  const [showDropDown, setDropDown] = useState(false);
 
   const isMobile = useIsMobile();
 
   // unpack props id: used for key, url: shows image
   const { id, url } = props;
   return (
+    // Image Container
     <div
       onMouseEnter={() => setMenu(true)}
       onMouseLeave={() => setMenu(false)}
       onFocus={() => (isMobile ? setMenu(true) : "")}
-      onBlur={() => (isMobile ? setMenu(false) : "")}
+      onBlur={() => (isMobile && !showDropDown ? setMenu(false) : "")}
+      onMouseDown={() => (isMobile ? setMenu(true) : "")}
       className="p-2 rounded flex flex-col gap-2 relative bg-zinc-900 shadow-md contain-content"
     >
+      {/* Image */}
       <Image
         props={{
           src: `${url}`,
@@ -90,7 +155,8 @@ function ImageCard({ props }: { props: ImageDataType }) {
           className: "object-cover aspect-square",
         }}
       />
-
+      
+      {/* Dropdown menu */}
       {showMenu && (
         <span
           className={clsx(
@@ -99,9 +165,13 @@ function ImageCard({ props }: { props: ImageDataType }) {
             { "bg-transparent": !showMenu },
           )}
         >
-          <ImageMenu key={id} props={props} />
+          <ImageMenu
+            key={id}
+            props={{ image: props, showDropDown, setDropDown }}
+          />
         </span>
       )}
+      {/* Image Name */}
       {showMenu && !isMobile && (
         <p className="font-bold z-200 border border-blue-500 rounded-br rounded-bl border-t-0 absolute py-4 bottom-0 left-0 w-full bg-black/50">
           Image Name
@@ -111,10 +181,21 @@ function ImageCard({ props }: { props: ImageDataType }) {
   );
 }
 
-// Image Menu
-function ImageMenu({ props }: { props: ImageDataType }) {
-  // Dropdown menu show hide true=show, false=hide
-  const [showDropDown, setDropDown] = useState(false);
+// =============== IMAGE CARDS END =============== //
+
+// =============== IMAGE DROPDOWN MENU =============== //
+function ImageMenu({
+  props,
+}: {
+  props: {
+    image: ImageDataType;
+
+    showDropDown: boolean;
+    setDropDown: React.Dispatch<SetStateAction<boolean>>;
+  };
+}) {
+  //  Unpack props
+  const { image, showDropDown, setDropDown } = props;
 
   // Copy image URL
   const [isCopied, setCopy] = useState<boolean>(false);
@@ -124,22 +205,28 @@ function ImageMenu({ props }: { props: ImageDataType }) {
     setCopy(true);
   };
 
+  // Full Screen Image
+  const { setImgURL } = useMedia();
+
   // mutation operation for image deletion
   const deleteImageMutation = useDeleteMutation();
   const handleDelete = async (public_id: string) => {
     deleteImageMutation.mutate(public_id);
   };
   // unpack props - public_id is used to delete image and url is used to copy image and show full-screen
-  const { url, public_id } = props;
+  const { url, public_id } = image;
 
   return (
     <>
+      {/* Menu & Close button */}
       <button
         onClick={() => setDropDown((prev) => !prev)}
         className="absolute right-2 top-2 flex justify-center p-1 rounded-full bg-zinc-500/50"
       >
         {!showDropDown ? <MoreVert /> : <Close />}
       </button>
+
+      {/* Dropdown menu options */}
       <div
         className={clsx(
           "absolute min-w-[50%] flex flex-col scale-0 contain-content z-400",
@@ -148,6 +235,7 @@ function ImageMenu({ props }: { props: ImageDataType }) {
           { "scale-100": showDropDown },
         )}
       >
+        {/* Copy Image URL */}
         <div
           onClick={() => handleCopy(url)}
           className="p-2 text-white hover:bg-green-500 hover:text-white flex items-center justify-between"
@@ -155,10 +243,17 @@ function ImageMenu({ props }: { props: ImageDataType }) {
           Copy URL
           {!isCopied ? <Link fontSize="small" /> : <Done fontSize="small" />}
         </div>
-        <div className="p-2 text-white hover:bg-zinc-500 border-t border-b border-zinc-300 hover:text-zinc-200 flex items-center justify-between">
-          Full screen
+
+        {/* Full Screen Image */}
+        <div
+          onClick={() => setImgURL(url)}
+          className="p-2 text-white hover:bg-zinc-500 gap-2 border-t border-b border-zinc-300 hover:text-zinc-200 flex items-center justify-between"
+        >
+          Full-Screen
           <Fullscreen fontSize="small" />
         </div>
+
+        {/* Delete */}
         <div
           onClick={() => handleDelete(public_id)}
           className="p-2 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-between"
@@ -170,3 +265,6 @@ function ImageMenu({ props }: { props: ImageDataType }) {
     </>
   );
 }
+// =============== IMAGE DROPDOWN MENU END =============== //
+
+// ===================================================== END =================================================//
