@@ -1,18 +1,21 @@
 import BlogForm from "../components/BlogCreateForm";
 import { useEffect } from "react";
 import { BlogProvider } from "../utils/contexts.blog";
+import { MediaProvider } from "../utils/context.media";
 import { useNav } from "../utils/hooks";
 import clsx from "clsx";
 
 export default function Page() {
-
-  const { setCustomHeader, collapse } = useNav();
+  const { setCustomHeader, setCollapse, collapse } = useNav();
   useEffect(() => {
-      setCustomHeader("Create blog");
+    setCollapse(true);
+    setCustomHeader(null);
+    setCustomHeader("Create blog");
   }, []);
 
-    return (
-      <BlogProvider>
+  return (
+    <BlogProvider>
+      <MediaProvider>
         <div
           className={clsx(
             "transition-all duration-300 md:w-screen grid place-content-center",
@@ -27,6 +30,7 @@ export default function Page() {
 
           {/* Markdown Preview Ends */}
         </div>
-      </BlogProvider>
-    );
+      </MediaProvider>
+    </BlogProvider>
+  );
 }
