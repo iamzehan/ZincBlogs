@@ -1,10 +1,11 @@
 import MultiSelectInput from "./AutoSuggest";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTags, createBlog } from "../utils/requests.blog";
 import { useAuth, useBlog, useIsMobile } from "../utils/hooks";
 import clsx from "clsx";
 
+import { placeCursorAtEnd } from "../utils/events";
 interface BlogType {
   title: string;
   content: string;
@@ -39,6 +40,15 @@ export default function BlogForm() {
     fetchOptions();
   }, []);
 
+  // On focus/ On click --> scrolldown the textarea place cursor in the end
+    const contentEl = useRef<HTMLTextAreaElement>(null);
+    function handleCursor(){
+      if(contentEl.current) {
+        placeCursorAtEnd(contentEl.current);
+        contentEl.current.scrollTop = contentEl.current?.scrollHeight;
+      }
+  
+    }
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       <form
@@ -58,9 +68,16 @@ export default function BlogForm() {
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
           Main Content
           <textarea
+            ref={contentEl}
             name="content"
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
+            onFocus={()=> {
+              handleCursor();
+            }}
+            onClick={()=> {
+              handleCursor();
+            }}
             required
           />
         </label>
