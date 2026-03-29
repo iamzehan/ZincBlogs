@@ -15,7 +15,10 @@ dialog::backdrop {
   backdrop-filter: blur(8px);
   background: rgba(0,0,0,0.3);
 }
-dialog[open] {
+dialog{
+  margin:auto;
+  inset: 0;
+  position: fixed;
   animation: 0.2s dialog-pop-in ease-in forwards;
 }
 /* Entry animation */
@@ -106,5 +109,11 @@ button{
 
 /* Textarea */
 .blog-form-textarea {
+  scrollbar-width: thin;
   @apply min-h-100 w-full resize-y rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm leading-relaxed text-zinc-200 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/40;
+}
+
+/* Form Input text format */
+.blog-form-input, .blog-form-textarea {
+  @apply font-normal;
 }
