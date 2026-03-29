@@ -1,19 +1,33 @@
+// React Hooks
 import { useState, useRef } from "react";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import CloseIcon from "@mui/icons-material/Close";
-import { AddAPhoto } from "@mui/icons-material";
-import Button from "./Buttons";
+
+// Icons
+import {
+  CloudUpload, 
+  Close
+} from "@mui/icons-material"
+
+// Tanstack Query Mutations
 import { useUploadMutation } from "../utils/query.hooks";
 
-export default function UploadModal() {
-  const [open, setOpen] = useState(false);
+// Component
+export default function UploadModal({props} : {
+  props: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+}) {
+  const {open, setOpen} = props;
   const [file, setFile] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const uploadFileMutation = useUploadMutation();
 
   const handleUpload = (f: File) => {
     uploadFileMutation.mutate(f);
-    setOpen((prev)=> !prev);
+    if (uploadFileMutation.isSuccess) {
+      setOpen(false);
+      setFile(null);
+    }
   };
   const handleFile = (f: File) => {
     if (!f.type.startsWith("image/")) return;
@@ -29,25 +43,9 @@ export default function UploadModal() {
 
   return (
     <>
-      {/* Trigger button */}
-      <Button
-        key="write-btn"
-        props={{
-          type: "primary",
-          fn: () => setOpen(true),
-          additionalDesign: `
-                        fixed bottom-2 right-10 z-10
-                        bottom-10
-                        self-end rounded-full md:rounded-lg`,
-        }}
-      >
-        <p className="hidden md:block text-xl px-2">Upload</p>
-        <AddAPhoto className="md:text-xl! text-4xl!" />
-      </Button>
-
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-100 p-4 flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <div className="bg-zinc-900 text-zinc-100 w-full max-w-md rounded-2xl p-6 relative shadow-xl">
             {/* Close */}
             <button
@@ -55,9 +53,9 @@ export default function UploadModal() {
                 setOpen(false);
                 setFile(null);
               }}
-              className="absolute top-3 right-3 text-zinc-400 hover:text-white"
+              className="absolute top-0 right-0 bg-zinc-600 p-1 rounded-tr-2xl rounded-bl-xl text-zinc-400 hover:text-white"
             >
-              <CloseIcon />
+              <Close />
             </button>
 
             <h2 className="text-lg font-semibold mb-4">Upload Image</h2>
@@ -69,7 +67,7 @@ export default function UploadModal() {
               onDrop={handleDrop}
               className="border-2 border-dashed border-zinc-700 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-zinc-500 transition"
             >
-              <CloudUploadIcon
+              <CloudUpload
                 className="text-zinc-400 mb-2"
                 fontSize="large"
               />

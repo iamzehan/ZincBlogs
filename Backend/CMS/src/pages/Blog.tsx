@@ -3,6 +3,7 @@ import BlogForm from "../components/BlogForm";
 import { useEffect, useState } from "react";
 import { getBlog } from "../utils/requests.blog";
 import { BlogProvider } from "../utils/contexts.blog";
+import { MediaProvider } from "../utils/context.media";
 import { useNav } from "../utils/hooks";
 import clsx from "clsx";
 interface BlogType {
@@ -18,7 +19,7 @@ export default function Page() {
   const [isError, setError] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<null | BlogType>(null);
-  const { setCustomHeader, collapse } = useNav();
+  const { setCustomHeader, collapse, setCollapse } = useNav();
   useEffect(() => {
     async function fetchBlog() {
       try {
@@ -34,10 +35,12 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if(id){
-    setCustomHeader("Update blog")
-    };
-  }, [id]);
+    if (id!==null) {
+      setCustomHeader(null);
+      setCustomHeader("Update blog");
+      setCollapse(true);
+    }
+  }, [id, setCustomHeader, setCollapse]);
 
   if (isError) return <p>Error loading blog</p>;
 
@@ -46,28 +49,30 @@ export default function Page() {
   if (data)
     return (
       <BlogProvider>
-        <div
-          className={clsx(
-            "transition-all duration-300 md:w-screen grid place-content-center",
-            { "xl:w-[calc(100vw-100px)]": collapse },
-            { "xl:w-[calc(100vw-350px)] xl:ml-5!": !collapse },
-          )}
-        >
-          {/* Form */}
-          <BlogForm
-            props={{
-              id: data?.id,
-              title: data?.title,
-              content: data?.content,
-              tags: data?.tags,
-              publish: data?.publish,
-            }}
-          />
-          {/* Form Ends */}
-          {/* Markdown Preview */}
+        <MediaProvider>
+          <div
+            className={clsx(
+              "transition-all duration-300 md:w-screen grid place-content-center",
+              { "xl:w-[calc(100vw-100px)]": collapse },
+              { "xl:w-[calc(100vw-350px)] xl:ml-5!": !collapse },
+            )}
+          >
+            {/* Form */}
+            <BlogForm
+              props={{
+                id: data?.id,
+                title: data?.title,
+                content: data?.content,
+                tags: data?.tags,
+                publish: data?.publish,
+              }}
+            />
+            {/* Form Ends */}
+            {/* Markdown Preview */}
 
-          {/* Markdown Preview Ends */}
-        </div>
+            {/* Markdown Preview Ends */}
+          </div>
+        </MediaProvider>
       </BlogProvider>
     );
 }
