@@ -5,7 +5,7 @@ import { getTags, createBlog } from "../../utils/requests.blog";
 import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
 import clsx from "clsx";
 
-import UploadModal from "../UploadModal";
+import { UploadWrapper } from "./components/UploadWrapper";
 // Component
 import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
 
@@ -58,9 +58,12 @@ export default function BlogForm() {
       contentEl.current.scrollTop = contentEl.current?.scrollHeight;
     }
   }
+
+  // uploaded image added to text
+  const [text, setText] = useState<string>("");
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
-      <UploadModal props={{ open: upload, setOpen: setUpload }} />
+      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText }} />
 
       {/* The following modal enables the user to choose upload options */}
       <UploadOptions props={{ open, setOpen, setUpload }} />
@@ -87,10 +90,10 @@ export default function BlogForm() {
             name="content"
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
-            onFocus={() => {
-              handleCursor();
-            }}
+            value={text}
             required
+            onFocus={handleCursor}
+            onChange={(e) => setText(e.target.value)}
           />
         </label>
 

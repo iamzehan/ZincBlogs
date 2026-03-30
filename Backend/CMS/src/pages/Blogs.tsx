@@ -30,7 +30,8 @@ export default function Page() {
             fn: handleClick,
             additionalDesign: `
             fixed bottom-2 z-10
-            bottom-10
+            bottom-10 font-medium
+            border-animate
             self-end rounded-full md:rounded-lg`
           }}
         >

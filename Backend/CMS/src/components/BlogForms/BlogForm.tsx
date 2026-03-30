@@ -11,7 +11,7 @@ import { placeCursorAtEnd } from "../../utils/events";
 import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
 
 import clsx from "clsx";
-import UploadModal from "../UploadModal";
+import { UploadWrapper } from "./components/UploadWrapper";
 
 // Form Props
 interface PropsType {
@@ -116,10 +116,13 @@ export default function BlogForm({ props }: { props: PropsType }) {
     wasFocused.current = false;
   };
 
+  // Text content state
+  const [text, setText] = useState<string>(content);
+
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       {/* The following modal enables the user to upload file */}
-      <UploadModal props={{ open: upload, setOpen: setUpload }} />
+      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText }} />
       
       {/* The following modal enables the user to choose upload options */}
       <UploadOptions props={{ open, setOpen, setUpload }} />
@@ -144,12 +147,14 @@ export default function BlogForm({ props }: { props: PropsType }) {
           <textarea
             ref={textareaRef}
             name="content"
-            defaultValue={content}
+            defaultValue={text}
+            value={text}
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
             onClick={()=> handleFocus()}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onChange={(e) => setText(e.target.value)}
             required
           />
         </label>

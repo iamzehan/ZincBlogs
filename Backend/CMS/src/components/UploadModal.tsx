@@ -1,33 +1,30 @@
 // React Hooks
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 // Icons
-import {
-  CloudUpload, 
-  Close
-} from "@mui/icons-material"
-
-// Tanstack Query Mutations
-import { useUploadMutation } from "../utils/query.hooks";
+import { CloudUpload, Close, FileUpload } from "@mui/icons-material";
 
 // Component
-export default function UploadModal({props} : {
+export default function UploadModal({
+  props,
+}: {
   props: {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  }
-}) {
-  const {open, setOpen} = props;
-  const [file, setFile] = useState<File | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const uploadFileMutation = useUploadMutation();
-
-  const handleUpload = (f: File) => {
-    uploadFileMutation.mutate(f);
-    setOpen(false);
-    setFile(null);
+    file: File | null;
+    setFile: React.Dispatch<React.SetStateAction<File | null>>;
+    onUpload: (file: File) => Promise<void>;
+    isUploading?: boolean;
   };
-  
+}) {
+  const { open, setOpen, file, setFile, onUpload, isUploading } = props;
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleUpload = async (f: File) => {
+    await onUpload(f);
+  };
+
   const handleFile = (f: File) => {
     if (!f.type.startsWith("image/")) return;
     setFile(f);
@@ -66,10 +63,7 @@ export default function UploadModal({props} : {
               onDrop={handleDrop}
               className="border-2 border-dashed border-zinc-700 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-zinc-500 transition"
             >
-              <CloudUpload
-                className="text-zinc-400 mb-2"
-                fontSize="large"
-              />
+              <CloudUpload className="text-zinc-400 mb-2" fontSize="large" />
 
               <p className="text-sm text-zinc-400">
                 Drag & drop or{" "}
@@ -91,18 +85,29 @@ export default function UploadModal({props} : {
             {/* Preview */}
             {file && (
               <div className="mt-4">
-                <p className="text-sm mb-2 text-zinc-400">Preview:</p>
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="preview"
-                  className="w-fit justify-self-center rounded-lg max-h-60 object-contain border border-zinc-700"
-                />
+                <div className="relative flex justify-center bg-black items-center border border-zinc-700 rounded-lg overflow-hidden max-h-60">
+                  <p className="absolute text-sm mb-2 text-zinc-400 
+                  top-0 pl-2 bg-black/50 left-0 text-left">
+                    Preview:
+                  </p>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="preview"
+                    className="max-h-60 object-contain"
+                  />
+
+                  {isUploading && (
+                    <div className="absolute animate-pulse inset-0 bg-black/80 flex items-center justify-center gap-2 text-sm text-white">
+                      Uploading...
+                      <FileUpload className="animate-pulse" />
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
             {/* Actions */}
             <div className="mt-6 flex justify-end gap-2">
-              
               <button
                 disabled={!file}
                 className="px-4 py-2 rounded-lg bg-white text-black hover:bg-zinc-200 disabled:opacity-50"
@@ -123,7 +128,6 @@ export default function UploadModal({props} : {
               >
                 Cancel
               </button>
-
             </div>
           </div>
         </div>

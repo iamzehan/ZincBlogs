@@ -136,3 +136,22 @@ export function useUploadMutation() {
     },
   });
 }
+
+
+// Handle upload and insert in the text area
+
+export function useUploadAndInsert() {
+  const { accessToken } = useAuth();
+  const { fetchWithAuth } = useMedia();
+
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const data = await fetchWithAuth(uploadImage, {
+        accessToken,
+        file,
+      }) as ImageDataType;
+
+      return data?.url;
+    },
+  });
+}
