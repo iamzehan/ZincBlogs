@@ -1,4 +1,4 @@
-import BlogForm from "../components/BlogCreateForm";
+import BlogForm from "../components/BlogForms/BlogCreateForm";
 import { useEffect } from "react";
 import { BlogProvider } from "../utils/contexts.blog";
 import { MediaProvider } from "../utils/context.media";

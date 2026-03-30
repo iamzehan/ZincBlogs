@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import BlogForm from "../components/BlogForm";
+import BlogForm from "../components/BlogForms/BlogForm";
 import { useEffect, useState } from "react";
 import { getBlog } from "../utils/requests.blog";
 import { BlogProvider } from "../utils/contexts.blog";
