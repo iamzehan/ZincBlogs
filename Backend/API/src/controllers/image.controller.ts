@@ -29,7 +29,7 @@ export const insertImageToDB = async (req: Request, res: Response) => {
       }
     });
 
-    res.status(200).json({ message: "Image uploaded!" });
+    res.status(200).json({ message: "Image uploaded!", url });
   } catch {
     res.status(500).json({ message: "Internal Server Error" });
   }
