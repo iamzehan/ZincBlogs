@@ -4,9 +4,11 @@
 import Image from "../components/Image";
 import Grid from "../components/ImageGrid";
 import UploadModal from "../components/UploadModal";
+import UploadButton from "../components/Buttons";
 
 // Icons
 import {
+  AddAPhoto,
   MoreVert,
   DeleteOutline,
   Fullscreen,
@@ -32,11 +34,29 @@ import { useDeleteMutation } from "../utils/query.hooks";
 
 // =============== PAGE COMPONENT =============== //
 export default function Page() {
+  const [open, setOpen] = useState(false);
+  
   return (
     <MediaProvider>
       <FullScreen />
       <ImageGrid />
-      <UploadModal/>
+      <UploadModal props={{open, setOpen}}/>
+      {/* Upload Modal Trigger button */}
+      <UploadButton
+        key="write-btn"
+        props={{
+          type: "primary",
+          fn: () => setOpen(true),
+          additionalDesign: `
+                        fixed bottom-2 right-5 md:right-10 z-10 h-20 aspect-square md:h-auto md:aspect-auto
+                        flex items-center justify-center shadow-md border border-zinc-500/20
+                        bottom-10
+                        self-end rounded-full md:rounded-lg`,
+        }}
+      >
+        <p className="hidden md:block text-xl px-2">Upload</p>
+        <AddAPhoto className="md:text-xl! text-4xl!" />
+      </UploadButton>
     </MediaProvider>
   );
 }
@@ -59,17 +79,18 @@ function FullScreen() {
     // Popup modal
     <dialog
       ref={ref}
-      className="flex border rounded backdrop-blur-xl max-w-200 z-100 self-center justify-self-center"
+      className="flex border shadow-2xl border-zinc-600/50 rounded backdrop-blur-xl
+       max-w-[80vw] md:max-w-200 z-100 self-center justify-self-center"
     >
       {/* Close modal button */}
       <Close
         onClick={() => setImgURL(null)}
-        className="border rounded-full absolute
-       top-1 right-2 bg-red-400 z-10 cursor-pointer hover:bg-white hover:text-red-400"
+        className="rounded-bl absolute
+       top-0 right-0 bg-zinc-600 text-zinc-300 z-10 cursor-pointer hover:text-white"
         fontSize="medium"
       />
       {/* Full-screen image */}
-      <Image props={{ src: imgURL, alt: "img", className: "w-auto" }} />
+      <Image props={{ src: imgURL, alt: "img", className: "w-auto max-h-[80vh]" }} />
     </dialog>
   );
 }
@@ -121,17 +142,29 @@ function ImageCard({ props }: { props: ImageDataType }) {
 
   const isMobile = useIsMobile();
 
+  // Full Screen Image
+  const { setImgURL } = useMedia();
+
   // unpack props id: used for key, url: shows image
   const { id, url } = props;
   return (
     // Image Container
     <div
       onMouseEnter={() => setMenu(true)}
-      onMouseLeave={() => setMenu(false)}
+      onMouseLeave={() => {
+        setMenu(false);
+        setDropDown(false);
+      }}
       onFocus={() => (isMobile ? setMenu(true) : "")}
-      onBlur={() => (isMobile && !showDropDown ? setMenu(false) : "")}
+      onBlur={() => {
+        if(isMobile && !showDropDown){
+          setMenu(false);
+        }
+      }}
+      onDoubleClick={() => {if(!isMobile) setImgURL(url)}}
+      
       onMouseDown={() => (isMobile ? setMenu(true) : "")}
-      className="p-2 rounded flex flex-col gap-2 relative bg-zinc-900 shadow-md contain-content"
+      className="rounded flex flex-col gap-2 relative bg-zinc-900 border border-zinc-500 shadow-xl contain-content"
     >
       {/* Image */}
       <Image
@@ -146,8 +179,8 @@ function ImageCard({ props }: { props: ImageDataType }) {
       {showMenu && (
         <span
           className={clsx(
-            "absolute cursor-pointer z-100 border border-blue-500 rounded inset-0 h-full w-full transition-all duration-300",
-            { "bg-black/40 backdrop-blur-[2px]": showMenu },
+            "absolute cursor-pointer z-100 border border-zinc-50 rounded inset-0 h-full w-full transition-all duration-300",
+            { "bg-black/40": showMenu },
             { "bg-transparent": !showMenu },
           )}
         >
@@ -159,7 +192,7 @@ function ImageCard({ props }: { props: ImageDataType }) {
       )}
       {/* Image Name */}
       {showMenu && !isMobile && (
-        <p className="font-bold z-200 border border-blue-500 rounded-br rounded-bl border-t-0 absolute py-4 bottom-0 left-0 w-full bg-black/50">
+        <p className="font-bold z-200 border border-zinc-50 rounded-br rounded-bl border-t-0 absolute py-4 bottom-0 left-0 w-full bg-black/50">
           Image Name
         </p>
       )}
@@ -193,7 +226,9 @@ function ImageMenu({
 
   // Full Screen Image
   const { setImgURL } = useMedia();
-
+  
+  // mobile view
+  const isMobile = useIsMobile();
   // mutation operation for image deletion
   const deleteImageMutation = useDeleteMutation();
   const handleDelete = async (public_id: string) => {
@@ -216,9 +251,10 @@ function ImageMenu({
       <div
         className={clsx(
           "absolute min-w-[50%] flex flex-col scale-0 contain-content z-400",
-          "text-left bg-zinc-950/90 text-black rounded-md top-10 right-4",
+          "text-left bg-zinc-950/90 text-black rounded-md top-10 right-10",
           "transition-transform duration-300 origin-top-right",
-          { "scale-100": showDropDown },
+          { "scale-100 ": showDropDown },
+          { "w-[80%] right-5!" : isMobile}
         )}
       >
         {/* Copy Image URL */}
@@ -226,8 +262,8 @@ function ImageMenu({
           onClick={() => handleCopy(url)}
           className="p-2 text-white hover:bg-green-500 hover:text-white flex items-center justify-between"
         >
-          Copy URL
-          {!isCopied ? <Link fontSize="small" /> : <Done fontSize="small" />}
+          {!isCopied ?  "Copy URL" : "Copied!"}
+          {!isCopied ?  <Link fontSize="small" /> : <Done fontSize="small" />}
         </div>
 
         {/* Full Screen Image */}

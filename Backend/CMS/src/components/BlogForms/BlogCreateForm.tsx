@@ -1,35 +1,24 @@
-import MultiSelectInput from "./AutoSuggest";
-import { useTogglePublish } from "../utils/query.hooks";
-import { useEffect, useState } from "react";
+import MultiSelectInput from "../AutoSuggest";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTags, updateBlog } from "../utils/requests.blog";
-import { useAuth, useBlog, useIsMobile } from "../utils/hooks";
+import { getTags, createBlog } from "../../utils/requests.blog";
+import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
 import clsx from "clsx";
 
-interface PropsType {
-  id: string;
-  title: string;
-  content: string;
-  tags: {
-    id: string;
-    tag: string;
-  }[];
-  publish: { id: string; status: boolean };
-}
+import UploadModal from "../UploadModal";
+// Component
+import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
 
+import { placeCursorAtEnd } from "../../utils/events";
 interface BlogType {
   title: string;
   content: string;
   tags: string[];
 }
-export default function BlogForm({ props }: { props: PropsType }) {
-  const { id, title, content, tags, publish } = props;
-  const { mutate } = useTogglePublish();
+export default function BlogForm() {
   const { fetchWithAuth } = useBlog();
-  const [status, setStatus] = useState<boolean>(publish.status);
   const { accessToken } = useAuth();
-  const tagsList = tags.map((value) => value.tag);
-  const [selected, setSelected] = useState<string[]>(tagsList);
+  const [selected, setSelected] = useState<string[]>([]);
   const isMobile = useIsMobile();
 
   const navigate = useNavigate();
@@ -41,18 +30,8 @@ export default function BlogForm({ props }: { props: PropsType }) {
     const post = JSON.parse(JSON.stringify(dataObject));
 
     const blogData: BlogType = { ...post, tags: [...new Set(selected)] };
-    await fetchWithAuth(updateBlog, { accessToken, id, body: blogData });
+    await fetchWithAuth(createBlog, { accessToken, body: blogData });
     navigate("/blog/posts");
-  };
-
-  //   Publish button
-  const handlePublish = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    mutate({
-      id,
-      publish: !publish.status,
-    });
-    setStatus((prev) => !prev);
   };
 
   // get the available tags for suggestions
@@ -65,33 +44,58 @@ export default function BlogForm({ props }: { props: PropsType }) {
     fetchOptions();
   }, []);
 
+  // Upload option dialog states
+  const [open, setOpen] = useState(false);
+
+  // Upload modal dialog states
+  const [upload, setUpload] = useState(false);
+
+  // On focus/ On click --> scrolldown the textarea place cursor in the end
+  const contentEl = useRef<HTMLTextAreaElement>(null);
+  function handleCursor() {
+    if (contentEl.current) {
+      placeCursorAtEnd(contentEl.current);
+      contentEl.current.scrollTop = contentEl.current?.scrollHeight;
+    }
+  }
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
+      <UploadModal props={{ open: upload, setOpen: setUpload }} />
+
+      {/* The following modal enables the user to choose upload options */}
+      <UploadOptions props={{ open, setOpen, setUpload }} />
       <form
         className="blog-form w-screen md:w-[800px] xl:w-[65vw] xl:h-full xl:justify-evenly!"
         onSubmit={handleSubmit}
       >
+        {/* Blog Title input */}
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
           Title
           <input
             type="text"
             name="title"
-            defaultValue={title}
             placeholder="Your blog Title"
             className="blog-form-input"
             required
           />
         </label>
+        {/* Main Content textarea */}
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
           Main Content
           <textarea
+            ref={contentEl}
             name="content"
-            defaultValue={content}
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
+            onFocus={() => {
+              handleCursor();
+            }}
             required
           />
         </label>
+
+        {/* Upload Button */}
+        <PhotoUpload props={{ open, setOpen }} />
         {Array.isArray(options) && (
           <MultiSelectInput
             options={options}
@@ -99,9 +103,11 @@ export default function BlogForm({ props }: { props: PropsType }) {
             setSelected={setSelected}
           />
         )}
+
+        {/* Buttons */}
         <div
-          className={clsx("blog-form-header flex justify-between w-full", {
-            "sticky left-0 bottom-0 bg-zinc-900 backdrop-blur-3xl px-2 py-3 border-zinc-600/50":
+          className={clsx("blog-form-header flex justify-end w-full", {
+            "sticky left-0 bottom-2 bg-zinc-900/80 backdrop-blur-3xl px-2 py-3 border rounded-md border-zinc-600/50":
               isMobile,
           })}
         >
@@ -109,26 +115,8 @@ export default function BlogForm({ props }: { props: PropsType }) {
             <input
               type="submit"
               value="Save"
-              className="w-20 bg-lime-600 active:bg-lime-800 active:scale-95 border-2
-               border-lime-600 hover:bg-white hover:text-lime-600 
-               py-2 rounded md:w-30 transition-all duration-300"
+              className="w-20 bg-lime-600 active:bg-lime-800 active:scale-95 border-2 border-lime-600 hover:bg-white hover:text-lime-600 py-2 rounded md:w-30 transition-all duration-300"
             />
-            <button
-              className={clsx(
-                "rounded w-20 md:w-30 transition-all duration-300",
-                {
-                  "bg-white text-zinc-800 hover:bg-zinc-400 hover:text-white":
-                    !status,
-                },
-                {
-                  "bg-zinc-700 text-zinc-200 hover:bg-zinc-300 hover:text-zinc-800":
-                    status,
-                },
-              )}
-              onClick={(e) => handlePublish(e)}
-            >
-              {status ? "Unpublish" : "Publish"}
-            </button>
           </div>
           <button
             onClick={(e) => {
