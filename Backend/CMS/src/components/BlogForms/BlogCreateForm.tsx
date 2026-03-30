@@ -1,11 +1,15 @@
-import MultiSelectInput from "./AutoSuggest";
+import MultiSelectInput from "../AutoSuggest";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTags, createBlog } from "../utils/requests.blog";
-import { useAuth, useBlog, useIsMobile } from "../utils/hooks";
+import { getTags, createBlog } from "../../utils/requests.blog";
+import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
 import clsx from "clsx";
 
-import { placeCursorAtEnd } from "../utils/events";
+import UploadModal from "../UploadModal";
+// Component
+import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
+
+import { placeCursorAtEnd } from "../../utils/events";
 interface BlogType {
   title: string;
   content: string;
@@ -40,21 +44,31 @@ export default function BlogForm() {
     fetchOptions();
   }, []);
 
+  // Upload option dialog states
+  const [open, setOpen] = useState(false);
+
+  // Upload modal dialog states
+  const [upload, setUpload] = useState(false);
+
   // On focus/ On click --> scrolldown the textarea place cursor in the end
-    const contentEl = useRef<HTMLTextAreaElement>(null);
-    function handleCursor(){
-      if(contentEl.current) {
-        placeCursorAtEnd(contentEl.current);
-        contentEl.current.scrollTop = contentEl.current?.scrollHeight;
-      }
-  
+  const contentEl = useRef<HTMLTextAreaElement>(null);
+  function handleCursor() {
+    if (contentEl.current) {
+      placeCursorAtEnd(contentEl.current);
+      contentEl.current.scrollTop = contentEl.current?.scrollHeight;
     }
+  }
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
+      <UploadModal props={{ open: upload, setOpen: setUpload }} />
+
+      {/* The following modal enables the user to choose upload options */}
+      <UploadOptions props={{ open, setOpen, setUpload }} />
       <form
         className="blog-form w-screen md:w-[800px] xl:w-[65vw] xl:h-full xl:justify-evenly!"
         onSubmit={handleSubmit}
       >
+        {/* Blog Title input */}
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
           Title
           <input
@@ -65,6 +79,7 @@ export default function BlogForm() {
             required
           />
         </label>
+        {/* Main Content textarea */}
         <label className="mb-1 block text-zinc-400 font-semibold text-left">
           Main Content
           <textarea
@@ -72,15 +87,15 @@ export default function BlogForm() {
             name="content"
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
-            onFocus={()=> {
-              handleCursor();
-            }}
-            onClick={()=> {
+            onFocus={() => {
               handleCursor();
             }}
             required
           />
         </label>
+
+        {/* Upload Button */}
+        <PhotoUpload props={{ open, setOpen }} />
         {Array.isArray(options) && (
           <MultiSelectInput
             options={options}
@@ -88,8 +103,10 @@ export default function BlogForm() {
             setSelected={setSelected}
           />
         )}
+
+        {/* Buttons */}
         <div
-          className={clsx("blog-form-header flex justify-between w-full", {
+          className={clsx("blog-form-header flex justify-end w-full", {
             "sticky left-0 bottom-2 bg-zinc-900/80 backdrop-blur-3xl px-2 py-3 border rounded-md border-zinc-600/50":
               isMobile,
           })}
