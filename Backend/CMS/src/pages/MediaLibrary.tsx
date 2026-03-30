@@ -30,17 +30,16 @@ import { getAllImages } from "../utils/requests.media";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useRef, useEffect, type SetStateAction } from "react";
 import { useAuth, useIsMobile, useMedia } from "../utils/hooks";
-import { useDeleteMutation } from "../utils/query.hooks";
+import { useDeleteMutation, useUploadMutation } from "../utils/query.hooks";
 
 // =============== PAGE COMPONENT =============== //
 export default function Page() {
   const [open, setOpen] = useState(false);
-  
   return (
     <MediaProvider>
       <FullScreen />
       <ImageGrid />
-      <UploadModal props={{open, setOpen}}/>
+      <UploadWrapper props={{open, setOpen}}/>
       {/* Upload Modal Trigger button */}
       <UploadButton
         key="write-btn"
@@ -48,8 +47,10 @@ export default function Page() {
           type: "primary",
           fn: () => setOpen(true),
           additionalDesign: `
-                        fixed bottom-2 right-5 md:right-10 z-10 h-20 aspect-square md:h-auto md:aspect-auto
-                        flex items-center justify-center shadow-md border border-zinc-500/20
+                        border-animate
+                        fixed bottom-2 right-5 md:right-10 z-10 h-20 
+                        aspect-square md:h-auto md:aspect-auto
+                        flex items-center justify-center shadow-md
                         bottom-10
                         self-end rounded-full md:rounded-lg`,
         }}
@@ -58,6 +59,28 @@ export default function Page() {
         <AddAPhoto className="md:text-xl! text-4xl!" />
       </UploadButton>
     </MediaProvider>
+  );
+}
+
+// Wrapper for the upload modal (workaround for useMedia() hook)
+function UploadWrapper({props} : {props: {open: boolean; setOpen: React.Dispatch<React.SetStateAction<boolean>>}}) {
+  const {open, setOpen} = props;
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setUploadStatus] = useState<boolean>(false)
+  const uploadMutation = useUploadMutation();
+
+  // handle upload with mutation
+  const handleUpload = async (file: File): Promise<void> => {
+    setUploadStatus(true);
+    await uploadMutation.mutateAsync(file);
+    setUploadStatus(false);
+    setOpen(false);
+    setFile(null);
+  };
+  return (
+    <UploadModal
+      props={{ open, setOpen, file, setFile, onUpload: handleUpload, isUploading }}
+    />
   );
 }
 
@@ -90,7 +113,9 @@ function FullScreen() {
         fontSize="medium"
       />
       {/* Full-screen image */}
-      <Image props={{ src: imgURL, alt: "img", className: "w-auto max-h-[80vh]" }} />
+      <Image
+        props={{ src: imgURL, alt: "img", className: "w-auto max-h-[80vh]" }}
+      />
     </dialog>
   );
 }
@@ -157,12 +182,13 @@ function ImageCard({ props }: { props: ImageDataType }) {
       }}
       onFocus={() => (isMobile ? setMenu(true) : "")}
       onBlur={() => {
-        if(isMobile && !showDropDown){
+        if (isMobile && !showDropDown) {
           setMenu(false);
         }
       }}
-      onDoubleClick={() => {if(!isMobile) setImgURL(url)}}
-      
+      onDoubleClick={() => {
+        if (!isMobile) setImgURL(url);
+      }}
       onMouseDown={() => (isMobile ? setMenu(true) : "")}
       className="rounded flex flex-col gap-2 relative bg-zinc-900 border border-zinc-500 shadow-xl contain-content"
     >
@@ -174,7 +200,7 @@ function ImageCard({ props }: { props: ImageDataType }) {
           className: "object-cover aspect-square",
         }}
       />
-      
+
       {/* Dropdown menu */}
       {showMenu && (
         <span
@@ -193,7 +219,9 @@ function ImageCard({ props }: { props: ImageDataType }) {
       {/* Image Name */}
       {showMenu && !isMobile && (
         <p className="font-bold z-200 border border-zinc-50 rounded-br rounded-bl border-t-0 absolute py-4 bottom-0 left-0 w-full bg-black/50">
-          Image Name
+          {
+            url.split("/").at(-1)
+          }
         </p>
       )}
     </div>
@@ -226,7 +254,7 @@ function ImageMenu({
 
   // Full Screen Image
   const { setImgURL } = useMedia();
-  
+
   // mobile view
   const isMobile = useIsMobile();
   // mutation operation for image deletion
@@ -254,7 +282,7 @@ function ImageMenu({
           "text-left bg-zinc-950/90 text-black rounded-md top-10 right-10",
           "transition-transform duration-300 origin-top-right",
           { "scale-100 ": showDropDown },
-          { "w-[80%] right-5!" : isMobile}
+          { "w-[80%] right-5!": isMobile },
         )}
       >
         {/* Copy Image URL */}
@@ -262,8 +290,8 @@ function ImageMenu({
           onClick={() => handleCopy(url)}
           className="p-2 text-white hover:bg-green-500 hover:text-white flex items-center justify-between"
         >
-          {!isCopied ?  "Copy URL" : "Copied!"}
-          {!isCopied ?  <Link fontSize="small" /> : <Done fontSize="small" />}
+          {!isCopied ? "Copy URL" : "Copied!"}
+          {!isCopied ? <Link fontSize="small" /> : <Done fontSize="small" />}
         </div>
 
         {/* Full Screen Image */}
