@@ -24,11 +24,10 @@ export default function UploadModal({props} : {
 
   const handleUpload = (f: File) => {
     uploadFileMutation.mutate(f);
-    if (uploadFileMutation.isSuccess) {
-      setOpen(false);
-      setFile(null);
-    }
+    setOpen(false);
+    setFile(null);
   };
+  
   const handleFile = (f: File) => {
     if (!f.type.startsWith("image/")) return;
     setFile(f);
@@ -96,23 +95,14 @@ export default function UploadModal({props} : {
                 <img
                   src={URL.createObjectURL(file)}
                   alt="preview"
-                  className="rounded-lg max-h-60 object-contain border border-zinc-700"
+                  className="w-fit justify-self-center rounded-lg max-h-60 object-contain border border-zinc-700"
                 />
               </div>
             )}
 
             {/* Actions */}
             <div className="mt-6 flex justify-end gap-2">
-              <button
-                onClick={() => {
-                  setFile(null);
-                  setOpen(false);
-                }}
-                className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700"
-              >
-                Cancel
-              </button>
-
+              
               <button
                 disabled={!file}
                 className="px-4 py-2 rounded-lg bg-white text-black hover:bg-zinc-200 disabled:opacity-50"
@@ -123,6 +113,17 @@ export default function UploadModal({props} : {
               >
                 Upload
               </button>
+
+              <button
+                onClick={() => {
+                  setFile(null);
+                  setOpen(false);
+                }}
+                className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700"
+              >
+                Cancel
+              </button>
+
             </div>
           </div>
         </div>
