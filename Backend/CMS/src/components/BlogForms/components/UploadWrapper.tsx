@@ -10,9 +10,10 @@ export function UploadWrapper({
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setText: React.Dispatch<React.SetStateAction<string>>;
+    handleFocus: ()=> void;
   };
 }) {
-  const { open, setOpen, setText } = props;
+  const { open, setOpen, setText, handleFocus } = props;
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setUploadStatus] = useState<boolean>(false);
   const uploadMutation = useUploadAndInsert();
@@ -27,6 +28,7 @@ export function UploadWrapper({
     setText((prev) =>
       prev ? `${prev}\n![image](${url})\n` : `![image](${url})\n`,
     );
+    handleFocus();
   };
 
   return (

@@ -1,14 +1,15 @@
 import MultiSelectInput from "../AutoSuggest";
 import { useTogglePublish } from "../../utils/query.hooks";
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTags, updateBlog } from "../../utils/requests.blog";
 import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
-// Cursor 
+// Cursor
 import { placeCursorAtEnd } from "../../utils/events";
 
 // Component
 import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
+import MediaModal from "./components/MediaLibraryModal";
 
 import clsx from "clsx";
 import { UploadWrapper } from "./components/UploadWrapper";
@@ -49,14 +50,14 @@ export default function BlogForm({ props }: { props: PropsType }) {
   const tagsList = tags.map((value) => value.tag);
   // selected list of tags - state
   const [selected, setSelected] = useState<string[]>(tagsList);
-  
-  // detect mobile device - helper 
+
+  // detect mobile device - helper
   const isMobile = useIsMobile();
 
   // navigation function
   const navigate = useNavigate();
 
-  // handle form submission 
+  // handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // form data converted to JSON
@@ -66,7 +67,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
 
     // add tags to the data (since format of storing tags is different)
     const blogData: BlogType = { ...post, tags: [...new Set(selected)] };
-    
+
     // make the api call
     await fetchWithAuth(updateBlog, { accessToken, id, body: blogData });
     navigate("/blog/posts");
@@ -99,6 +100,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
 
   // Upload modal dialog states
   const [upload, setUpload] = useState(false);
+  const [mediaLib, setMediaLib] = useState(false);
 
   // On focus/ On click --> scrolldown the textarea place cursor in the end
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -107,7 +109,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
   const handleFocus = () => {
     if (!wasFocused.current) {
       const el = textareaRef.current;
-      if(el) placeCursorAtEnd(el);
+      if (el) placeCursorAtEnd(el);
     }
     wasFocused.current = true;
   };
@@ -122,10 +124,21 @@ export default function BlogForm({ props }: { props: PropsType }) {
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       {/* The following modal enables the user to upload file */}
-      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText }} />
-      
+      <UploadWrapper
+        props={{ open: upload, setOpen: setUpload, setText, handleFocus }}
+      />
+      {/* Media Library Selection */}
+      <MediaModal
+        props={{
+          open: mediaLib,
+          setOpen: setMediaLib,
+          setText,
+          handleFocus,
+        }}
+      />
+
       {/* The following modal enables the user to choose upload options */}
-      <UploadOptions props={{ open, setOpen, setUpload }} />
+      <UploadOptions props={{ open, setOpen, setUpload, setMediaLib }} />
 
       <form
         className="blog-form w-screen md:w-[800px] xl:w-[65vw] xl:h-full xl:justify-evenly!"
@@ -151,7 +164,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
             value={text}
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
-            onClick={()=> handleFocus()}
+            onClick={() => handleFocus()}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={(e) => setText(e.target.value)}
@@ -212,4 +225,3 @@ export default function BlogForm({ props }: { props: PropsType }) {
     </div>
   );
 }
-

@@ -31,8 +31,7 @@ export default function Page() {
             additionalDesign: `
             fixed bottom-2 z-10
             bottom-10 font-medium
-            border-animate
-            self-end rounded-full md:rounded-lg`
+            self-end rounded-full md:rounded-lg ${!isMobile? "border-animate":""}`
           }}
         >
           <p className="hidden md:block text-xl px-2">Write</p>

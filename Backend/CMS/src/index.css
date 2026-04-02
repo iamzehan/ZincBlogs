@@ -19,13 +19,12 @@
 
 
 /* gradient border layer */
-.border-animate::before {
+.border-animate::before, .border-animate.continuous::before{
   content: "";
   position: absolute;
   inset: 0;
   padding: 2px; /* border thickness */
   border-radius: inherit;
-
   background: linear-gradient(
     270deg,
     #ff00cc,
@@ -43,7 +42,8 @@
   mask-composite: exclude;
 }
 
-.border-animate:hover::before{
+.border-animate:hover::before, .border-animate.continuous::before,
+ .login-form input[type="submit"]:hover::before{
   animation: border 3s linear infinite;
 }
 
