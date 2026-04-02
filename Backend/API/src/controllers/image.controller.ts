@@ -5,7 +5,11 @@ import { getPublicIdFromUrl } from "../utils/cloudinary-helpers.js";
 // ============================= GET ALL IMAGES =======================//
 export const getAllImages = async (req: Request, res: Response) => {
   try {
-    const url = await prisma.images.findMany();
+    const url = await prisma.images.findMany({
+      orderBy: {
+        created_at: 'desc'
+      }
+    });
 
     res.status(200).json(url);
   }
