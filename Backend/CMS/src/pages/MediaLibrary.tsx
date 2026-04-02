@@ -35,6 +35,7 @@ import { useDeleteMutation, useUploadMutation } from "../utils/query.hooks";
 // =============== PAGE COMPONENT =============== //
 export default function Page() {
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <MediaProvider>
       <FullScreen />
@@ -47,7 +48,7 @@ export default function Page() {
           type: "primary",
           fn: () => setOpen(true),
           additionalDesign: `
-                        border-animate
+                        self-end rounded-full md:rounded-lg ${!isMobile? "border-animate":""}
                         fixed bottom-2 right-5 md:right-10 z-10 h-20 
                         aspect-square md:h-auto md:aspect-auto
                         flex items-center justify-center shadow-md
