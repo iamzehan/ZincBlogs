@@ -1,28 +1,44 @@
-import MultiSelectInput from "../AutoSuggest";
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { getTags, createBlog } from "../../utils/requests.blog";
-import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
+// ======================== IMPORTS =========================== //
+// Style lib
 import clsx from "clsx";
 
-import { UploadWrapper } from "./components/UploadWrapper";
-// Component
-import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
+// requests
+import { getTags, createBlog } from "../../utils/requests.blog";
 
+// hooks
+import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth, useBlog, useIsMobile } from "../../utils/hooks";
+
+// Component
+import MultiSelectInput from "../AutoSuggest";
+import { UploadOptions, PhotoUpload } from "./components/UploadOptions";
+import { UploadWrapper } from "./components/UploadWrapper";
+import MediaModal from "./components/MediaLibraryModal";
+
+// Helper
 import { placeCursorAtEnd } from "../../utils/events";
+
+// ============================== IMPORTS END ============================= //
+// type
 interface BlogType {
   title: string;
   content: string;
   tags: string[];
 }
+
+// ================================== COMPONENT ================================== //
 export default function BlogForm() {
+  // helper hooks
   const { fetchWithAuth } = useBlog();
   const { accessToken } = useAuth();
-  const [selected, setSelected] = useState<string[]>([]);
   const isMobile = useIsMobile();
-
   const navigate = useNavigate();
 
+  // tags selection
+  const [selected, setSelected] = useState<string[]>([]);
+  
+  // submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -48,10 +64,14 @@ export default function BlogForm() {
   const [open, setOpen] = useState(false);
 
   // Upload modal dialog states
+  // direct Upload
   const [upload, setUpload] = useState(false);
+  // media library Upload
+  const [mediaLib, setMediaLib] = useState(false);
 
   // On focus/ On click --> scrolldown the textarea place cursor in the end
   const contentEl = useRef<HTMLTextAreaElement>(null);
+
   function handleCursor() {
     if (contentEl.current) {
       placeCursorAtEnd(contentEl.current);
@@ -63,10 +83,13 @@ export default function BlogForm() {
   const [text, setText] = useState<string>("");
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
-      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText }} />
-
+      {/* Direct Upload */}
+      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText, handleFocus: handleCursor }} />
+      {/* Media Library Selection */}
+      <MediaModal props= {{open: mediaLib, setOpen: setMediaLib, setText, handleFocus: handleCursor}}/>
+      
       {/* The following modal enables the user to choose upload options */}
-      <UploadOptions props={{ open, setOpen, setUpload }} />
+      <UploadOptions props={{ open, setOpen, setUpload, setMediaLib }} />
       <form
         className="blog-form w-screen md:w-[800px] xl:w-[65vw] xl:h-full xl:justify-evenly!"
         onSubmit={handleSubmit}
