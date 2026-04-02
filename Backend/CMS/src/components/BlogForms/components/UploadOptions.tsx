@@ -14,12 +14,13 @@ interface DialogPropType {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
   setUpload?: React.Dispatch<SetStateAction<boolean>>;
+  setMediaLib?: React.Dispatch<SetStateAction<boolean>> 
 }
 
 // Options dialog there are going to be options to upload directly to the cloud
 // and choosing from media library
 export function UploadOptions({ props }: { props: DialogPropType }) {
-  const { open, setOpen, setUpload } = props;
+  const { open, setOpen, setUpload, setMediaLib } = props;
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (open) {
@@ -71,6 +72,11 @@ export function UploadOptions({ props }: { props: DialogPropType }) {
           <button
             className="border rounded-xl p-2 flex gap-2 justify-center items-center bg-white text-zinc-800
     hover:text-white hover:bg-transparent transition-all duration-200 ease-in-out active:scale-90"
+          onClick= {(e)=> {
+            e.preventDefault();
+            setMediaLib?.(true);
+            setOpen(false);
+          }}
           >
             Media Library
             <Cloud fontSize="small" />
