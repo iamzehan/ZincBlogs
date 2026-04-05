@@ -53,33 +53,37 @@ export default function Page() {
     return (
       <BlogProvider>
         <MediaProvider>
-          <PreviewEdit/>
-          <div
-            className={clsx(
-              "transition-all duration-300 md:w-screen grid place-content-center",
-              { "xl:w-[calc(100vw-100px)]": collapse },
-              { "xl:w-[calc(100vw-350px)] xl:ml-5!": !collapse },
-            )}
-          >
-            <BlogWrapper data={data} />
+          <div className="flex flex-col items-center w-screen">
+            <PreviewEdit />
+            <div
+              className={clsx(
+                "transition-all duration-300 md:w-screen grid place-content-center",
+                { "xl:w-[calc(100vw-100px)]": collapse },
+                { "xl:w-[calc(100vw-350px)] xl:ml-5!": !collapse },
+              )}
+            >
+              <BlogWrapper data={data} />
+            </div>
           </div>
         </MediaProvider>
       </BlogProvider>
     );
 }
 
-const BlogWrapper = ({data}: {data: BlogType}) => {
+const BlogWrapper = ({ data }: { data: BlogType }) => {
   const { preview, previewText, setPreviewText } = useBlog();
   const [title, setTitle] = useState(data.title);
 
   const tagsList = data.tags.map((value) => value.tag);
   const [selected, setSelected] = useState<string[]>(tagsList);
 
-  useEffect(()=> {
+  useEffect(() => {
     setPreviewText(data.content);
-  }, [])
+  }, []);
   if (preview) {
-    return <MarkdownPreview data={{title, content:previewText, tags: selected}}/>;
+    return (
+      <MarkdownPreview data={{ title, content: previewText, tags: selected }} />
+    );
   }
   return (
     <BlogForm
@@ -91,7 +95,7 @@ const BlogWrapper = ({data}: {data: BlogType}) => {
         setTitle,
         setSelected,
         previewText,
-        setPreviewText
+        setPreviewText,
       }}
     />
   );

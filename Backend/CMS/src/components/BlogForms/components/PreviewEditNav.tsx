@@ -28,11 +28,9 @@ export default function PreviewEdit() {
 
       <div
         className={clsx(
-          "sticky top-18 w-full md:w-auto md:ml-14 justify-self-center flex md:rounded-lg border-b-zinc-600/0 bg-zinc-900 transition-all duration-200"
-        ,
-        "transition-all duration-500 ease-in-out",
+          "preview",
         {
-          "md:w-[80vw]! w-full rounded-none! [>*]:rounded-none!": isSticky
+          "expand": isSticky
         }
         )}
       >
