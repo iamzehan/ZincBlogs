@@ -6,3 +6,11 @@ interface Blog {
   };
   createdAt: Date;
 }
+
+interface BlogType {
+  id: string;
+  title: string;
+  content: string;
+  tags: { id: string; tag: string }[];
+  publish: { id: string; status: boolean };
+}
