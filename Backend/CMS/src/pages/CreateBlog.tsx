@@ -9,6 +9,9 @@ import { useBlog } from "../utils/hooks";
 import PreviewEdit from "../components/BlogForms/components/PreviewEditNav";
 export default function Page() {
   const { setCustomHeader, setCollapse, collapse } = useNav();
+  // Show or hide preview edit navigation
+  const [showPrevNav, setShow ] = useState<boolean>(false);
+
   useEffect(() => {
     setCollapse(true);
     setCustomHeader(null);
@@ -18,7 +21,11 @@ export default function Page() {
   return (
     <BlogProvider>
       <MediaProvider>
-        <PreviewEdit/>
+        <div className="flex flex-col items-center w-screen">
+          {/* Place holder for empty space */}
+        {!showPrevNav && <span className="h-10"></span>} 
+        {/* Navigation for Preview and Edit */}
+        { showPrevNav && <PreviewEdit/> }
         <div
           className={clsx(
             "transition-all duration-300 md:w-screen grid place-content-center",
@@ -27,11 +34,12 @@ export default function Page() {
           )}
         >
           {/* Form */}
-          <BlogWrapper />
+          <BlogWrapper props={{setShow}}/>
           {/* Form Ends */}
           {/* Markdown Preview */}
 
           {/* Markdown Preview Ends */}
+        </div>
         </div>
       </MediaProvider>
     </BlogProvider>
@@ -39,10 +47,24 @@ export default function Page() {
 }
 
 
-const BlogWrapper = () => {
+const BlogWrapper = ({props}: {props: {setShow: Setter<boolean>}}) => {
+  
   const { preview, previewText, setPreviewText } = useBlog();
   const [selected, setSelected] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
+
+  // State action for nav
+  const {setShow} = props;
+
+  // Show or hide preview or edit navigation based on title & content
+  useEffect(()=> {
+    if(title && previewText){
+      setShow(true);
+    }
+    else{
+      setShow(false)
+    }
+  }, [title, previewText, setShow])
   if (preview) {
     return <MarkdownPreview data={{title, content:previewText, tags: [...new Set(selected)]}}/>;
   }
