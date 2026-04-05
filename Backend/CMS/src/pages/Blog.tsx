@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { getBlog } from "../utils/requests.blog";
 import { BlogProvider } from "../utils/contexts.blog";
 import { MediaProvider } from "../utils/context.media";
-import { useNav } from "../utils/hooks";
+import { useBlog, useNav } from "../utils/hooks";
 import clsx from "clsx";
+import MarkdownPreview from "../components/BlogForms/components/MarkdownPreview";
+import PreviewEdit from "../components/BlogForms/components/PreviewEditNav";
 interface BlogType {
   id: string;
   title: string;
@@ -20,6 +22,7 @@ export default function Page() {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<null | BlogType>(null);
   const { setCustomHeader, collapse, setCollapse } = useNav();
+
   useEffect(() => {
     async function fetchBlog() {
       try {
@@ -35,7 +38,7 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if (id!==null) {
+    if (id !== null) {
       setCustomHeader(null);
       setCustomHeader("Update blog");
       setCollapse(true);
@@ -50,6 +53,7 @@ export default function Page() {
     return (
       <BlogProvider>
         <MediaProvider>
+          <PreviewEdit/>
           <div
             className={clsx(
               "transition-all duration-300 md:w-screen grid place-content-center",
@@ -57,22 +61,38 @@ export default function Page() {
               { "xl:w-[calc(100vw-350px)] xl:ml-5!": !collapse },
             )}
           >
-            {/* Form */}
-            <BlogForm
-              props={{
-                id: data?.id,
-                title: data?.title,
-                content: data?.content,
-                tags: data?.tags,
-                publish: data?.publish,
-              }}
-            />
-            {/* Form Ends */}
-            {/* Markdown Preview */}
-
-            {/* Markdown Preview Ends */}
+            <BlogWrapper data={data} />
           </div>
         </MediaProvider>
       </BlogProvider>
     );
 }
+
+const BlogWrapper = ({data}: {data: BlogType}) => {
+  const { preview, previewText, setPreviewText } = useBlog();
+  const [title, setTitle] = useState(data.title);
+
+  const tagsList = data.tags.map((value) => value.tag);
+  const [selected, setSelected] = useState<string[]>(tagsList);
+
+  useEffect(()=> {
+    setPreviewText(data.content);
+  }, [])
+  if (preview) {
+    return <MarkdownPreview data={{title, content:previewText, tags: selected}}/>;
+  }
+  return (
+    <BlogForm
+      props={{
+        id: data?.id,
+        title: title,
+        tags: selected,
+        publish: data?.publish,
+        setTitle,
+        setSelected,
+        previewText,
+        setPreviewText
+      }}
+    />
+  );
+};
