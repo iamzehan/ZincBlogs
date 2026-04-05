@@ -90,7 +90,7 @@ button{
 
 /* Form */
 .blog-form {
-  @apply flex flex-col min-h-screen md:min-h-auto gap-4 md:rounded-lg border border-zinc-800 bg-zinc-900 p-6;
+  @apply flex flex-col md:w-[80vw] min-h-screen md:min-h-auto gap-4 md:rounded-lg border border-zinc-800 bg-zinc-900 p-6;
 }
 
 /* Header / Save button */
@@ -116,4 +116,39 @@ button{
 /* Form Input text format */
 .blog-form-input, .blog-form-textarea {
   @apply font-normal;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #000000;
+}
+
+.thin-scrollbar::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #000000;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb
+{
+	background-color: #F5F5F5;
+}
+
+/* Markdown wrapper */
+
+.md-wrapper {
+  @apply bg-zinc-900 md:mx-2 md:rounded-lg md:mt-2 md:w-[80vw]! p-5 flex flex-col gap-2;
+  h1{
+    @apply w-full text-left;
+  }
+  p{
+    @apply text-justify p-5;
+  }
+  img{
+    @apply w-full rounded;
+  }
+  .tags {
+    @apply rounded-full bg-zinc-600/40 text-white py-1 px-2 text-sm;
+  }
 }

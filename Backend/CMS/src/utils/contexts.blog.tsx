@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { useAuth } from "./hooks";
 import { fetchRefresh } from "./requests.auth";
 
@@ -18,6 +18,10 @@ interface BlogContextType {
     fetchFn: (options: FetchOptions) => Promise<Response>,
     options: FetchOptions,
   ) => Promise<unknown>;
+  preview: boolean;
+  setPreview: Setter<boolean>;
+  setPreviewText: Setter<string>;
+  previewText: string;
 }
 
 interface BlogProviderProps {
@@ -28,6 +32,8 @@ const BlogContext = createContext<BlogContextType | undefined>(undefined);
 
 export const BlogProvider = ({ children }: BlogProviderProps) => {
   const { setAccessToken } = useAuth();
+  const [preview, setPreview] = useState<boolean>(false);
+  const [previewText, setPreviewText] = useState<string>("");
 
   async function fetchWithAuth<T>(
     fetchFn: (options: FetchOptions) => Promise<Response>,
@@ -67,6 +73,10 @@ export const BlogProvider = ({ children }: BlogProviderProps) => {
 
   const value: BlogContextType = {
     fetchWithAuth,
+    preview, 
+    setPreview,
+    setPreviewText,
+    previewText
   };
   return <BlogContext.Provider value={value}>{children}</BlogContext.Provider>;
 };

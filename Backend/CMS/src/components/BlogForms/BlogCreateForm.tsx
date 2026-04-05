@@ -28,16 +28,25 @@ interface BlogType {
 }
 
 // ================================== COMPONENT ================================== //
-export default function BlogForm() {
+export default function BlogForm({
+  props,
+}: {
+  props: {
+    title: string;
+    setTitle: Setter<string>;
+    previewText: string;
+    setPreviewText: Setter<string>;
+    selected: string[];
+    setSelected: Setter<string[]>;
+  };
+}) {
   // helper hooks
   const { fetchWithAuth } = useBlog();
   const { accessToken } = useAuth();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { title, setTitle, previewText, setPreviewText, selected, setSelected} = props;
 
-  // tags selection
-  const [selected, setSelected] = useState<string[]>([]);
-  
   // submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,15 +88,27 @@ export default function BlogForm() {
     }
   }
 
-  // uploaded image added to text
-  const [text, setText] = useState<string>("");
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       {/* Direct Upload */}
-      <UploadWrapper props={{ open: upload, setOpen: setUpload, setText, handleFocus: handleCursor }} />
+      <UploadWrapper
+        props={{
+          open: upload,
+          setOpen: setUpload,
+          setText: setPreviewText,
+          handleFocus: handleCursor,
+        }}
+      />
       {/* Media Library Selection */}
-      <MediaModal props= {{open: mediaLib, setOpen: setMediaLib, setText, handleFocus: handleCursor}}/>
-      
+      <MediaModal
+        props={{
+          open: mediaLib,
+          setOpen: setMediaLib,
+          setText: setPreviewText,
+          handleFocus: handleCursor,
+        }}
+      />
+
       {/* The following modal enables the user to choose upload options */}
       <UploadOptions props={{ open, setOpen, setUpload, setMediaLib }} />
       <form
@@ -102,6 +123,8 @@ export default function BlogForm() {
             name="title"
             placeholder="Your blog Title"
             className="blog-form-input"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </label>
@@ -113,10 +136,12 @@ export default function BlogForm() {
             name="content"
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
-            value={text}
+            value={previewText}
             required
             onFocus={handleCursor}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              setPreviewText(e.target.value);
+            }}
           />
         </label>
 
