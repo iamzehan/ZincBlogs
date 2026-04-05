@@ -152,3 +152,12 @@ button{
     @apply rounded-full bg-zinc-600/40 text-white py-1 px-2 text-sm;
   }
 }
+
+
+/* Preview nav */
+.preview {
+  @apply sticky top-18 w-full md:w-[20vw] flex md:rounded-lg bg-zinc-900 transition-[width] duration-200 ease-in-out;
+}
+.preview.expand {
+  @apply md:w-[80vw]! w-full rounded-none! border-b border-zinc-600;
+}
