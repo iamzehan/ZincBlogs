@@ -33,18 +33,23 @@ export default function MediaModal({ props }: { props: DialogPropType }) {
   return (
     <dialog
       ref={dialogRef}
-      className="relative flex flex-col max-h-[80%] max-w-[80%] overflow-y-auto 
+      className="
+      relative flex flex-col max-h-[80%] max-w-[80%]
     rounded-xl border
      border-zinc-500"
     >
-      <h2>Choose one from below</h2>
+      <div className="flex justify-between bg-zinc-900 sticky top-0 z-100 pl-5 py-2">
+        <h2 className="text-xl font-bold">Choose one from below</h2>
+        <button
+          onClick={() => setOpen(false)}
+          className="px-2 hover:text-red-500"
+          title="Close"
+        >
+          <Close fontSize="small"/>
+        </button>
+      </div>
+
       <ImageGrid props={{ setText, setOpen, handleFocus }} />
-      <button
-        onClick={() => setOpen(false)}
-        className="border-l border-b bg-zinc-500 border-zinc-400 right-0 top-0 absolute rounded-bl"
-      >
-        <Close />
-      </button>
     </dialog>
   );
 }
@@ -84,7 +89,7 @@ function ImageGrid({
     );
   if (Array.isArray(data) && data?.length > 0)
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 p-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 p-2 overflow-y-auto thin-scrollbar">
         {Array.isArray(data) &&
           data.map((img: ImageDataType) => (
             <ImageCard key={img?.id} props={{ img, handleSelect }} />
