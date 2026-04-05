@@ -18,11 +18,11 @@ import { UploadWrapper } from "./components/UploadWrapper";
 interface PropsType {
   id: string;
   title: string;
-  content: string;
-  tags: {
-    id: string;
-    tag: string;
-  }[];
+  tags: string[];
+  setTitle: Setter<string>;
+  setSelected: Setter<string[]>;
+  previewText: string;
+  setPreviewText: Setter<string>;
   publish: { id: string; status: boolean };
 }
 
@@ -36,7 +36,7 @@ interface BlogType {
 // This component is a form that allows the user to edit a blog
 export default function BlogForm({ props }: { props: PropsType }) {
   // unpacking the props
-  const { id, title, content, tags, publish } = props;
+  const { id, title, tags, publish, setSelected, setTitle, previewText, setPreviewText } = props;
   // publish-unpublish toggle - mutation function
   const { mutate } = useTogglePublish();
   // auth token
@@ -46,10 +46,6 @@ export default function BlogForm({ props }: { props: PropsType }) {
 
   // publish status state - preset
   const [status, setStatus] = useState<boolean>(publish.status);
-  // list of tags - preset
-  const tagsList = tags.map((value) => value.tag);
-  // selected list of tags - state
-  const [selected, setSelected] = useState<string[]>(tagsList);
 
   // detect mobile device - helper
   const isMobile = useIsMobile();
@@ -66,7 +62,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
     const post = JSON.parse(JSON.stringify(dataObject));
 
     // add tags to the data (since format of storing tags is different)
-    const blogData: BlogType = { ...post, tags: [...new Set(selected)] };
+    const blogData: BlogType = { ...post, tags: [...new Set(tags)] };
 
     // make the api call
     await fetchWithAuth(updateBlog, { accessToken, id, body: blogData });
@@ -118,21 +114,18 @@ export default function BlogForm({ props }: { props: PropsType }) {
     wasFocused.current = false;
   };
 
-  // Text content state
-  const [text, setText] = useState<string>(content);
-
   return (
     <div className="blog-form-wrapper xl:h-[90vh]">
       {/* The following modal enables the user to upload file */}
       <UploadWrapper
-        props={{ open: upload, setOpen: setUpload, setText, handleFocus }}
+        props={{ open: upload, setOpen: setUpload, setText:setPreviewText, handleFocus }}
       />
       {/* Media Library Selection */}
       <MediaModal
         props={{
           open: mediaLib,
           setOpen: setMediaLib,
-          setText,
+          setText:setPreviewText,
           handleFocus,
         }}
       />
@@ -152,6 +145,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
             defaultValue={title}
             placeholder="Your blog Title"
             className="blog-form-input"
+            onChange={(e)=> {setTitle(e.target.value)}}
             required
           />
         </label>
@@ -160,14 +154,13 @@ export default function BlogForm({ props }: { props: PropsType }) {
           <textarea
             ref={textareaRef}
             name="content"
-            defaultValue={text}
-            value={text}
+            value={previewText}
             placeholder="Write something..."
             className="blog-form-textarea resize-none!"
             onClick={() => handleFocus()}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {setPreviewText(e.target.value)}}
             required
           />
         </label>
@@ -176,7 +169,7 @@ export default function BlogForm({ props }: { props: PropsType }) {
         {Array.isArray(options) && (
           <MultiSelectInput
             options={options}
-            selected={selected}
+            selected={tags}
             setSelected={setSelected}
           />
         )}
