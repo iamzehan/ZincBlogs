@@ -20,37 +20,42 @@ export const allBlogsTitleGET = async (req: Request, res: Response) => {
 export const allPublishedBlogsGET = async (req: Request, res: Response) => {
   try {
     const blogs = await prisma.blog.findMany({
-      include: {
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+
         author: {
-          select: {username: true, firstName:true, lastName: true},
-        },
-        comments: {
           select: {
-            owner: {select: {username:true, firstName: true, lastName: true}},
-            content: true, createdAt:true, 
-          },
-          orderBy: {
-            createdAt: 'desc'
+            username: true,
+            firstName: true,
+            lastName: true
           }
         },
+
         tags: {
-          select: {tag: true},
+          select: {
+            tag: true
+          }
         },
-        publish: true
+
+        _count: {
+          select: {
+            likes: true,
+            comments: true
+          }
+        }
       },
-      omit: {
-        authorId: true,
-        updatedAt: true,
-        publish: true
-      },
-      // Only get the published blogs
+
       where: {
         publish: {
           status: true
         }
       },
+
       orderBy: {
-        createdAt: 'desc'
+        createdAt: "desc"
       }
     });
 
@@ -68,22 +73,25 @@ export const allBlogsGET = async (req: Request, res: Response) => {
     const blogs = await prisma.blog.findMany({
       include: {
         author: {
-          select: {username: true, firstName:true, lastName: true},
+          select: { username: true, firstName: true, lastName: true }
         },
         comments: {
           select: {
-            owner: {select: {username:true, firstName: true, lastName: true}},
-            content: true, createdAt:true, 
+            owner: {
+              select: { username: true, firstName: true, lastName: true }
+            },
+            content: true,
+            createdAt: true
           },
           orderBy: {
-            createdAt: 'desc'
+            createdAt: "desc"
           }
         },
         tags: {
-          select: {tag: true},
+          select: { tag: true }
         },
         publish: {
-          select: {status: true}
+          select: { status: true }
         }
       },
       omit: {
@@ -91,7 +99,7 @@ export const allBlogsGET = async (req: Request, res: Response) => {
         updatedAt: true
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: "desc"
       }
     });
 
@@ -107,24 +115,29 @@ export const allBlogsGET = async (req: Request, res: Response) => {
 export const findOneBlogGET = async (req: Request, res: Response) => {
   try {
     const id = parameterIDProcessor(req);
-    const blog= await prisma.blog.findFirst({
+    const blog = await prisma.blog.findFirst({
       include: {
         author: {
-          select: {username: true, firstName:true, lastName: true},
+          select: { username: true, firstName: true, lastName: true }
         },
+        likes: true,
         comments: {
           select: {
-            owner: {select: { username:true, firstName: true, lastName: true}},
-            id:true, content: true, createdAt:true, 
+            owner: {
+              select: { username: true, firstName: true, lastName: true }
+            },
+            id: true,
+            content: true,
+            createdAt: true
           },
           orderBy: {
-            createdAt: 'desc'
+            createdAt: "desc"
           }
         },
         tags: {
-          select: {tag: true}
+          select: { tag: true }
         },
-        publish: true,
+        publish: true
       },
       where: {
         id: id
@@ -137,13 +150,12 @@ export const findOneBlogGET = async (req: Request, res: Response) => {
 
     const formattedBlog = {
       ...blog,
-      tags: blog?.tags.map(t=> ({
+      tags: blog?.tags.map((t) => ({
         id: t.tag.id,
         tag: t.tag.tag
-      })) 
-    }
+      }))
+    };
     res.status(200).json(formattedBlog);
-
   } catch (err) {
     console.error(err);
     res.status(404).json({ message: "Could not find blog details" });
@@ -198,26 +210,28 @@ export const updateOneBlogPUT = async (req: Request, res: Response) => {
 export const publishBlogPUT = async (req: Request, res: Response) => {
   try {
     const id = parameterIDProcessor(req);
-    const {status} = req.query;
+    const { status } = req.query;
 
-    if(status) {
+    if (status) {
       await prisma.publishBlog.update({
         data: {
-          status: status==='true'? true: false 
+          status: status === "true" ? true : false
         },
-        where: {blogId: id}
-      })
+        where: { blogId: id }
+      });
     }
-    res.status(200).json({message: "Blog published!"});
-  } catch(err){
+    res.status(200).json({ message: "Blog published!" });
+  } catch (err) {
     console.log(err);
-    res.status(500).json({message: "Could not Publish blog, something went wrong"})
+    res
+      .status(500)
+      .json({ message: "Could not Publish blog, something went wrong" });
   }
-}
+};
 
 // =================================== DELETE A BLOG ==============================================//
 
-export const deleteBlogDELETE = async (req:Request, res: Response) => {
+export const deleteBlogDELETE = async (req: Request, res: Response) => {
   try {
     const id = parameterIDProcessor(req);
     const blog = await prisma.blog.delete({
@@ -226,14 +240,14 @@ export const deleteBlogDELETE = async (req:Request, res: Response) => {
       }
     });
 
-    if(blog) return res.status(200).json({message: `Blog ${id} was deleted`});
-    else throw new Error;
-  }
-  catch(err){
+    if (blog)
+      return res.status(200).json({ message: `Blog ${id} was deleted` });
+    else throw new Error();
+  } catch (err) {
     console.log(err);
-    res.status(500).json({message: "Could not delete blog!"});
+    res.status(500).json({ message: "Could not delete blog!" });
   }
-}
+};
 
 // =================================== CREATE A BLOG ==============================================//
 export const createBlogPOST = async (req: Request, res: Response) => {
@@ -260,7 +274,7 @@ export const createBlogPOST = async (req: Request, res: Response) => {
         data: {
           title,
           content,
-          authorId: userId || ''
+          authorId: userId || ""
         }
       });
 
@@ -280,7 +294,7 @@ export const createBlogPOST = async (req: Request, res: Response) => {
         data: {
           blogId: blog.id
         }
-      })
+      });
 
       return blog;
     });
@@ -291,41 +305,123 @@ export const createBlogPOST = async (req: Request, res: Response) => {
   }
 };
 
-
 // ====================================== COMMENTS SECTION ==============================//
 
 // Create comment
 export const commentPOST = async (req: Request, res: Response) => {
-  try{
+  try {
     const id = parameterIDProcessor(req);
-  const {content} = req.body;
-  const comment = await prisma.comments.create({
-    data: {
-      blogId: id,
-      userId: req.userId || '',
-      content: content,
-    }
-  });
-  return res.status(201).json({message: "Your comment was sent!"});
-}catch(err){
-  return res.status(500).json({message: "Your comment was not sent!"})
-}
-}
+    const { content } = req.body;
+    const comment = await prisma.comments.create({
+      data: {
+        blogId: id,
+        userId: req.userId || "",
+        content: content
+      }
+    });
+    return res.status(201).json({ message: "Your comment was sent!" });
+  } catch (err) {
+    return res.status(500).json({ message: "Your comment was not sent!" });
+  }
+};
 
 // Update comment
 export const commentPUT = async (req: Request, res: Response) => {
-  try{
+  try {
     const id = parameterIDProcessor(req);
-    const {commentId, content} = req.body;
+    const { commentId, content } = req.body;
 
     await prisma.comments.update({
-      where: {id: commentId, blogId: id},
+      where: { id: commentId, blogId: id },
       data: {
         content: content
       }
-    })
-    res.status(200).json({message: "Comment updated!"});
-  }catch(err){
-    res.status(500).json({message: "Comment update failed!"})
+    });
+    res.status(200).json({ message: "Comment updated!" });
+  } catch (err) {
+    res.status(500).json({ message: "Comment update failed!" });
   }
-}
+};
+
+// Delete comment
+export const commentDELETE = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+    const { commentId, content } = req.body;
+
+    await prisma.comments.delete({
+      where: { id: commentId, blogId: id }
+    });
+    res.status(201).json({ message: "Comment deleted!" });
+  } catch (err) {
+    res.status(500).json({ message: "Comment deletion failed!" });
+  }
+};
+
+// Like or unlike a blog post
+export const likeBlogPUT = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // 🔥 FIX: parse boolean correctly
+    const like = req.query.like === "true";
+
+    if (like) {
+      // ✅ prevent duplicate crash
+      await prisma.likes.upsert({
+        where: {
+          blogId_subsId: {
+            blogId: id,
+            subsId: req.userId
+          }
+        },
+        update: {}, // nothing to update
+        create: {
+          blogId: id,
+          subsId: req.userId
+        }
+      });
+    } else {
+      // ✅ safe delete (no crash if not exists)
+      await prisma.likes.deleteMany({
+        where: {
+          blogId: id,
+          subsId: req.userId
+        }
+      });
+    }
+
+    return res.status(200).json({
+      message: `Post was ${like ? "Liked" : "Unliked"}`
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Failed to update likes!"
+    });
+  }
+};
+
+// verify if the user liked this post
+export const likeVerify = async (req: Request, res: Response) => {
+  try {
+    const id = parameterIDProcessor(req);
+    if (req.userId) {
+      const liked = await prisma.likes.findFirst({
+        where: {
+          blogId: id,
+          subsId: req.userId
+        }
+      });
+      if (liked) res.status(200).json({ liked: true });
+      else res.status(200).json({ liked: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to verify" });
+  }
+};
