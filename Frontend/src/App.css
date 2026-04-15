@@ -21,7 +21,7 @@ main, footer {
 }
 
 .md-wrapper {
-  @apply text-justify;
+  @apply text-justify max-w-[90vw] flex flex-col;
   img{
     @apply border bg-[canvas] w-full object-contain mt-2 mb-2 rounded border-zinc-500/20 p-2;
   }
