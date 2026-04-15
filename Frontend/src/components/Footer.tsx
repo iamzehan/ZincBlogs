@@ -22,22 +22,22 @@ export default function Footer() {
       <div className="relative max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Brand */}
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <img alt="logo" src="/favicon.png" className="h-6 w-6" />
-            <span className="font-semibold text-zinc-200">
+          <div className="flex items-center gap-2 col-span-1 justify-center md:justify-start">
+            <img alt="logo" src="/favicon.png" className="h-10 md:h-6 aspect-square" />
+            <span className="font-semibold text-zinc-200 text-2xl">
               Zinc<span className="text-zinc-400">Blogs</span>
             </span>
           </div>
 
-          <p className="text-sm text-zinc-500 max-w-xs leading-relaxed text-left">
+          <p className="text-sm text-zinc-500 max-w-xs leading-relaxed text-justify">
             A minimal blogging platform focused on clarity, speed, and raw
             developer expression.
           </p>
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col w-full gap-2 items-start *:w-full *:text-left">
-          <span className="text-xl font-medium text-zinc-200 mb-2 p-1 w-full text-left">
+        <div className="flex flex-col w-full gap-2 items-center *:px-5 *:place-content-center *:h-10 *:w-full *:lg:text-left">
+          <span className="text-xl font-medium text-zinc-200 mb-2 p-1 w-full lg:text-left">
             Explore
           </span>
 
@@ -103,7 +103,7 @@ export default function Footer() {
       <div className="relative border-t border-zinc-800">
         <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between text-xs text-zinc-500">
           <span>
-            © {new Date().getFullYear()} ZincBlogs. All rights reserved.
+            © {new Date().getFullYear()} ZincBlogs | All rights reserved.
           </span>
 
           <div className="flex gap-4 mt-2 md:mt-0">
