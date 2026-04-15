@@ -44,7 +44,7 @@ main, footer {
     @apply bg-zinc-600 rounded-lg px-2 py-1;
   }
   code[class*="language"] {
-    @apply bg-zinc-800 px-1 rounded my-5 text-left;
+    @apply bg-zinc-800 px-5 rounded my-5 text-left;
   }
 
   ul {
