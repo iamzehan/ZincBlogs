@@ -1,5 +1,5 @@
 import { formatDate } from "../utils/helpers";
-import ReactMarkdown from "react-markdown";
+import Markdown from "./Markdown";
 
 export default function BlogBody({
   data,
@@ -55,7 +55,7 @@ export default function BlogBody({
           md-wrapper
         "
         >
-          <ReactMarkdown>{data.content}</ReactMarkdown>
+          <Markdown content={data.content}/>
         </div>
         {children}
       </article>
