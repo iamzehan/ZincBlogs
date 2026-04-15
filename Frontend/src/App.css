@@ -10,7 +10,7 @@ body {
   @apply bg-zinc-950 w-screen m-0 place-items-center;
 }
 
-main {
+main, footer {
   @apply xl:border-r xl:border-l border-zinc-700
 }
 
@@ -24,5 +24,30 @@ main {
   @apply text-justify;
   img{
     @apply border bg-[canvas] w-full object-contain mt-2 mb-2 rounded border-zinc-500/20 p-2;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold mb-1 mt-2;
+  }
+  
+  p {
+    @apply p-2 mb-1;
+  }
+
+  hr {
+    @apply mb-6 text-zinc-800;
+  }
+
+  pre > code {
+    @apply bg-zinc-600/30 rounded p-2 flex text-left my-2;
+  }
+  code {
+    @apply bg-zinc-600 rounded-lg px-2 py-1;
+  }
+  code[class*="language"] {
+    @apply bg-zinc-800 px-1 rounded my-5 text-left;
+  }
+
+  ul {
+    @apply list-disc p-5;
   }
 }
