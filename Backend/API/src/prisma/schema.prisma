@@ -58,6 +58,7 @@ model Subscriber {
   updatedAt DateTime @updatedAt
 
   comments Comments[]
+  likes Likes[]
 }
 
 // Temporary user storage
@@ -96,6 +97,7 @@ model Blog {
   // One to many relations
   tags TagsOnBlogs[]
   comments Comments[]
+  likes Likes[]
   publish PublishBlog?
 
   // indexing the author and the blog id
@@ -160,4 +162,20 @@ model Images {
 view BlogTitles{
   id String @unique
   title String
+}
+
+// Likes 
+
+model Likes {
+  blogId String
+  subsId String
+
+  // relations
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  subscriber Subscriber @relation(fields: [subsId], references: [id], onDelete: Cascade)
+
+  @@id([blogId, subsId]) // composite primary key
+  @@index([blogId]) 
+  @@index([subsId])
+
 }
