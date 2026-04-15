@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import TopBar from "../components/TopBar";
 
 import LoginPromptDialog from "../components/LoginRequired";
+import Footer from "../components/Footer";
 import { useAuth } from "../utils/hooks";
 
 export default function HomeLayout() {
@@ -13,6 +14,7 @@ export default function HomeLayout() {
         <Outlet />
         <LoginPromptDialog open={loginPrompt} setOpen={setLoginPrompt} />
       </div>
+      <Footer/>
     </div>
   );
 }

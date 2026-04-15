@@ -19,11 +19,12 @@ function App() {
             <Route index element={<Blogs />} />
             <Route path="/blogs/:id" element={<BlogsDetail />} />
           </Route>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<LoginPage />} />
         </Route>
-        <Route path="/signup" element={<Signup />} />
+        
         <Route path="/api/subscribe/verify-email" element={<VerifyEmail />} />
-
-        <Route path="/login" element={<LoginPage />} />
+        
       </Routes>
     </AuthProvider>
   );
