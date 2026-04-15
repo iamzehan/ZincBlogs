@@ -1,4 +1,4 @@
-import ReactMarkdown from "react-markdown";
+import Markdown from "./Markdown";
 
 interface BlogType {
   title: string;
@@ -18,9 +18,7 @@ export default function MarkdownPreview({ data }: { data: BlogType }) {
           })
         }
       </div>
-      <ReactMarkdown>
-        {data.content}
-      </ReactMarkdown>
+      <Markdown content={data.content}/>
     </div>
   );
 }
