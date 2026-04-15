@@ -396,6 +396,7 @@ export const ModelName = {
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
   Images: 'Images',
+  Likes: 'Likes',
   BlogTitles: 'BlogTitles'
 } as const
 
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "publishBlog" | "comments" | "tags" | "tagsOnBlogs" | "images" | "blogTitles"
+    modelProps: "session" | "author" | "profile" | "subscriber" | "pendingUser" | "emailToken" | "blog" | "publishBlog" | "comments" | "tags" | "tagsOnBlogs" | "images" | "likes" | "blogTitles"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1304,6 +1305,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Likes: {
+      payload: Prisma.$LikesPayload<ExtArgs>
+      fields: Prisma.LikesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LikesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LikesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        findFirst: {
+          args: Prisma.LikesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LikesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        findMany: {
+          args: Prisma.LikesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>[]
+        }
+        create: {
+          args: Prisma.LikesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        createMany: {
+          args: Prisma.LikesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LikesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>[]
+        }
+        delete: {
+          args: Prisma.LikesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        update: {
+          args: Prisma.LikesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        deleteMany: {
+          args: Prisma.LikesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LikesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LikesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>[]
+        }
+        upsert: {
+          args: Prisma.LikesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikesPayload>
+        }
+        aggregate: {
+          args: Prisma.LikesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLikes>
+        }
+        groupBy: {
+          args: Prisma.LikesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LikesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LikesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LikesCountAggregateOutputType> | number
+        }
+      }
+    }
     BlogTitles: {
       payload: Prisma.$BlogTitlesPayload<ExtArgs>
       fields: Prisma.BlogTitlesFieldRefs
@@ -1511,6 +1586,14 @@ export const ImagesScalarFieldEnum = {
 export type ImagesScalarFieldEnum = (typeof ImagesScalarFieldEnum)[keyof typeof ImagesScalarFieldEnum]
 
 
+export const LikesScalarFieldEnum = {
+  blogId: 'blogId',
+  subsId: 'subsId'
+} as const
+
+export type LikesScalarFieldEnum = (typeof LikesScalarFieldEnum)[keyof typeof LikesScalarFieldEnum]
+
+
 export const BlogTitlesScalarFieldEnum = {
   id: 'id',
   title: 'title'
@@ -1710,6 +1793,7 @@ export type GlobalOmitConfig = {
   tags?: Prisma.TagsOmit
   tagsOnBlogs?: Prisma.TagsOnBlogsOmit
   images?: Prisma.ImagesOmit
+  likes?: Prisma.LikesOmit
   blogTitles?: Prisma.BlogTitlesOmit
 }
 

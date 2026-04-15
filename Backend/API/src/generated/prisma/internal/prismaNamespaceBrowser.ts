@@ -63,6 +63,7 @@ export const ModelName = {
   Tags: 'Tags',
   TagsOnBlogs: 'TagsOnBlogs',
   Images: 'Images',
+  Likes: 'Likes',
   BlogTitles: 'BlogTitles'
 } as const
 
@@ -210,6 +211,14 @@ export const ImagesScalarFieldEnum = {
 } as const
 
 export type ImagesScalarFieldEnum = (typeof ImagesScalarFieldEnum)[keyof typeof ImagesScalarFieldEnum]
+
+
+export const LikesScalarFieldEnum = {
+  blogId: 'blogId',
+  subsId: 'subsId'
+} as const
+
+export type LikesScalarFieldEnum = (typeof LikesScalarFieldEnum)[keyof typeof LikesScalarFieldEnum]
 
 
 export const BlogTitlesScalarFieldEnum = {
