@@ -138,20 +138,41 @@ button{
 /* Markdown wrapper */
 
 .md-wrapper {
-  @apply bg-zinc-900 md:mx-2 md:rounded-lg md:mt-2 md:w-[80vw]! p-5 flex flex-col gap-2;
-  h1{
-    @apply w-full text-left;
+  @apply text-justify bg-zinc-900 md:mx-2 md:rounded-lg md:mt-2 md:w-[80vw]! p-5 flex flex-col gap-2;
+    img{
+    @apply border bg-[canvas] w-full object-contain mt-2 mb-2 rounded border-zinc-500/20 p-2;
   }
-  p{
-    @apply text-justify p-5;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold mb-1 mt-2 text-left;
   }
-  img{
-    @apply w-full rounded;
+  
+  p {
+    @apply p-2 mb-1 text-left;
+  }
+
+  hr {
+    @apply mb-6 text-zinc-800;
+  }
+
+  pre > code {
+    @apply bg-zinc-600/30 rounded p-2 flex text-left my-2;
+  }
+  code {
+    @apply bg-zinc-600 rounded-lg px-2 py-1;
+  }
+  code[class*="language"] {
+    @apply bg-zinc-800 px-5 rounded my-5 text-left;
+  }
+
+  ul {
+    @apply list-disc p-5;
   }
   .tags {
     @apply rounded-full bg-zinc-600/40 text-white py-1 px-2 text-sm;
   }
 }
+
+
 
 
 /* Preview nav */
