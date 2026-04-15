@@ -27,8 +27,6 @@ export default function Page() {
     queryFn: fetchAllBlogs,
   });
 
-  console.log(data);
-
   if (isLoading) {
     return <BlogsSkeleton />;
   }
