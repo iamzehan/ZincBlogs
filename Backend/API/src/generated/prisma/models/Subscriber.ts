@@ -215,6 +215,7 @@ export type SubscriberWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   comments?: Prisma.CommentsListRelationFilter
+  likes?: Prisma.LikesListRelationFilter
 }
 
 export type SubscriberOrderByWithRelationInput = {
@@ -228,6 +229,7 @@ export type SubscriberOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   comments?: Prisma.CommentsOrderByRelationAggregateInput
+  likes?: Prisma.LikesOrderByRelationAggregateInput
 }
 
 export type SubscriberWhereUniqueInput = Prisma.AtLeast<{
@@ -244,6 +246,7 @@ export type SubscriberWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscriber"> | Date | string
   comments?: Prisma.CommentsListRelationFilter
+  likes?: Prisma.LikesListRelationFilter
 }, "id" | "email" | "username">
 
 export type SubscriberOrderByWithAggregationInput = {
@@ -287,6 +290,7 @@ export type SubscriberCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentsCreateNestedManyWithoutOwnerInput
+  likes?: Prisma.LikesCreateNestedManyWithoutSubscriberInput
 }
 
 export type SubscriberUncheckedCreateInput = {
@@ -300,6 +304,7 @@ export type SubscriberUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutOwnerInput
+  likes?: Prisma.LikesUncheckedCreateNestedManyWithoutSubscriberInput
 }
 
 export type SubscriberUpdateInput = {
@@ -313,6 +318,7 @@ export type SubscriberUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentsUpdateManyWithoutOwnerNestedInput
+  likes?: Prisma.LikesUpdateManyWithoutSubscriberNestedInput
 }
 
 export type SubscriberUncheckedUpdateInput = {
@@ -326,6 +332,7 @@ export type SubscriberUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentsUncheckedUpdateManyWithoutOwnerNestedInput
+  likes?: Prisma.LikesUncheckedUpdateManyWithoutSubscriberNestedInput
 }
 
 export type SubscriberCreateManyInput = {
@@ -423,6 +430,20 @@ export type SubscriberUpdateOneRequiredWithoutCommentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriberUpdateToOneWithWhereWithoutCommentsInput, Prisma.SubscriberUpdateWithoutCommentsInput>, Prisma.SubscriberUncheckedUpdateWithoutCommentsInput>
 }
 
+export type SubscriberCreateNestedOneWithoutLikesInput = {
+  create?: Prisma.XOR<Prisma.SubscriberCreateWithoutLikesInput, Prisma.SubscriberUncheckedCreateWithoutLikesInput>
+  connectOrCreate?: Prisma.SubscriberCreateOrConnectWithoutLikesInput
+  connect?: Prisma.SubscriberWhereUniqueInput
+}
+
+export type SubscriberUpdateOneRequiredWithoutLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriberCreateWithoutLikesInput, Prisma.SubscriberUncheckedCreateWithoutLikesInput>
+  connectOrCreate?: Prisma.SubscriberCreateOrConnectWithoutLikesInput
+  upsert?: Prisma.SubscriberUpsertWithoutLikesInput
+  connect?: Prisma.SubscriberWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriberUpdateToOneWithWhereWithoutLikesInput, Prisma.SubscriberUpdateWithoutLikesInput>, Prisma.SubscriberUncheckedUpdateWithoutLikesInput>
+}
+
 export type SubscriberCreateWithoutCommentsInput = {
   id?: string
   email: string
@@ -433,6 +454,7 @@ export type SubscriberCreateWithoutCommentsInput = {
   isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  likes?: Prisma.LikesCreateNestedManyWithoutSubscriberInput
 }
 
 export type SubscriberUncheckedCreateWithoutCommentsInput = {
@@ -445,6 +467,7 @@ export type SubscriberUncheckedCreateWithoutCommentsInput = {
   isVarified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  likes?: Prisma.LikesUncheckedCreateNestedManyWithoutSubscriberInput
 }
 
 export type SubscriberCreateOrConnectWithoutCommentsInput = {
@@ -473,6 +496,7 @@ export type SubscriberUpdateWithoutCommentsInput = {
   isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  likes?: Prisma.LikesUpdateManyWithoutSubscriberNestedInput
 }
 
 export type SubscriberUncheckedUpdateWithoutCommentsInput = {
@@ -485,6 +509,75 @@ export type SubscriberUncheckedUpdateWithoutCommentsInput = {
   isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  likes?: Prisma.LikesUncheckedUpdateManyWithoutSubscriberNestedInput
+}
+
+export type SubscriberCreateWithoutLikesInput = {
+  id?: string
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  username: string
+  isVarified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  comments?: Prisma.CommentsCreateNestedManyWithoutOwnerInput
+}
+
+export type SubscriberUncheckedCreateWithoutLikesInput = {
+  id?: string
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  username: string
+  isVarified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type SubscriberCreateOrConnectWithoutLikesInput = {
+  where: Prisma.SubscriberWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriberCreateWithoutLikesInput, Prisma.SubscriberUncheckedCreateWithoutLikesInput>
+}
+
+export type SubscriberUpsertWithoutLikesInput = {
+  update: Prisma.XOR<Prisma.SubscriberUpdateWithoutLikesInput, Prisma.SubscriberUncheckedUpdateWithoutLikesInput>
+  create: Prisma.XOR<Prisma.SubscriberCreateWithoutLikesInput, Prisma.SubscriberUncheckedCreateWithoutLikesInput>
+  where?: Prisma.SubscriberWhereInput
+}
+
+export type SubscriberUpdateToOneWithWhereWithoutLikesInput = {
+  where?: Prisma.SubscriberWhereInput
+  data: Prisma.XOR<Prisma.SubscriberUpdateWithoutLikesInput, Prisma.SubscriberUncheckedUpdateWithoutLikesInput>
+}
+
+export type SubscriberUpdateWithoutLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentsUpdateManyWithoutOwnerNestedInput
+}
+
+export type SubscriberUncheckedUpdateWithoutLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  isVarified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -494,10 +587,12 @@ export type SubscriberUncheckedUpdateWithoutCommentsInput = {
 
 export type SubscriberCountOutputType = {
   comments: number
+  likes: number
 }
 
 export type SubscriberCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | SubscriberCountOutputTypeCountCommentsArgs
+  likes?: boolean | SubscriberCountOutputTypeCountLikesArgs
 }
 
 /**
@@ -517,6 +612,13 @@ export type SubscriberCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.T
   where?: Prisma.CommentsWhereInput
 }
 
+/**
+ * SubscriberCountOutputType without action
+ */
+export type SubscriberCountOutputTypeCountLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikesWhereInput
+}
+
 
 export type SubscriberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -529,6 +631,7 @@ export type SubscriberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   comments?: boolean | Prisma.Subscriber$commentsArgs<ExtArgs>
+  likes?: boolean | Prisma.Subscriber$likesArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriberCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscriber"]>
 
@@ -571,6 +674,7 @@ export type SubscriberSelectScalar = {
 export type SubscriberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "username" | "isVarified" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriber"]>
 export type SubscriberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Subscriber$commentsArgs<ExtArgs>
+  likes?: boolean | Prisma.Subscriber$likesArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriberCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SubscriberIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -580,6 +684,7 @@ export type $SubscriberPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Subscriber"
   objects: {
     comments: Prisma.$CommentsPayload<ExtArgs>[]
+    likes: Prisma.$LikesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -986,6 +1091,7 @@ readonly fields: SubscriberFieldRefs;
 export interface Prisma__SubscriberClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   comments<T extends Prisma.Subscriber$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscriber$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  likes<T extends Prisma.Subscriber$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscriber$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1433,6 +1539,30 @@ export type Subscriber$commentsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CommentsScalarFieldEnum | Prisma.CommentsScalarFieldEnum[]
+}
+
+/**
+ * Subscriber.likes
+ */
+export type Subscriber$likesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Likes
+   */
+  select?: Prisma.LikesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Likes
+   */
+  omit?: Prisma.LikesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikesInclude<ExtArgs> | null
+  where?: Prisma.LikesWhereInput
+  orderBy?: Prisma.LikesOrderByWithRelationInput | Prisma.LikesOrderByWithRelationInput[]
+  cursor?: Prisma.LikesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikesScalarFieldEnum | Prisma.LikesScalarFieldEnum[]
 }
 
 /**
