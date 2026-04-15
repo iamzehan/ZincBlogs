@@ -15,6 +15,7 @@ const envSchema = z.object({
   EMAIL_USER: z.string(),
   EMAIL_PASSWORD: z.string(),
   CLIENT_URL: z.string(),
+  CMS_URL : z.string(),
   CL_API_KEY: z.string(),
   CL_API_SECRET: z.string(),
   CL_NAME: z.string(), 

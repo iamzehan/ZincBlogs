@@ -14,10 +14,20 @@ import './jobs/index.js';
 const app = express();
 
 // CORS setup
-app.use(cors({
-  origin: env.CLIENT_URL,
-  credentials: true
-}));
+const allowedOrigins = [env.CLIENT_URL, env.CMS_URL];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
