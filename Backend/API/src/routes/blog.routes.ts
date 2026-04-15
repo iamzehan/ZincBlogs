@@ -27,4 +27,11 @@ routes.post("/create", requireAuth, ensureAuthor, controller.createBlogPOST);
 routes.post("/posts/:id/comment", requireAuth, controller.commentPOST);
 // update a comment
 routes.put("/posts/:id/comment", requireAuth, ensureCommentOwner, controller.commentPUT);
+// delete a comment
+routes.delete("/posts/:id/comment", requireAuth, ensureCommentOwner, controller.commentDELETE);
+
+
+// ================================ LIKE ================================//
+routes.put("/posts/:id/react", requireAuth, controller.likeBlogPUT);
+routes.get("/posts/:id/react", requireAuth, controller.likeVerify);
 export default routes;
