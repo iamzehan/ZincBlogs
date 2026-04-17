@@ -7,24 +7,27 @@ import { useNavigate } from "react-router-dom";
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "error">("idle");
-  
-  const {login, lastPage, setLastPage} = useAuth();
+
+  const { login, lastPage, setLastPage } = useAuth();
   const navigate = useNavigate();
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const dataObject = Object.fromEntries(formData.entries());
     const credentials = JSON.parse(JSON.stringify(dataObject));
-    await login(credentials);
-    
-    // navigate
-    if(lastPage){
-      navigate(lastPage);
-      setLastPage(null);
+    try {
+      setLoading(true);
+      await login(credentials);
+      // navigate
+      if (lastPage) {
+        navigate(lastPage);
+        setLastPage(null);
+      } else navigate("/blogs");
+    } catch {
+      setStatus("error");
+      setLoading(false);
     }
-    else navigate('/blogs');
   };
-
 
   return (
     <Background>
@@ -35,13 +38,11 @@ export default function LoginPage() {
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-100 mt-2">
             Welcome Back
           </h1>
-          <p className="text-sm text-zinc-400 mt-1">
-            Sign in to your account
-          </p>
+          <p className="text-sm text-zinc-400 mt-1">Sign in to your account</p>
         </div>
 
         {/* Login Form */}
-        <form onSubmit={(e)=> handleLogin(e)} className="flex flex-col gap-4">
+        <form onSubmit={(e) => handleLogin(e)} className="flex flex-col gap-4">
           <Input
             key="email"
             label="Email"
@@ -68,9 +69,11 @@ export default function LoginPage() {
             disabled={loading}
             className={`
               mt-2 w-full py-2.5 rounded-xl font-medium transition
-              ${loading
-                ? "bg-zinc-700 text-zinc-400 cursor-not-allowed"
-                : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300"}
+              ${
+                loading
+                  ? "bg-zinc-700 text-zinc-400 cursor-not-allowed"
+                  : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300"
+              }
             `}
           >
             {loading ? "Signing in..." : "Login"}
@@ -80,7 +83,10 @@ export default function LoginPage() {
         {/* Footer */}
         <p className="text-sm text-zinc-500 mt-6 text-center">
           Don’t have an account?{" "}
-          <span className="text-zinc-300 hover:text-white cursor-pointer transition">
+          <span
+            onClick={() => navigate("/signup")}
+            className="text-zinc-300 hover:text-white cursor-pointer transition"
+          >
             Sign up
           </span>
         </p>
