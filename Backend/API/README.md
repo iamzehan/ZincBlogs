@@ -19,20 +19,20 @@ This document serves as the authoritative technical reference for developers, in
 
 ### Core Principles
 
-* RESTful API design
-* Stateless authentication (JWT)
-* Normalized relational schema
-* Token-based verification
-* Secure credential handling
-* Modular service separation
-* Background job processing
+- RESTful API design
+- Stateless authentication (JWT)
+- Normalized relational schema
+- Token-based verification
+- Secure credential handling
+- Modular service separation
+- Background job processing
 
 ### Authentication Strategy
 
-* JWT-based access tokens
-* Email verification workflow
-* Token expiration policies
-* Role-based access control (RBAC-ready)
+- JWT-based access tokens
+- Email verification workflow
+- Token expiration policies
+- Role-based access control (RBAC-ready)
 
 ---
 
@@ -105,22 +105,22 @@ Token-based identity confirmation.
 
 ### Authentication
 
-* JWT access tokens
-* Secure password hashing
-* Token expiration
-* Email verification enforcement
+- JWT access tokens
+- Secure password hashing
+- Token expiration
+- Email verification enforcement
 
 ### Authorization
 
-* Role-based design
-* Resource ownership validation
-* Access scope enforcement
+- Role-based design
+- Resource ownership validation
+- Access scope enforcement
 
 ### Compliance Ready
 
-* GDPR-compatible structure
-* Auditable authentication flows
-* Token lifecycle management
+- GDPR-compatible structure
+- Auditable authentication flows
+- Token lifecycle management
 
 ---
 
@@ -128,9 +128,9 @@ Token-based identity confirmation.
 
 ### Token Cleanup Service
 
-* Scheduled cron execution every 10 minutes
-* Automatic expiration handling
-* Database hygiene maintenance
+- Scheduled cron execution every 10 minutes
+- Automatic expiration handling
+- Database hygiene maintenance
 
 ---
 
@@ -140,21 +140,21 @@ Token-based identity confirmation.
 
 ### Author Services
 
-* `POST /api/auth/register`
-  Author registration *(disabled in production)*
+- `POST /api/auth/register`
+  Author registration _(disabled in production)_
 
-* `POST /api/auth/login`
+- `POST /api/auth/login`
   Author authentication
 
 ### Subscriber Services
 
-* `POST /api/subscribe/register`
+- `POST /api/subscribe/register`
   Subscriber onboarding
 
-* `POST /api/subscribe/login`
+- `POST /api/subscribe/login`
   Subscriber authentication
 
-* `GET /api/subscribe/verify-email?token={verification_token}`
+- `GET /api/subscribe/verify-email?token={verification_token}`
   Email verification callback endpoint
 
 ---
@@ -163,38 +163,38 @@ Token-based identity confirmation.
 
 ### Blog Services
 
-* `GET /api/blog/posts`
+- `GET /api/blog/posts`
   Retrieve all blog resources
 
-* `GET /api/blog/posts/published`
+- `GET /api/blog/posts/published`
   Retrieve all published blog resources
 
-* `POST /api/blog/create`
+- `POST /api/blog/create`
   Create blog resource
 
-* `GET /api/blog/posts/:id`
+- `GET /api/blog/posts/:id`
   Retrieve blog resource by ID
 
-* `PUT /api/blog/posts/:id`
+- `PUT /api/blog/posts/:id`
   Update blog resource
 
-* `DELETE /api/blog/posts/:id`
+- `DELETE /api/blog/posts/:id`
   Delete blog resource
 
-* `PUT /api/blog/posts/:id/publish?status={boolean}`
+- `PUT /api/blog/posts/:id/publish?status={boolean}`
   `status=true` publishes a blog, `status=false` unpublishes it.
 
-* `GET /api/blog/titles`
+- `GET /api/blog/titles`
   Gets titles and id of all published blogs for side navigation bar.
 
 ---
 
 ### Comment Services
 
-* `POST /api/blog/:id/comment`
+- `POST /api/blog/:id/comment`
   Create comment resource
 
-* `PUT /api/blog/:id/comment`
+- `PUT /api/blog/:id/comment`
   Update comment resource
 
 ---
