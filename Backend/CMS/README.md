@@ -103,32 +103,39 @@ The **Blog Platform CMS** is a production-ready, feature-rich admin dashboard fo
 
 ### 📝 Blog Management
 
-- **Create Blogs** - Write with rich text editor, add images, set tags
+<img width="964" height="543" alt="image" src="https://github.com/user-attachments/assets/189d61ec-9b0b-4983-beb5-eeb5776a4ed7" />
+
+- **Create Blogs** - Write with Markdown text editor, add images, set tags
+  
+- <img width="959" height="538" alt="image" src="https://github.com/user-attachments/assets/0defe2b0-93e5-4cf5-91e8-12a62104dd8d" />
+
 - **Edit Drafts** - Modify unpublished blog posts
+- <img width="1074" height="1712" alt="image" src="https://github.com/user-attachments/assets/d0369332-dfda-4dcd-af13-ca0214596539" />
+
 - **Publish/Unpublish** - Control blog visibility
-- **View Analytics** - See blog statistics (ready for integration)
-- **Batch Operations** - Delete multiple blogs at once
-- **Auto-save** - Prevent loss of work with draft saving
+- <img width="1079" height="1706" alt="image" src="https://github.com/user-attachments/assets/27830e07-3be3-464f-b097-72a80d020af2" />
 
 ### 🎨 Media Library
 
-**Screenshot Space: [Add screenshot of Media Library interface showing image grid, upload button, filters]**
+<img width="1080" height="1920" alt="image" src="https://github.com/user-attachments/assets/c8dd6b58-72bf-4084-8b64-9ba742270119" />
 
 - **Upload Images** - Drag-and-drop or click to upload
+<img width="1067" height="914" alt="image" src="https://github.com/user-attachments/assets/01129f93-79b0-455a-94c2-7545f8ba040e" />
+
 - **Image Preview** - View images before using
+
+<img width="959" height="716" alt="image" src="https://github.com/user-attachments/assets/4a94cbfc-2cc9-47ff-8310-497aa3a48aad" />
+
 - **Organized Grid** - Browse media in thumbnail view
-- **Search & Filter** - Find images quickly
+
 - **Cloudinary Integration** - Cloud-based storage
 
 ### 👥 Subscriber Management
 
-**Screenshot Space: [Add screenshot of Subscribers table showing columns, sorting, pagination]**
+<img width="1073" height="591" alt="image" src="https://github.com/user-attachments/assets/635e9861-d6fe-4876-8201-682de0d8704b" />
 
 - **View All Subscribers** - See complete subscriber list
-- **Search Subscribers** - Filter by email or name
-- **Sort by Column** - Name, email, join date
-- **Export Data** - Download subscriber list (ready for integration)
-- **Analytics** - Subscription trends
+
 
 ### 🔐 Authentication
 
@@ -137,16 +144,6 @@ The **Blog Platform CMS** is a production-ready, feature-rich admin dashboard fo
 - **Protected Routes** - Only authenticated users access CMS
 - **Auto-redirect** - Unauthenticated users sent to login
 - **Session Persistence** - Stay logged in across page refreshes
-
-### 📊 Dashboard
-
-**Screenshot Space: [Add screenshot of main dashboard showing stats, recent blogs, quick actions]**
-
-Statistics available:
-- Total blogs published
-- Total subscribers
-- Recent activity
-- Quick action buttons
 
 ---
 
