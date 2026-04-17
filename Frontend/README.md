@@ -129,9 +129,13 @@ The **Blog Platform Frontend** is a modern, responsive public-facing web applica
 
 ### 📄 Blog Detail Page
 
-**Screenshot Space: [Add screenshot of individual blog page showing full blog content, rich text formatting, comments section, like button]**
+<img width="1079" height="1774" alt="image" src="https://github.com/user-attachments/assets/29011e77-a746-416a-a9a5-f3c5c794d7c5" />
+
 
 - Full blog content with rich markdown rendering
+  <img width="1066" height="1778" alt="image" src="https://github.com/user-attachments/assets/df982350-03ec-47e0-a4aa-4f7166a79c03" />
+  <img width="1079" height="1781" alt="image" src="https://github.com/user-attachments/assets/119dc620-2f95-4277-a768-13ee4dc60151" />
+
 - Blog metadata:
   - Title
   - Author name and avatar
@@ -139,29 +143,28 @@ The **Blog Platform Frontend** is a modern, responsive public-facing web applica
   - Tags
   - Featured image
 - Like button (authenticated users only)
+- 
+  <img width="1076" height="1777" alt="image" src="https://github.com/user-attachments/assets/1f95814e-5d3b-4903-ab8f-f1f922361532" />
+
 - Comments section:
+ <img width="783" height="392" alt="image" src="https://github.com/user-attachments/assets/08aab631-9a46-4428-8ba8-757583b98749" />
+
   - View all comments
   - Add new comment (authenticated)
   - Comment author and timestamp
 - Up/down navigation to other blogs
-- Share functionality (ready)
 
 ### 🔐 Login Page
 
-**Screenshot Space: [Add screenshot of login form showing email input, password input, submit button, signup link]**
+<img width="1079" height="1781" alt="image" src="https://github.com/user-attachments/assets/ad850a26-71a6-4d7b-82de-8741a76ca60c" />
 
 - Email input field
 - Password input field
 - Submit button
-- "Forgot password?" link (ready)
-- Link to signup page
-- Error messages for failed login
-- Form validation
-- Loading state during submission
 
 ### 📝 Signup Page
 
-**Screenshot Space: [Add screenshot of signup form showing name fields, email, password, confirm password, terms checkbox, submit button]**
+<img width="1079" height="1781" alt="image" src="https://github.com/user-attachments/assets/0f9b7fcb-1f5f-4cb9-8f17-abc8dc4ec216" />
 
 - First name input
 - Last name input
@@ -172,12 +175,19 @@ The **Blog Platform Frontend** is a modern, responsive public-facing web applica
 - Submit button
 - Link to login page
 - Form validation
-- Password strength indicator (ready)
-- Error handling for duplicate emails
 
 ### ✉️ Email Verification Page
 
-**Screenshot Space: [Add screenshot of verification page showing verification status, confirmation message, or error state]**
+<img width="748" height="603" alt="image" src="https://github.com/user-attachments/assets/21b35f53-bc49-4bee-af2f-28b7bfcdedc4" />
+
+<img width="475" height="211" alt="image" src="https://github.com/user-attachments/assets/54bc93de-6317-4779-bf9f-dc37069be145" />
+
+<img width="748" height="532" alt="image" src="https://github.com/user-attachments/assets/73722276-c244-44a6-ae2d-3614d3f02869" />
+
+<img width="757" height="476" alt="image" src="https://github.com/user-attachments/assets/38a576c2-6e9e-4220-9b2c-581b5716d6cf" />
+
+<img width="226" height="191" alt="image" src="https://github.com/user-attachments/assets/b5fb1995-4b8e-4e56-af96-26ffb53e3616" />
+
 
 - Email verification confirmation
 - Status message (success/pending/error)
