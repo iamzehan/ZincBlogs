@@ -7,7 +7,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   await transporter.sendMail({
     from: env.EMAIL_USER,
     to: email,
-    subject: "Verify your email",
+    subject: "ZincBlogs | Verify your email",
     html: `
       <h2>Verify your account</h2>
       <p>Click the link below to verify your email:</p>
