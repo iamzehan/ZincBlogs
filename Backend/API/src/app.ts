@@ -18,7 +18,7 @@ const allowedOrigins: string[] = [
   env.CLIENT_URL
 ];
 
-// 🔥 Strongly typed CORS config
+// Strongly typed CORS config
 const corsOptions: CorsOptions = {
   origin: (origin: string | undefined, callback) => {
     // allow server-to-server / curl / postman
@@ -38,7 +38,7 @@ const corsOptions: CorsOptions = {
 // Apply CORS
 app.use(cors(corsOptions));
 
-app.options("*", cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
