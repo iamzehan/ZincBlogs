@@ -13,21 +13,32 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
-// CORS setup
-const allowedOrigins = [env.CLIENT_URL, env.CMS_URL];
+const allowedOrigins = [
+  env.CMS_URL,
+  env.CLIENT_URL
+];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+    origin: function (origin, callback) {
+      // allow non-browser requests (Postman, server-to-server)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      // IMPORTANT: do NOT throw error
+      return callback(null, false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
+// CRITICAL for preflight (Vercel-safe)
+app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json());
