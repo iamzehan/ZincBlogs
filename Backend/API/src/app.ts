@@ -9,7 +9,7 @@ import { sessionMiddleware } from "./config/session.js";
 import { env } from "./config/env.js";
 import cookieParser from 'cookie-parser';
 // cron jobs
-import './jobs/index.js';
+//import './jobs/index.js';
 
 const app = express();
 
