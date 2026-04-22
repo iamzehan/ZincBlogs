@@ -4,20 +4,25 @@ import { env } from "../config/env.js";
 import { prisma } from "../config/prisma.js";
 import { parameterIDProcessor } from "../utils/processors.js";
 
-export const requireAuth = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.sendStatus(401);
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: "Missing Authorization header" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Invalid token format" });
+  }
 
   try {
     const payload = jwt.verify(token, env.JWT_SECRET) as { sub: string };
     req.userId = payload.sub;
     next();
-  } catch {
-    res.sendStatus(401);
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 
@@ -39,19 +44,23 @@ export const ensureGuest = (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-export const ensureAuthor = async (req: Request, res:Response, next: NextFunction) => {
+export const ensureAuthor = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.userId) {
+    return res.status(401).json({ message: "Unauthorized: missing userId" });
+  }
+
   const isAuthor = await prisma.author.findFirst({
     where: {
       id: req.userId
     }
   });
-  if(isAuthor){
-    return next();
+
+  if (!isAuthor) {
+    return res.status(403).json({ message: "Forbidden!" });
   }
-  else{
-    return res.status(403).json({message: "Forbidden!"})
-  }
-}
+
+  next();
+};
 
 // Check if the comment is owned by the user before making destructive changes
 export const ensureCommentOwner = async (req:Request, res:Response, next: NextFunction)=> {
