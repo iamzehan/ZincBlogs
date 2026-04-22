@@ -1,18 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "declaration": false,
-    "sourceMap": false,
-    "outDir": "./dist",
-
-    // IMPORTANT: makes CommonJS interop behave correctly
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
-    // avoid noise in CI builds
-    "skipLibCheck": true
-  },
-  "include": ["src"],
   "exclude": ["tests", "**/*.test.ts"]
 }

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
+import * as helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import routes from "./routes/index.js";
@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 
-app.use(helmet());
+app.use(helmet.default());
 app.use(compression());
 app.use(morgan("dev"));
 
