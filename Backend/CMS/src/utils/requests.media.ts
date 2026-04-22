@@ -49,6 +49,7 @@ export const deleteImage = async (options: FetchOptions): Promise<Response> => {
 export const uploadImage = async (options: FetchOptions): Promise<Response> => {
   const formData = new FormData();
   const { file } = options;
+  if (!file) throw new Error("No file provided");
   formData.append("image_file", file);
 
   const res = await fetch(`${env.VITE_BACKEND_URL}/api/files/images/upload`, {
