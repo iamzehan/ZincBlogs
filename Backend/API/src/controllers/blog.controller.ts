@@ -253,11 +253,18 @@ export const deleteBlogDELETE = async (req: Request, res: Response) => {
 export const createBlogPOST = async (req: Request, res: Response) => {
   try {
     const { title, content, tags } = req.body;
-    const userId = req.userId; // get the currently logged in user
-    const parsedTags = tagParser(tags);
 
-    const result = await prisma.$transaction(async (prismaTx) => {
-      // Upsert tags and collect their IDs
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!title || !content) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const parsedTags = tagParser(tags ?? []);
+
+    const blog = await prisma.$transaction(async (prismaTx) => {
       const tagIds: string[] = [];
 
       for (const tag of parsedTags) {
@@ -266,42 +273,44 @@ export const createBlogPOST = async (req: Request, res: Response) => {
           update: {},
           create: { tag }
         });
+
         tagIds.push(t.id);
       }
 
-      // Create the blog
-      const blog = await prismaTx.blog.create({
+      const newBlog = await prismaTx.blog.create({
         data: {
           title,
           content,
-          authorId: userId || ""
+          authorId: req.userId!
         }
       });
 
-      // Populate the junction table TagsOnBlogs
-      const tagsOnBlogsData = tagIds.map((tagId) => ({
-        blogId: blog.id,
-        tagId
-      }));
+      if (tagIds.length > 0) {
+        await prismaTx.tagsOnBlogs.createMany({
+          data: tagIds.map((tagId) => ({
+            blogId: newBlog.id,
+            tagId
+          })),
+          skipDuplicates: true
+        });
+      }
 
-      await prismaTx.tagsOnBlogs.createMany({
-        data: tagsOnBlogsData,
-        skipDuplicates: true
-      });
-
-      // publication status defaults to false
       await prismaTx.publishBlog.create({
-        data: {
-          blogId: blog.id
-        }
+        data: { blogId: newBlog.id }
       });
 
-      return blog;
+      return newBlog;
     });
-    // when that's done return a 201 response
-    res.status(201).json({ message: "Blog created successfully" });
+
+    return res.status(201).json({
+      message: "Blog created successfully",
+      blog
+    });
   } catch (err) {
-    res.status(500).json({ message: "Blog post failed!" });
+    console.error("CREATE BLOG ERROR:", err);
+    return res.status(500).json({
+      message: "Internal server error"
+    });
   }
 };
 
