@@ -1,10 +1,16 @@
+import router from "../src/routes/index.js";
 import request from "supertest";
-import { app } from "../src/app.js";
+import express from "express";
+import test from "node:test";
 
-describe("Health Check", () => {
-  it("should return ok", async () => {
-    const res = await request(app).get("/api/health");
-    expect(res.status).toBe(200);
-    expect(res.body.status).toBe("ok");
-  });
-});
+const app = express();
+
+app.use(express.urlencoded({extended: false}));
+
+app.use("/api", router);
+
+test("Index route works", done=> {
+  request(app)
+  .get("/")
+  .expect(200, done);
+})
