@@ -14,7 +14,7 @@ interface Comment {
 }
 
 interface CommentsProps {
-  ref: React.RefObject<null> | (()=> void);
+  ref: React.RefObject<HTMLDivElement | null> | (()=> void);
   comments: Comment[];
 }
 

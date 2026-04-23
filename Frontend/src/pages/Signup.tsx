@@ -82,7 +82,7 @@ export default function Page() {
               placeholder="john.doe@example.com"
             />
 
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <Input
                 key="firstname"
                 label="First Name"

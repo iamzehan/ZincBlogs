@@ -14,13 +14,13 @@ import Like from "../components/Like";
 export default function Page() {
   const { id } = useParams<string>();
   const [showComment, setShowComment] = useState<boolean>(false);
-  const [commentsRef, scrollToComments] = useScrollTo();
+  const { targetRef, scrollToTarget } = useScrollTo();
 
   useEffect(() => {
     if (showComment) {
-      scrollToComments();
+      scrollToTarget();
     }
-  }, [showComment, scrollToComments]);
+  }, [showComment, scrollToTarget]);
 
   const handleComment = () => {
     setShowComment((prev) => !prev);
@@ -71,7 +71,7 @@ export default function Page() {
 
           <Comment props={{ onSubmit: addComment }} />
 
-          <Comments ref={commentsRef} comments={data.comments} />
+          <Comments ref={targetRef} comments={data.comments} />
         </>
       )}
     </main>

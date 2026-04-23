@@ -23,16 +23,16 @@ export const useIsMobile = (breakpoint = 768) => {
 
 
 
-export const useScrollTo = (options = { behavior: 'smooth', block: 'start' }) => {
-  const targetRef = useRef(null);
+export const useScrollTo = (
+  options: ScrollIntoViewOptions = { behavior: 'smooth', block: 'start' }
+) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToTarget = useCallback(() => {
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView(options);
-    }
+    targetRef.current?.scrollIntoView(options);
   }, [options]);
 
-  return [targetRef, scrollToTarget];
+  return { targetRef, scrollToTarget };
 };
 
 // Authentication Provider hook
