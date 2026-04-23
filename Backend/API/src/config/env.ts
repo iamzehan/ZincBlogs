@@ -8,6 +8,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
   SESSION_SECRET: z.string(),
   DATABASE_URL: z.string(),
+  RESEND_API_KEY: z.string(),
   JWT_SECRET: z.string(),
   JWT_REFRESH_SECRET: z.string(),
   EMAIL_HOST: z.string(),

@@ -1,9 +1,9 @@
 import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { env } from "../../config/env.js";
+const resend = new Resend(`${env.RESEND_API_KEY}`);
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const link = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
+  const link = `${env.CLIENT_URL}/verify-email?token=${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
