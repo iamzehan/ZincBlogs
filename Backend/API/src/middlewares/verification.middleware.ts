@@ -1,6 +1,6 @@
 
 import {prisma} from "../config/prisma.js";
-import { sendVerificationEmail } from "../mail/sendVerfication.js";
+import { sendVerificationEmail } from "../mail/v2/sendVerification.js";
 import { Request, Response, NextFunction } from "express";
 import { hashPassword } from "../utils/password.js";
 import { generateToken, hashToken } from "../utils/token.js";
